@@ -8,6 +8,7 @@ services:
       - .env
     volumes:
       - mongo-data:/data/db
+      - ./init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js
     ports:
     - "27017:27017"
     restart: unless-stopped
