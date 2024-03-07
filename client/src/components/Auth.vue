@@ -1,10 +1,13 @@
 <template>
-    <h1>авторизация</h1>
+  <Navbar username="Марк Заславский"></Navbar>
 </template>
 
 <script>
+import Navbar from "@/components/Navbar.vue";
+
 export default {
   name: "Auth",
+  components: { Navbar},
 };
 </script>
 
