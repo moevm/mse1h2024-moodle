@@ -7,7 +7,13 @@ import Navbar from "@/components/Navbar.vue";
 
 export default {
   name: "Auth",
-  components: { Navbar},
+  components: {Navbar},
+
+  data() {
+    return {
+
+    };
+  },
 };
 </script>
 
