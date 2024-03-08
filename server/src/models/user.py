@@ -1,3 +1,5 @@
+from typing import Optional
+
 from pydantic import BaseModel, EmailStr, Field
 from enum import Enum
 
@@ -14,6 +16,27 @@ class User(BaseModel):
     email: EmailStr = Field(...)
     position: Role = Field(...)
     password: str = Field(...)
+
+    class Config:
+        schema_extra = {
+            "example": {
+                "name": "Иван",
+                "surname": "Иванов",
+                "lastname": "Иванович",
+                "email": "iiivanov@edu.ru",
+                "position": Role.regular,
+                "password": "sdfsdfwgesdgcx"
+            }
+        }
+
+
+class UpdateUser(BaseModel):
+    name: Optional[str]
+    surname: Optional[str]
+    lastname: Optional[str]
+    email: Optional[EmailStr]
+    position: Optional[Role]
+    password: Optional[str]
 
     class Config:
         schema_extra = {
