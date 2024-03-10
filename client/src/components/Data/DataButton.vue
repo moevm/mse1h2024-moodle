@@ -1,11 +1,11 @@
 <template>
-  <v-btn class="bottom-custom" type="submit">{{ bottomTitle }}</v-btn>
+  <v-btn class="button-custom" type="submit">{{ title }}</v-btn>
 </template>
 
 <script>
 export default {
-  name: 'DataBottom',
-  props: ['bottomTitle']
+  name: 'DataButton',
+  props: ['title']
 };
 </script>
 
@@ -14,7 +14,7 @@ v-btn{
   background-color: white;
 }
 
-.bottom-custom {
+.button-custom {
   font-family: Inter, sans-serif;
   font-size: 14px;
   font-weight: 300;
