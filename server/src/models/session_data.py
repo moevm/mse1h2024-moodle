@@ -1,3 +1,4 @@
+from bson import ObjectId
 from pydantic import BaseModel, EmailStr, HttpUrl, Field
 from datetime import date, time
 from typing import List
@@ -40,6 +41,7 @@ class Payload(BaseModel):
 
 
 class SessionData(BaseModel):
+    id: ObjectId = Field(default_factory=ObjectId, alias="_id")
     student: str = Field(...)
     group: int = Field(...)
     email: EmailStr = Field(...)

@@ -1,5 +1,6 @@
 from typing import Optional
 
+from bson import ObjectId
 from pydantic import BaseModel, EmailStr, Field
 from enum import Enum
 
@@ -10,6 +11,7 @@ class Role(str, Enum):
 
 
 class User(BaseModel):
+    id: ObjectId = Field(default_factory=ObjectId, alias="_id")
     name: str = Field(...)
     surname: str = Field(...)
     lastname: str = Field(...)
