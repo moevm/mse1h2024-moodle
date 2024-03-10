@@ -11,8 +11,10 @@ export default {
 </script>
 
 <style>
+@import '@/colors.css';
+
 .custom-form {
   text-align: center;
-  background-color: white;
+  background-color: var(--white-1);
 }
 </style>

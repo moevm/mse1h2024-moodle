@@ -49,35 +49,37 @@ export default {
 </script>
 
 <style scoped>
+@import '@/colors.css';
+
 .container {
   margin-top: 8%;
 }
 
 .menu {
-  color: #3C6170;
+  color: var(--blue-2);
   border-radius: 0 !important;
 }
 .custom-list-item {
   font-family: Inter, sans-serif;
   font-size: 20px;
-  color: #000000;
+  color: var(--black-1);
   font-weight: 400;
   border-radius: 0;
 }
 .site-title {
   font-family: Inter, sans-serif;
   font-size: 23px;
-  color: #3C6170;
+  color: var(--blue-2);
   font-weight: 300;
 }
 .custom-text {
   font-family: Inter, sans-serif;
   font-size: 19px;
-  color: #000000;
+  color: var(--black-1);
   font-weight: 300;
 }
 .user {
-  color: #a6a5a5;
+  color: var(--grey-2);
   margin: 10px;
 }
 </style>

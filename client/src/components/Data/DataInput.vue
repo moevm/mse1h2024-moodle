@@ -23,12 +23,14 @@ export default {
 </script>
 
 <style>
+@import '@/colors.css';
+
 .custom-text-field {
   width: 85%;
   min-height: 20px;
   margin-left: auto;
   margin-right: auto;
-  color: #C8C8C8;
+  color: var(--grey-1);
 }
 
 .custom-text-field .v-label {
@@ -41,6 +43,6 @@ export default {
   font-size: 14px;
   font-family: Inter, sans-serif;
   font-weight: 300;
-  color: #7e7e7e;
+  color: var(--grey-3);
 }
 </style>

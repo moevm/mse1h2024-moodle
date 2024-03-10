@@ -10,8 +10,10 @@ export default {
 </script>
 
 <style>
+@import '@/colors.css';
+
 v-btn{
-  background-color: white;
+  background-color: var(--white-1);
 }
 
 .button-custom {
@@ -19,8 +21,8 @@ v-btn{
   font-size: 14px;
   font-weight: 300;
   width: 37%;
-  color: white;
-  background-color: #6B93B0;
+  color: var(--white-1);
+  background-color: var(--blue-1);
   letter-spacing: -0.3px;
   border-radius: 5px;
   align-self: center;

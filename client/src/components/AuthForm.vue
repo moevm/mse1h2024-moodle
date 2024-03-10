@@ -15,28 +15,30 @@ export default {
 </script>
 
 <style>
+@import '@/colors.css';
+
 .container {
   margin: auto;
   position: absolute;
   top: 0; left: 0; bottom: 0; right: 0;
   border-radius: 5px;
-  background-color: white;
+  background-color: var(--white-1);
   box-shadow: 0 2px 5px 0 rgba(117, 106, 106, 0.5);
 }
 
 .title {
   border-radius: 5px 5px 0 0;
   text-align: center;
-  background-color: #fdd2a9;
+  background-color: var(--orange-1);
   padding: 2%;
   font-family: Inter, sans-serif;
   font-size: 24px;
   font-weight: 300;
-  color: #646464;
+  color: var(--grey-4);
   margin-bottom: 5%;
 }
 
 .content {
-  background-color: white;
+  background-color: var(--white-1);
 }
 </style>

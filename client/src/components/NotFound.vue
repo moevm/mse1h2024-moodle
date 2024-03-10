@@ -36,14 +36,16 @@ export default {
 </script>
 
 <style>
+@import '@/colors.css';
+
 p {
   font-family: Inter, sans-serif;
   font-size: 14px;
   font-weight: 300;
-  color: #101E29;
+  color: var(--blue-3);
   padding-bottom: 3%;
   padding-top: 0;
   text-align: center;
-  background-color: white;
+  background-color: var(--white-1);
 }
 </style>
