@@ -9,7 +9,7 @@
 
 <script>
 export default {
-  name: 'DataContainer',
+  name: 'AuthForm',
   props: ['title', 'width', 'height']
 }
 </script>
