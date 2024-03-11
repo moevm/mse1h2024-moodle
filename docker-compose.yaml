@@ -8,6 +8,8 @@ services:
       context: ./server
       dockerfile: Dockerfile
     restart: unless-stopped
+    ports:
+      - "8080:8080"
     networks:
       - backend
 
@@ -30,3 +32,4 @@ volumes:
 
 networks:
   backend:
+    driver: bridge
