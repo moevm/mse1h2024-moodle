@@ -1,6 +1,7 @@
 import logging
 from src.core.modules.database.errors import RepoNotFoundError, RepoAlreadyExistsError, RepoEmptyDataError
 from src.core.modules.service.errors import UserNotFoundError, UserAlreadyExistsError, UserEmptyDataError
+from src.models.user import Role
 
 
 class UserService:
@@ -26,6 +27,7 @@ class UserService:
 
     async def create_user(self, user_data):
         try:
+            user_data["position"] = Role.regular
             return await self.repo.add_user(user_data)
         except Exception as e:
             if isinstance(e, RepoAlreadyExistsError):
