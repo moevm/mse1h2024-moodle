@@ -1,5 +1,4 @@
 from bson.objectid import ObjectId
-from fastapi import HTTPException, status
 
 from src.core.modules.database.errors import RepoNotFoundError, RepoAlreadyExistsError, RepoEmptyDataError
 
@@ -10,13 +9,15 @@ class MongoUserRepo:
 
     async def get_all_users(self) -> list:
         users = []
-        for user in await self.client.users.find():
+        for user in await self.client.users.find().to_list(length=None):
+            user['_id'] = str(user['_id'])
             users.append(user)
         return users
 
     async def get_user(self, user_id: str) -> dict:
         user = await self.client.users.find_one({"_id": ObjectId(user_id)})
         if user:
+            user['_id'] = str(user['_id'])
             return user
         raise RepoNotFoundError(f"user with id {user_id} not found")
 
@@ -25,6 +26,7 @@ class MongoUserRepo:
             raise RepoAlreadyExistsError(f"user with email {user_data['email']} already exists")
         user = await self.client.users.insert_one(user_data)
         new_user = await self.client.users.find_one({"_id": user.inserted_id})
+        new_user['_id'] = str(new_user['_id'])
         return new_user
 
     async def update_user(self, user_id: str, data: dict) -> dict:
@@ -33,13 +35,15 @@ class MongoUserRepo:
         user = await self.client.users.find_one({"_id": ObjectId(user_id)})
         if not user:
             raise RepoNotFoundError(f"user with id {user_id} not found")
-        updated_user = await self.client.users.update_one(
+        await self.client.users.update_one(
             {"_id": ObjectId(user_id)}, {"$set": data}
         )
+        updated_user = await self.client.users.find_one({"_id": ObjectId(user_id)})
+        updated_user["_id"] = str(updated_user["_id"])
         return updated_user
 
     async def delete_user(self, user_id: str):
         user = await self.client.users.find_one({"_id": ObjectId(user_id)})
         if user:
-            await self.client.users.delete_one({"_id": ObjectId(user_id)})
+            return await self.client.users.delete_one({"_id": ObjectId(user_id)})
         raise RepoNotFoundError(f"user with id {user_id} not found")
