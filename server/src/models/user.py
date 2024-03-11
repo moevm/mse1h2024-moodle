@@ -1,6 +1,6 @@
+import uuid
 from typing import Optional
 
-from bson import ObjectId
 from pydantic import BaseModel, EmailStr, Field
 from enum import Enum
 
@@ -11,7 +11,7 @@ class Role(str, Enum):
 
 
 class User(BaseModel):
-    id: ObjectId = Field(default_factory=ObjectId, alias="_id")
+    id: str = Field(default_factory=uuid.uuid4, alias="_id")
     name: str = Field(...)
     surname: str = Field(...)
     lastname: str = Field(...)
@@ -20,8 +20,10 @@ class User(BaseModel):
     password: str = Field(...)
 
     class Config:
-        schema_extra = {
+        populate_by_field_name = True
+        json_schema_extra = {
             "example": {
+                "id": str(uuid.uuid4()),
                 "name": "Иван",
                 "surname": "Иванов",
                 "lastname": "Иванович",
@@ -41,13 +43,34 @@ class UpdateUser(BaseModel):
     password: Optional[str]
 
     class Config:
-        schema_extra = {
+        populate_by_field_name = True
+        json_schema_extra = {
             "example": {
                 "name": "Иван",
                 "surname": "Иванов",
                 "lastname": "Иванович",
                 "email": "iiivanov@edu.ru",
                 "position": Role.regular,
+                "password": "sdfsdfwgesdgcx"
+            }
+        }
+
+
+class CreateUser(BaseModel):
+    name: str = Field(...)
+    surname: str = Field(...)
+    lastname: str = Field(...)
+    email: EmailStr = Field(...)
+    password: str = Field(...)
+
+    class Config:
+        populate_by_field_name = True
+        json_schema_extra = {
+            "example": {
+                "name": "Иван",
+                "surname": "Иванов",
+                "lastname": "Иванович",
+                "email": "iiivanov@edu.ru",
                 "password": "sdfsdfwgesdgcx"
             }
         }
