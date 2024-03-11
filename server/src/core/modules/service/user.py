@@ -7,16 +7,16 @@ class UserService:
     def __init__(self, repo):
         self.repo = repo
 
-    def get_all_users(self):
+    async def get_all_users(self):
         try:
-            return self.repo.get_all_users()
+            return await self.repo.get_all_users()
         except Exception as e:
             logging.error(f'error getting users: {str(e)}')
             raise
 
-    def get_user(self, user_id):
+    async def get_user(self, user_id):
         try:
-            return self.repo.get_user(user_id)
+            return await self.repo.get_user(user_id)
         except Exception as e:
             if isinstance(e, RepoNotFoundError):
                 logging.error(f'error getting user {user_id}: {str(e)}')
@@ -24,9 +24,9 @@ class UserService:
             else:
                 raise
 
-    def create_user(self, user_data):
+    async def create_user(self, user_data):
         try:
-            return self.repo.add_user(user_data)
+            return await self.repo.add_user(user_data)
         except Exception as e:
             if isinstance(e, RepoAlreadyExistsError):
                 logging.error(f'error creating user {user_data}: {str(e)}')
@@ -34,9 +34,9 @@ class UserService:
             else:
                 raise
 
-    def update_user(self, user_id, user_data):
+    async def update_user(self, user_id, user_data):
         try:
-            return self.repo.update_user(user_id, user_data)
+            return await self.repo.update_user(user_id, user_data)
         except Exception as e:
             if isinstance(e, RepoEmptyDataError):
                 logging.error(f'error updating user {user_id}: {str(e)}')
@@ -47,9 +47,9 @@ class UserService:
             else:
                 raise
 
-    def delete_user(self, user_id):
+    async def delete_user(self, user_id):
         try:
-            return self.repo.delete_user(user_id)
+            return await self.repo.delete_user(user_id)
         except Exception as e:
             if isinstance(e, RepoNotFoundError):
                 logging.error(f'error deleting user {user_id}: {str(e)}')
