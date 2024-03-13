@@ -30,7 +30,7 @@ db.users.insertMany([
 db.statistics.insertMany([
     {
         "student": "Диана Романенко",
-        "groupnumber": 9303,
+        "group": 9303,
         "email": "diana@mail.ru",
         "course": "Курс молодого бойца",
         "session": "",
@@ -42,13 +42,13 @@ db.statistics.insertMany([
             "element_type": "button",
             "element_name": "сохранить",
             "action_type": "conversation",
-            "event": "mousedown"
+            "event_type": "mousedown"
             }
         ]
     },
     {
         "student": "Беззубов Даниил",
-        "groupnumber": 1303,
+        "group": 1303,
         "email": "daniil@mail.ru",
         "course": "Курс молодого бойца",
         "session": "",
@@ -60,7 +60,7 @@ db.statistics.insertMany([
                 "element_type": "button",
                 "element_name": "сохранить",
                 "action_type": "conversation",
-                "event": "mousedown"
+                "event_type": "mousedown"
             },
             {
                 "date": "2024-02-02",
@@ -69,7 +69,7 @@ db.statistics.insertMany([
                 "element_type": "button",
                 "element_name": "следующая страница",
                 "action_type": "conversation",
-                "event": "mousedown"
+                "event_type": "mousedown"
             }
         ]
     }
