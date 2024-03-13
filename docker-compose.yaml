@@ -1,6 +1,18 @@
 version: "3.8"
 
 services:
+  backend:
+    container_name: backend
+    image: backend
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    networks:
+      - backend
+
   mongodb:
     container_name: mongodb 
     image: mongodb/mongodb-community-server:6.0-ubi8
@@ -12,6 +24,12 @@ services:
     ports:
     - "27017:27017"
     restart: unless-stopped
+    networks:
+      - backend
 
 volumes:
   mongo-data:
+
+networks:
+  backend:
+    driver: bridge
