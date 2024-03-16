@@ -8,6 +8,8 @@ services:
       context: ./server
       dockerfile: Dockerfile
     restart: unless-stopped
+    env_file:
+      - server/.env
     ports:
       - "8080:8080"
     networks:
@@ -17,7 +19,7 @@ services:
     container_name: mongodb 
     image: mongodb/mongodb-community-server:6.0-ubi8
     env_file: 
-      - .env
+      - server/.env
     volumes:
       - mongo-data:/data/db
       - ./init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js
