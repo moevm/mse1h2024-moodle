@@ -1,5 +1,5 @@
 <template>
-  <Navbar username="Марк Заславский">
+  <Navbar username="Авторизуйтесь">
     <StatisticsTable :info="statisticsInfo"></StatisticsTable>
   </Navbar>
 </template>
@@ -58,6 +58,9 @@ export default {
       ],
     };
   },
+//   mounted(){
+//     localStorage.setItem('name', 'Polina');
+//   }
 };
 </script>
 
