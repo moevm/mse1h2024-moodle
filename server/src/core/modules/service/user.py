@@ -1,7 +1,7 @@
 import logging
 from src.core.modules.database.errors import RepoNotFoundError, RepoAlreadyExistsError, RepoEmptyDataError
 from src.core.modules.service.errors import UserNotFoundError, UserAlreadyExistsError, UserEmptyDataError
-from src.models.user import Role
+from src.models.user import Role, UpdateUser
 
 
 class UserService:
@@ -36,9 +36,9 @@ class UserService:
             else:
                 raise
 
-    async def update_user(self, user_id, user_data):
+    async def update_user(self, user_id, user_data: UpdateUser):
         try:
-            return await self.repo.update_user(user_id, user_data)
+            return await self.repo.update_user(user_id, user_data.dict())
         except Exception as e:
             if isinstance(e, RepoEmptyDataError):
                 logging.error(f'error updating user {user_id}: {str(e)}')

@@ -1,7 +1,7 @@
 import uuid
 from pydantic import BaseModel, EmailStr, HttpUrl, Field
 import datetime
-from typing import List, Optional
+from typing import List
 from enum import Enum
 
 
