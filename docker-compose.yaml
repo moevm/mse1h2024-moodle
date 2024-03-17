@@ -29,6 +29,19 @@ services:
     networks:
       - backend
 
+  frontend:
+    container_name: client
+    image: client
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    ports:
+      - "8081:8080"
+    networks:
+      - backend
+
+
 volumes:
   mongo-data:
 
