@@ -14,6 +14,7 @@ services:
       - "8080:8080"
     networks:
       - backend
+      - moodle
 
   mongodb:
     container_name: mongodb 
@@ -41,10 +42,44 @@ services:
     networks:
       - backend
 
+  moodle:
+    container_name: moodle
+    image: bitnami/moodle
+    environment:
+      - MOODLE_DATABASE_NAME=moodle
+      - MOODLE_DATABASE_HOST=mariadb
+      - MOODLE_DATABASE_USER=moodle
+      - MOODLE_DATABASE_PASSWORD=kamisama123
+    ports:
+      - "80:8080"
+      - "443:8443"
+    volumes:
+      - moodle-data:/bitnami/moodle
+    restart: unless-stopped
+    networks:
+      - moodle
+
+  mariadb:
+    container_name: mariadb
+    image: mariadb
+    networks:
+      - moodle
+    environment:
+      - MYSQL_DATABASE=moodle
+      - MYSQL_ROOT_PASSWORD=kamisama123
+      - MYSQL_USER=moodle
+      - MYSQL_PASSWORD=kamisama123
+    volumes:
+      - mariadb-data:/var/lib/mysql
+    restart: unless-stopped
+
 
 volumes:
   mongo-data:
+  moodle-data:
+  mariadb-data:
 
 networks:
   backend:
     driver: bridge
+  moodle:
