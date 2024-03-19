@@ -14,6 +14,7 @@ services:
       - "8080:8080"
     networks:
       - backend
+      - frontend
 
   mongodb:
     container_name: mongodb 
@@ -40,6 +41,7 @@ services:
       - "8081:8080"
     networks:
       - backend
+      - frontend
 
 
 volumes:
@@ -48,3 +50,4 @@ volumes:
 networks:
   backend:
     driver: bridge
+  frontend:
