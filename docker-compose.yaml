@@ -15,6 +15,7 @@ services:
     networks:
       - backend
       - moodle
+      - frontend
 
   mongodb:
     container_name: mongodb 
@@ -41,6 +42,7 @@ services:
       - "8081:8080"
     networks:
       - backend
+      - frontend
 
   moodle:
     container_name: moodle
@@ -83,3 +85,5 @@ networks:
   backend:
     driver: bridge
   moodle:
+  frontend:
+
