@@ -16,7 +16,7 @@
           </v-list-item>
         </v-list>
       </v-menu>
-      <v-img src="moevm.jpg" alt="Image Description" max-width="55px" max-height="50px"></v-img>
+      <v-img src="/moevm.jpg" alt="Image Description" max-width="55px" max-height="50px"></v-img>
       <v-toolbar-title class="site-title">moevm statistics</v-toolbar-title>
       <v-spacer></v-spacer>
       <span class="custom-text">{{ username }}</span>

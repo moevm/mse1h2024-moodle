@@ -1,5 +1,5 @@
 <template>
-  <div class="container" :style="{ width: width, height: height }">
+  <div class="auth-container" :style="{ width: width, height: height }">
     <p class="title"> {{ title }} </p>
     <div class="content">
       <slot></slot>
@@ -17,7 +17,7 @@ export default {
 <style>
 @import '@/colors.css';
 
-.container {
+.auth-container {
   margin: auto;
   position: absolute;
   top: 0; left: 0; bottom: 0; right: 0;

@@ -1,10 +1,10 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
 const routes = [
-    { path: '/', redirect: '/newPassword'},
-    { path: '/statistics', name: 'Statistics', component: () => import('./components/Pages/StatisticsPage.vue')},
-    { path: '/start', name: 'Auth', component: () => import('./components/Auth.vue')},
-    { path: '/newPassword', name: 'NotFound', component: () => import('./components/NotFound.vue')}
+    { path: '/', redirect: '/e.moevm.statistics/auth'},
+    { path: '/start', redirect: '/e.moevm.statistics/auth'},
+    { path: '/e.moevm.statistics/auth', name: 'Authorization', component: () => import('./components/Pages/AuthorizationPage.vue')},
+    { path: '/e.moevm.statistics/statistics', name: 'Statistics', component: () => import('./components/Pages/StatisticsPage.vue')},
 ]
 
 const router = createRouter({

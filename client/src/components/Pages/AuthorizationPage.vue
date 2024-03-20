@@ -4,10 +4,16 @@
       :width="containerWidth"
       :height="containerHeight"
   >
-    <DataForm>
-      <DataInput v-model="inputLogin" label="Почта"></DataInput>
-      <DataInput v-model="inputPassword" label="Фамилия"></DataInput>
-      <p>В случае проблем пишите на admin@mail ru</p>
+    <DataForm fast-fail @submit.prevent="signIn">
+      <DataInput v-model="email" label="Почта"></DataInput>
+      <DataInput
+          :append-inner-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
+          v-model="password"
+          label="Пароль"
+          :type="show1 ? 'text' : 'password'"
+          @click:append-inner="show1 = !show1">
+      </DataInput>
+      <p class="problems">В случае проблем пишите на admin@mail ru</p>
       <DataButton title='вход'></DataButton>
     </DataForm>
   </AuthForm>
@@ -20,7 +26,7 @@ import DataButton from "@/components/Data/DataButton.vue";
 import AuthForm from "@/components/AuthForm.vue";
 
 export default {
-  name: "NotFound",
+  name: "Authorization",
   components: {AuthForm, DataButton, DataForm, DataInput},
 
   data() {
@@ -28,17 +34,26 @@ export default {
       title: 'e.moevm statistics',
       containerWidth: '31%',
       containerHeight: '45%',
-      inputLogin: '',
-      inputPassword: '',
+      email: '',
+      password: '',
+      show1: false,
     };
   },
+
+  methods: {
+    signIn() {
+      const userName = "Тестовый Пользователь";
+      localStorage.setItem("name", userName);
+      this.$router.push('/e.moevm.statistics/statistics');
+    }
+  }
 };
 </script>
 
 <style>
 @import '@/colors.css';
 
-p {
+.problems {
   font-family: Inter, sans-serif;
   font-size: 14px;
   font-weight: 300;
