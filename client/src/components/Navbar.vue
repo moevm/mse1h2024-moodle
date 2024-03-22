@@ -35,7 +35,7 @@ export default {
   data() {
     return {
       items: [
-        { title: "Добавить пользователя", path: '/addUser' },
+        { title: "Добавить пользователя", path: '/e.moevm.statistics/user' },
         { title: "Выдать новый пароль", path: '/newPassword' }
       ],
     };
