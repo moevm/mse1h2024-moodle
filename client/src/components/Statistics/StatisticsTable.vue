@@ -1,15 +1,15 @@
 <template>
   <v-data-table
-      class="custom-table"
-      :headers="headers"
-      :items="statistics"
-      outlined
+    class="custom-table"
+    :headers="headers"
+    :items="statistics"
+    outlined
   >
     <template v-slot:[`item.checkbox`]="{ item }">
       <v-checkbox
-          v-model="item.checked"
-          color="primary"
-          hide-details
+        v-model="item.checked"
+        color="primary"
+        hide-details
       ></v-checkbox>
     </template>
 
@@ -28,33 +28,38 @@
     </template>
 
     <template v-slot:[`item.action`]="{ item }">
-      <p align="start">{{ item.action }}</p>
+      <p align="start" id="action">{{ item.action }}</p>
     </template>
   </v-data-table>
 </template>
 
 <script>
 export default {
-  name: 'StatisticsTable',
+  name: "StatisticsTable",
   props: {
     info: {
       type: Array,
-      required: true
-    }
+      required: true,
+    },
   },
   data() {
     return {
       selected: [],
       selectedRows: [],
       headers: [
-        { title: '№', key: 'number', sortable: false, align: 'center' },
-        { title: '', key: 'checkbox', sortable: false, align: 'center' },
-        { title: 'ФИО', key: 'FIO', sortable: false, align: 'center' },
-        { title: 'Группа', key: 'group', sortable: false, align: 'center' },
-        { title: 'Дата', key: 'date', sortable: false, align: 'center' },
-        { title: 'Время', key: 'time', sortable: false, align: 'center' },
-        { title: 'Название курса', key: 'course', sortable: false, align: 'center' },
-        { title: 'Действие', key: 'action', sortable: false, align: 'center' },
+        { title: "№", key: "number", sortable: false, align: "center" },
+        { title: "", key: "checkbox", sortable: false, align: "center" },
+        { title: "ФИО", key: "FIO", sortable: false, align: "center" },
+        { title: "Группа", key: "group", sortable: false, align: "center" },
+        { title: "Дата", key: "date", sortable: false, align: "center" },
+        { title: "Время", key: "time", sortable: false, align: "center" },
+        {
+          title: "Название курса",
+          key: "course",
+          sortable: false,
+          align: "center",
+        },
+        { title: "Действие", key: "action", sortable: false, align: "center" },
       ],
     };
   },
@@ -62,18 +67,30 @@ export default {
     statistics() {
       return this.info.map((item, index) => ({
         ...item,
-        number: (index + 1).toString()
+        number: (index + 1).toString(),
       }));
     },
   },
   methods: {
     getColor(group) {
-      const colors = ['red', 'blue', 'green', 'orange', 'purple', 'pink', 'magenta', 'teal', 'indigo', 'lime', 'brown'];
+      const colors = [
+        "red",
+        "blue",
+        "green",
+        "orange",
+        "purple",
+        "pink",
+        "magenta",
+        "teal",
+        "indigo",
+        "lime",
+        "brown",
+      ];
       const index = group % 11;
       return colors[index];
     },
   },
-}
+};
 </script>
 
 <style>
@@ -83,7 +100,7 @@ export default {
 }
 
 .custom-table tbody tr:nth-child(odd) {
-  background-color: #F9F9F9;
+  background-color: #f9f9f9;
 }
 
 .custom-table tbody tr {
@@ -96,8 +113,12 @@ export default {
   font-family: Inter, sans-serif;
 }
 
-.custom-table th, .custom-table td {
-  border: 1px solid #DDDDDD;
+.custom-table th,
+.custom-table td {
+  border: 1px solid #dddddd;
 }
 
+#action {
+  white-space: pre-line;
+}
 </style>
