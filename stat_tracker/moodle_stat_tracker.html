@@ -13,7 +13,7 @@
 
             // Argument Assignment          // Type Checks                                                                          // Default Values
             interactor.interactions = typeof (config.interactions) == "boolean" ? config.interactions : true,
-                interactor.interactionElement = typeof (config.interactionElement) == "string" ? config.interactionElement : 'interaction',
+                interactor.interactionElement = typeof (config.interactionElement) == "object" ? config.interactionElement : 'interaction',
                 interactor.interactionEvents = Array.isArray(config.interactionEvents) === true ? config.interactionEvents : ['mouseup', 'touchend'],
                 interactor.conversions = typeof (config.conversions) == "boolean" ? config.conversions : true,
                 interactor.conversionElement = typeof (config.conversionElement) == "string" ? config.conversionElement : 'conversion',
@@ -38,12 +38,13 @@
         __bindEvents__: function () {
             var interactor = this;
 
-            // Set Interaction Capture
             if (interactor.interactions === true) {
                 for (var i = 0; i < interactor.interactionEvents.length; i++) {
                     document.querySelector('body').addEventListener(interactor.interactionEvents[i], function (e) {
                         e.stopPropagation();
-                        interactor.__addInteraction__(e, "interaction");
+                        if (interactor.interactionElement.includes(e.target.nodeName)) {
+                            interactor.__addInteraction__(e, "conversation");
+                        }
                     });
                 }
             }
@@ -71,10 +72,10 @@
                 date: `${date.getFullYear()}-${month < 10 ? '0' + month : month}-${day < 10 ? '0' + day : day}`,
                 time: `${hours < 10 ? '0' + hours : hours}:${minutes < 10 ? '0' + minutes : minutes}:${seconds < 10 ? '0' + seconds : seconds}`,
                 page: interactor.session.page.href,
-                element_type: "button",
-                element_name: "name",
-                action_type: "conversation",
-                event_type: "mousedown"
+                element_type: e.target.nodeName.toLowerCase(),
+                element_name: e.target.hasAttribute('name') ? e.target.name : '-',
+                action_type: type, // TODO согласовать action_type с бд
+                event_type: e.type
             }
             // Insert into Records Array
             interactor.records.push(trackingEntity);
@@ -173,12 +174,12 @@
     // An example instantiation with custom arguments
     var interactions = new Interactor({
         interactions: true,
-        interactionElement: ["interaction", "main-inner"],
-        interactionEvents: ["mousedown", "mouseup", "shiftKey", "touchstart", "touchend"],
+        interactionElement: ["BUTTON", "TEXTAREA", "INPUT", "A"],
+        interactionEvents: ["mousedown"],
         conversions: true,
         conversionElement: "conversion",
         conversionEvents: ["mouseup", "touchend"],
-        endpoint: '/',
+        endpoint: 'http//localhost:8080/api/statistics',
         async: true,
         debug: true
     });
