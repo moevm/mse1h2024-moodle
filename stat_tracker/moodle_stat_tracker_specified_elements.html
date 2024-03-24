@@ -1,19 +1,17 @@
 <script>
     var Interactor = function (config) {
-        // Call Initialization on Interactor Call
         this.__init__(config);
     };
 
     Interactor.prototype = {
 
-        // Initialization
         __init__: function (config) {
 
             var interactor = this;
 
-            // Argument Assignment          // Type Checks                                                                          // Default Values
             interactor.interactions = typeof (config.interactions) == "boolean" ? config.interactions : true,
-                interactor.interactionElement = typeof (config.interactionElement) == "object" ? config.interactionElement : 'interaction',
+                interactor.trackAll = typeof (config.trackAll) == "boolean" ? config.trackAll : flase,
+                interactor.interactionElement = Array.isArray(config.interactionElement) === true ? config.interactionElement : [],
                 interactor.interactionEvents = Array.isArray(config.interactionEvents) === true ? config.interactionEvents : ['mouseup', 'touchend'],
                 interactor.conversions = typeof (config.conversions) == "boolean" ? config.conversions : true,
                 interactor.conversionElement = typeof (config.conversionElement) == "string" ? config.conversionElement : 'conversion',
@@ -25,31 +23,39 @@
                 interactor.session = {},
                 interactor.loadTime = new Date();
 
-            // Initialize Session
             interactor.__initializeSession__();
-            // Call Event Binding Method
             interactor.__bindEvents__();
 
 
             return interactor;
         },
 
-        // Create Events to Track
         __bindEvents__: function () {
             var interactor = this;
 
-            if (interactor.interactions === true) {
+            if (interactor.trackAll) {
+                for (var i = 0; i < interactor.interactionEvents.length; i++) {
+                    document.querySelector('body').addEventListener(interactor.interactionEvents[i], function (e) {
+                        e.stopPropagation();
+                        if(interactor.debug)
+                            console.log(e.target)
+                        interactor.__addInteraction__(e, "conversation");
+                    });
+                }
+            }
+            else if (interactor.interactions === true) {
                 for (var i = 0; i < interactor.interactionEvents.length; i++) {
                     document.querySelector('body').addEventListener(interactor.interactionEvents[i], function (e) {
                         e.stopPropagation();
                         if (interactor.interactionElement.includes(e.target.nodeName)) {
+                            if(interactor.debug)
+                                console.log(e.target)
                             interactor.__addInteraction__(e, "conversation");
                         }
                     });
                 }
             }
 
-            // Bind onbeforeunload Event
             window.onbeforeunload = function (e) {
                 interactor.__sendInteractions__();
             };
@@ -57,7 +63,6 @@
             return interactor;
         },
 
-        // Add Interaction Object Triggered By Events to Records Array
         __addInteraction__: function (e, type) {
 
             var interactor = this;
@@ -77,12 +82,9 @@
                 action_type: type, // TODO согласовать action_type с бд
                 event_type: e.type
             }
-            // Insert into Records Array
             interactor.records.push(trackingEntity);
 
-            // Log Interaction if Debugging
             if (interactor.debug) {
-                // Close Session & Log to Console
                 interactor.__closeSession__();
                 console.log("Session:\n", interactor.session);
             }
@@ -90,11 +92,9 @@
             return interactor;
         },
 
-        // Generate Session Object & Assign to Session Property
         __initializeSession__: function () {
             var interactor = this;
 
-            // Assign Session Property
             interactor.session = {
                 loadTime: interactor.loadTime,
                 unloadTime: new Date(),
@@ -120,12 +120,10 @@
             return interactor;
         },
 
-        // Insert End of Session Values into Session Property
         __closeSession__: function () {
 
             var interactor = this;
 
-            // Assign Session Properties
             interactor.session.unloadTime = new Date();
             interactor.session.interactions = interactor.records;
             interactor.session.clientEnd = {
@@ -140,17 +138,13 @@
         },
 
 
-        // Gather Additional Data and Send Interaction(s) to Server
         __sendInteractions__: function () {
 
             var interactor = this,
-                // Initialize Cross Header Request
                 xhr = new XMLHttpRequest();
 
-            // Close Session
             interactor.__closeSession__();
 
-            // Post Session Data Serialized as JSON
             xhr.open('POST', interactor.endpoint, interactor.async);
             xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
             var trackingEntity = {
@@ -171,10 +165,10 @@
 </script>
 
 <script type="module">
-    // An example instantiation with custom arguments
     var interactions = new Interactor({
+        trackAll: false,
         interactions: true,
-        interactionElement: ["BUTTON", "TEXTAREA", "INPUT", "A"],
+        interactionElement: ["A", "BUTTON", "TEXTAREA", "INPUT"],
         interactionEvents: ["mousedown"],
         conversions: true,
         conversionElement: "conversion",
