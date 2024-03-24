@@ -163,6 +163,13 @@
 </script>
 
 <script type="module">
+    function getUserName() { // works only on e.moevm.info
+        return document
+            .getElementById('action-menu-toggle-1')
+            .getElementsByClassName('usertext')[0]
+            .innerText;
+    }
+
     var interactions = new Interactor({
         trackAll: true,
         interactions: true,
