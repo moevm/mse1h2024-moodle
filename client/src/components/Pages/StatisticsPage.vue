@@ -9,8 +9,8 @@ import Navbar from "@/components/Navbar.vue";
 import StatisticsTable from "@/components/Statistics/StatisticsTable.vue";
 import axios from "axios";
 
-// const STAT_URL = "/api/statistics/";
-const STAT_URL = "/data.json";
+const STAT_URL = "/api/statistics/";
+// const STAT_URL = "/data.json";
 
 export default {
   name: "Statistics",
