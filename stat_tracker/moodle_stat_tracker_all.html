@@ -75,8 +75,8 @@
                 date: `${date.getFullYear()}-${month < 10 ? '0' + month : month}-${day < 10 ? '0' + day : day}`,
                 time: `${hours < 10 ? '0' + hours : hours}:${minutes < 10 ? '0' + minutes : minutes}:${seconds < 10 ? '0' + seconds : seconds}`,
                 page: interactor.session.page.href,
-                element_type: e.target.nodeName.toLowerCase(),
-                element_name: e.target.hasAttribute('name') ? e.target.name : '-',
+                element_type: 'button',
+                element_name: e.target.nodeName.toLowerCase(),
                 action_type: type, // TODO согласовать action_type с бд
                 event_type: e.type
             }
@@ -185,7 +185,7 @@
         conversions: true,
         conversionElement: "conversion",
         conversionEvents: ["mouseup", "touchend"],
-        endpoint: 'http://backend:8080/api/statistics',
+        endpoint: 'http://localhost:8080/api/statistics',
         async: true,
         debug: true
     });
