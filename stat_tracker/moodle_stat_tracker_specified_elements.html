@@ -32,13 +32,6 @@
 
         __bindEvents__: function () {
             var interactor = this;
-            document.addEventListener("visibilitychange", function (e) {
-                        e.stopPropagation();
-                        if(interactor.debug)
-                            console.log(e.target)
-                            interactor.__addInteraction__(e, document.visibilityState);
-
-                    });
 
             if (interactor.trackAll) {
                 for (var i = 0; i < interactor.interactionEvents.length; i++) {
@@ -89,7 +82,7 @@
                 time: `${hours < 10 ? '0' + hours : hours}:${minutes < 10 ? '0' + minutes : minutes}:${seconds < 10 ? '0' + seconds : seconds}`,
                 page: interactor.session.page.href,
                 element_type: e.target.nodeName.toLowerCase(),
-                element_name: e.target !== document && e.target.hasAttribute('name') ? e.target.name : '-',
+                element_name: e.target.hasAttribute('name') ? e.target.name : '-',
                 action_type: type, // TODO согласовать action_type с бд
                 event_type: e.type
             }
