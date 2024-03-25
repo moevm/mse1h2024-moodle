@@ -86,8 +86,6 @@
                 action_type: type, // TODO согласовать action_type с бд
                 event_type: e.type
             }
-            console.log(trackingEntity.action_type);
-            console.log(trackingEntity.event_type);
             interactor.records.push(trackingEntity);
 
             if (interactor.debug) {
@@ -186,7 +184,7 @@
         conversions: true,
         conversionElement: "conversion",
         conversionEvents: ["mouseup", "touchend"],
-        endpoint: 'http://localhost:8080/api/statistics',
+        endpoint: 'http://backend:8080/api/statistics',
         async: true,
         debug: true
     });
