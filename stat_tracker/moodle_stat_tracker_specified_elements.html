@@ -172,6 +172,13 @@
             .innerText;
     }
 
+    function getCourseName() { // works only on e.moevm.info
+        return document
+        .getElementById('page-header')
+        .getElementsByTagName('h1')[0]
+        .innerText
+    }
+
     var interactions = new Interactor({
         trackAll: false,
         interactions: true,
