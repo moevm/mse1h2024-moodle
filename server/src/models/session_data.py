@@ -7,6 +7,7 @@ from enum import Enum
 
 class ElementTypeEnum(str, Enum):
     button = "button"
+    page = "page"
 
     def __str__(self):
         return self.value
@@ -14,6 +15,8 @@ class ElementTypeEnum(str, Enum):
 
 class ActionTypeEnum(str, Enum):
     conversation = "conversation"
+    visible = "visible"
+    hidden = "hidden"
 
     def __str__(self):
         return self.value
@@ -21,6 +24,7 @@ class ActionTypeEnum(str, Enum):
 
 class EventTypeEnum(str, Enum):
     mousedown = "mousedown"
+    visibilitychange = "visibilitychange"
 
     def __str__(self):
         return self.value
@@ -38,7 +42,7 @@ class Payload(BaseModel):
     class Config:
         populate_by_field_name = True
         json_schema_extra = {
-            "example": {
+            "examples": [{
                 "date": str(datetime.date.today()),
                 "time": str(datetime.datetime.now().time()),
                 "page": "https://example.com",
@@ -46,7 +50,21 @@ class Payload(BaseModel):
                 "element_name": "отправить",
                 "action_type": "conversation",
                 "event_type": "mousedown"
-            }
+            }, 
+            {"date": str(datetime.date.today()),
+                "time": str(datetime.datetime.now().time()),
+                "page": "https://example.com",
+                "element_type": "page",
+                "element_name": "сохранить",
+                "action_type": "hidden",
+                "event_type": "visibilitychange"}, 
+            {"date": str(datetime.date.today()),
+                "time": str(datetime.datetime.now().time()),
+                "page": "https://example.com",
+                "element_type": "page",
+                "element_name": "сохранить",
+                "action_type": "visible",
+                "event_type": "visibilitychange"}]
         }
 
 
@@ -62,7 +80,7 @@ class SessionData(BaseModel):
     class Config:
         populate_by_field_name = True
         json_schema_extra = {
-            "example": {
+            "examples": [{
                 "id": str(uuid.uuid4()),
                 "student": "Иванов Иван",
                 "group": 1303,
@@ -78,7 +96,41 @@ class SessionData(BaseModel):
                     "action_type": "conversation",
                     "event_type": "mousedown"
                 }]
-            }
+            }, 
+            {
+                "id": str(uuid.uuid4()),
+                "student": "Иванов Иван",
+                "group": 1303,
+                "email": "iiivanov@edu.ru",
+                "course": "Курс молодого бойца",
+                "session": "sessionId",
+                "actions": [{
+                    "date": "2024-02-02",
+                    "time": "14:00:00",
+                    "page": "http://e.moevm.info/some_course",
+                    "element_type": "button",
+                    "element_name": "сохранить",
+                    "action_type": "hidden",
+                    "event_type": "visibilitychange"
+                }]
+            }, 
+            {
+                "id": str(uuid.uuid4()),
+                "student": "Иванов Иван",
+                "group": 1303,
+                "email": "iiivanov@edu.ru",
+                "course": "Курс молодого бойца",
+                "session": "sessionId",
+                "actions": [{
+                    "date": "2024-02-02",
+                    "time": "14:00:00",
+                    "page": "http://e.moevm.info/some_course",
+                    "element_type": "page",
+                    "element_name": "сохранить",
+                    "action_type": "visible",
+                    "event_type": "visibilitychange"
+                }]
+            }]
         }
 
 
@@ -93,7 +145,7 @@ class CreateSessionData(BaseModel):
     class Config:
         populate_by_field_name = True
         json_schema_extra = {
-            "example": {
+            "examples":[ {
                 "student": "Иванов Иван",
                 "group": 1303,
                 "email": "iiivanov@edu.ru",
@@ -108,5 +160,39 @@ class CreateSessionData(BaseModel):
                     "action_type": "conversation",
                     "event_type": "mousedown"
                 }]
-            }
+            }, 
+            {
+                "id": str(uuid.uuid4()),
+                "student": "Иванов Иван",
+                "group": 1303,
+                "email": "iiivanov@edu.ru",
+                "course": "Курс молодого бойца",
+                "session": "sessionId",
+                "actions": [{
+                    "date": "2024-02-02",
+                    "time": "14:00:00",
+                    "page": "http://e.moevm.info/some_course",
+                    "element_type": "page",
+                    "element_name": "сохранить",
+                    "action_type": "hidden",
+                    "event_type": "visibilitychange"
+                }]
+            }, 
+            {
+                "id": str(uuid.uuid4()),
+                "student": "Иванов Иван",
+                "group": 1303,
+                "email": "iiivanov@edu.ru",
+                "course": "Курс молодого бойца",
+                "session": "sessionId",
+                "actions": [{
+                    "date": "2024-02-02",
+                    "time": "14:00:00",
+                    "page": "http://e.moevm.info/some_course",
+                    "element_type": "page",
+                    "element_name": "сохранить",
+                    "action_type": "visible",
+                    "event_type": "visibilitychange"
+                }]
+            }]
         }
