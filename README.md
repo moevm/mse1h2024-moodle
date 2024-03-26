@@ -43,7 +43,7 @@
         conversions: true,
         conversionElement: "conversion",
         conversionEvents: ["mouseup", "touchend"],
-        endpoint: '/',
+        endpoint: 'http://localhost:8080/api/statistics',
         async: true,
         debug: false
     });
