@@ -82,7 +82,7 @@
                 date: `${date.getFullYear()}-${month < 10 ? '0' + month : month}-${day < 10 ? '0' + day : day}`,
                 time: `${hours < 10 ? '0' + hours : hours}:${minutes < 10 ? '0' + minutes : minutes}:${seconds < 10 ? '0' + seconds : seconds}`,
                 page: interactor.session.page.href,
-                element_type: 'button',
+                element_type: 'page',
                 element_name: e.target.nodeName.toLowerCase(),
                 action_type: type, // TODO согласовать action_type с бд
                 event_type: e.type
