@@ -145,7 +145,7 @@ class CreateSessionData(BaseModel):
     class Config:
         populate_by_field_name = True
         json_schema_extra = {
-            "examples":[ {
+            "examples": [{
                 "student": "Иванов Иван",
                 "group": 1303,
                 "email": "iiivanov@edu.ru",
