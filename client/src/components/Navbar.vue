@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-app-bar app color="white accent-4" dark>
+    <v-app-bar app color="white accent-4" dark ref="appBar">
       <v-menu rounded="0">
         <template v-slot:activator="{ props }">
           <v-btn icon="mdi-menu" class="menu" v-bind="props"></v-btn>
@@ -22,7 +22,7 @@
       <span class="custom-text">{{ username }}</span>
       <v-icon size="36" class="user">mdi-account-circle</v-icon>
     </v-app-bar>
-    <div class="container">
+    <div class="container" :style="{ marginTop: appBarHeight }">
       <slot></slot>
     </div>
   </v-app>
@@ -38,7 +38,12 @@ export default {
         { title: "Добавить пользователя", path: '/e.moevm.statistics/user' },
         { title: "Выдать новый пароль", path: '/newPassword' }
       ],
+      appBarHeight: 0
     };
+  },
+  mounted() {
+    // Получаем высоту v-app-bar после рендеринга
+    this.appBarHeight = this.$refs.appBar.$el.clientHeight + 'px';
   },
   methods: {
     navigateTo(path) {
@@ -50,11 +55,6 @@ export default {
 
 <style scoped>
 @import '@/colors.css';
-
-.container {
-  margin-top: 8%;
-}
-
 .menu {
   color: var(--blue-2);
   border-radius: 0 !important;

@@ -100,7 +100,7 @@ export default {
 }
 
 .custom-table tbody tr:nth-child(odd) {
-  background-color: #f9f9f9;
+  background-color: var(--white-3);
 }
 
 .custom-table tbody tr {
@@ -115,7 +115,7 @@ export default {
 
 .custom-table th,
 .custom-table td {
-  border: 1px solid #dddddd;
+  border: 1px solid var(--white-2);
 }
 
 #action {
