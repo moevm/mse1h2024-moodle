@@ -75,12 +75,17 @@
             var hours = date.getHours();
             var minutes = date.getMinutes();
             var seconds = date.getSeconds();
+            let name;
+            if (e.target.nodeName == 'BUTTON')
+                name = e.target.innerText
+            else
+                name = e.target.nodeName.ToLowerCase()
             trackingEntity = {
                 date: `${date.getFullYear()}-${month < 10 ? '0' + month : month}-${day < 10 ? '0' + day : day}`,
                 time: `${hours < 10 ? '0' + hours : hours}:${minutes < 10 ? '0' + minutes : minutes}:${seconds < 10 ? '0' + seconds : seconds}`,
                 page: interactor.session.page.href,
-                element_type: 'button',
-                element_name: e.target.nodeName.toLowerCase(),
+                element_type: e.target.nodeName.ToLowerCase(),
+                element_name: name,
                 action_type: type, // TODO согласовать action_type с бд
                 event_type: e.type
             }
