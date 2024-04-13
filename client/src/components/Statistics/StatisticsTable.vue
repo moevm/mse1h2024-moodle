@@ -3,24 +3,14 @@
     class="custom-table"
     :headers="headers"
     :items="statistics"
+    item-value="number"
     outlined
+    v-model="selected"
+    show-select
   >
-    <template v-slot:[`item.checkbox`]="{ item }">
-      <v-checkbox
-        v-model="item.checked"
-        color="primary"
-        hide-details
-      ></v-checkbox>
-    </template>
 
     <template v-slot:[`item.FIO`]="{ item }">
       <p align="start">{{ item.FIO }}</p>
-    </template>
-
-    <template v-slot:[`item.group`]="{ item }">
-      <v-chip :color="getColor(item.group)">
-        {{ item.group }}
-      </v-chip>
     </template>
 
     <template v-slot:[`item.course`]="{ item }">
@@ -48,17 +38,10 @@ export default {
       selectedRows: [],
       headers: [
         { title: "№", key: "number", sortable: false, align: "center" },
-        { title: "", key: "checkbox", sortable: false, align: "center" },
         { title: "ФИО", key: "FIO", sortable: false, align: "center" },
-        { title: "Группа", key: "group", sortable: false, align: "center" },
         { title: "Дата", key: "date", sortable: false, align: "center" },
         { title: "Время", key: "time", sortable: false, align: "center" },
-        {
-          title: "Название курса",
-          key: "course",
-          sortable: false,
-          align: "center",
-        },
+        { title: "Название курса", key: "course", sortable: false, align: "center"},
         { title: "Действие", key: "action", sortable: false, align: "center" },
       ],
     };
@@ -70,26 +53,7 @@ export default {
         number: (index + 1).toString(),
       }));
     },
-  },
-  methods: {
-    getColor(group) {
-      const colors = [
-        "red",
-        "blue",
-        "green",
-        "orange",
-        "purple",
-        "pink",
-        "magenta",
-        "teal",
-        "indigo",
-        "lime",
-        "brown",
-      ];
-      const index = group % 11;
-      return colors[index];
-    },
-  },
+  }
 };
 </script>
 

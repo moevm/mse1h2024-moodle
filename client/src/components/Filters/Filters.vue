@@ -12,11 +12,13 @@ export default {
 
 <style>
 @import '@/colors.css';
-
 .filters {
   max-width: 95%;
   padding-left: 0;
   padding-right: 0;
   justify-self: center;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 </style>
