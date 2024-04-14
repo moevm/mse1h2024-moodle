@@ -11,6 +11,7 @@
 
             interactor.interactions = typeof (config.interactions) == "boolean" ? config.interactions : true,
                 interactor.trackAll = typeof (config.trackAll) == "boolean" ? config.trackAll : flase,
+                interactor.trackPagePresence = typeof (config.trackPagePresence) == "boolean" ? config.trackPagePresence : true,
                 interactor.interactionElement = Array.isArray(config.interactionElement) === true ? config.interactionElement : [],
                 interactor.interactionEvents = Array.isArray(config.interactionEvents) === true ? config.interactionEvents : ['mouseup', 'touchend'],
                 interactor.conversions = typeof (config.conversions) == "boolean" ? config.conversions : true,
@@ -32,6 +33,14 @@
 
         __bindEvents__: function () {
             var interactor = this;
+            
+            if (interactor.trackPagePresence)
+                document.addEventListener("visibilitychange", function (e) {
+                    e.stopPropagation();
+                    if(interactor.debug)
+                        console.log(e.target)
+                    interactor.__addInteraction__(e, document.visibilityState, 'page');
+                    });
 
             if (interactor.trackAll) {
                 for (var i = 0; i < interactor.interactionEvents.length; i++) {
@@ -39,7 +48,7 @@
                         e.stopPropagation();
                         if(interactor.debug)
                             console.log(e.target)
-                        interactor.__addInteraction__(e, "conversation");
+                        interactor.__addInteraction__(e, "conversation", 'button');
                     });
                 }
                 
@@ -52,7 +61,7 @@
                         if (interactor.interactionElement.includes(e.target.nodeName)) {
                             if(interactor.debug)
                                 console.log(e.target)
-                            interactor.__addInteraction__(e, "conversation");
+                            interactor.__addInteraction__(e, "conversation", 'button');
                         }
                     });
                 }
@@ -65,26 +74,21 @@
             return interactor;
         },
 
-        __addInteraction__: function (e, type) {
+        __addInteraction__: function (e, type, element_type) {
 
             var interactor = this;
 
             date = new Date();
-            var month = date.getMonth() + 1;
-            var day = date.getDate();
-            var hours = date.getHours();
-            var minutes = date.getMinutes();
-            var seconds = date.getSeconds();
             let name;
             if (e.target.nodeName == 'BUTTON')
                 name = e.target.innerText
             else
                 name = e.target.nodeName.toLowerCase()
             trackingEntity = {
-                date: `${date.getFullYear()}-${month < 10 ? '0' + month : month}-${day < 10 ? '0' + day : day}`,
-                time: `${hours < 10 ? '0' + hours : hours}:${minutes < 10 ? '0' + minutes : minutes}:${seconds < 10 ? '0' + seconds : seconds}`,
+                date: `${date.toISOString().slice(0, 10)}`,
+                time: `${date.toISOString().slice(11, 19)}`,
                 page: interactor.session.page.href,
-                element_type: e.target.nodeName.toLowerCase(),
+                element_type: element_type,
                 element_name: name,
                 action_type: type, // TODO согласовать action_type с бд
                 event_type: e.type
@@ -171,6 +175,8 @@
     };
 </script>
 
+
+
 <script type="module">
     function getUserName() { // works only on e.moevm.info
         return document
@@ -188,6 +194,7 @@
 
     var interactions = new Interactor({
         trackAll: false,
+        trackPagePresence: true,
         interactions: true,
         interactionElement: ["A", "BUTTON", "TEXTAREA", "INPUT"],
         interactionEvents: ["mousedown"],
