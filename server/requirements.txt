@@ -1,5 +1,7 @@
 fastapi==0.110.0
 uvicorn==0.27.1
-pydantic[email]
+pydantic[email]~=2.6.4
 motor==3.3.2
-python-dotenv
+python-dotenv~=1.0.1
+starlette~=0.36.3
+pymongo~=4.6.2

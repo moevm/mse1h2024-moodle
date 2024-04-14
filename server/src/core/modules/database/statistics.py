@@ -7,9 +7,19 @@ class MongoStatisticRepo:
     def __init__(self, client):
         self.client = client
 
-    async def get_all_sessions(self) -> list:
+    async def get_all_sessions(self, filters) -> list:
         stats = []
-        for session in await self.client.statistics.find().to_list(length=None):
+        query = {
+            'actions': {
+                '$elemMatch': {
+                    'timestamp': {
+                        '$gte': filters.timestamp__gte,
+                        '$lte': filters.timestamp__lte
+                    }
+                }
+            }
+        }
+        for session in await self.client.statistics.find(query).to_list(length=None):
             session["_id"] = str(session["_id"])
             stats.append(session)
         return stats

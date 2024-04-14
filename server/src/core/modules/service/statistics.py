@@ -1,16 +1,19 @@
 import logging
+from datetime import datetime
 
 from src.core.modules.database.errors import RepoNotFoundError
 from src.core.modules.service.errors import SessionNotFoundError
+
+from src.models.filter import SessionFilter
 
 
 class StatisticsService:
     def __init__(self, repo):
         self.repo = repo
 
-    async def get_all_sessions(self):
+    async def get_all_sessions(self, filters: SessionFilter):
         try:
-            return await self.repo.get_all_sessions()
+            return await self.repo.get_all_sessions(filters)
         except Exception as e:
             logging.error(f"error getting all sessions: {str(e)}")
             raise
@@ -37,6 +40,8 @@ class StatisticsService:
 
     async def create_session(self, session_data):
         try:
+            for action in session_data["actions"]:
+                action["timestamp"] = datetime.fromisoformat(action["timestamp"])
             return await self.repo.add_session(session_data)
         except Exception as e:
             logging.error(f'error creating session data {session_data}: {str(e)}')
