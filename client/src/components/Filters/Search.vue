@@ -21,7 +21,7 @@ export default {
 @import '@/colors.css';
 .search-filter {
   transform: translateY(25%);
-  width: 25%;
+  width: 100%;
   color: var(--white-1);
 }
 

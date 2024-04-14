@@ -1,9 +1,18 @@
 <template>
   <Navbar :username="name">
     <Filters>
-      <Search v-model="search"></Search>
+      <div class="search-info">
+        <Search v-model="search"></Search>
+      </div>
+      <div class="choose-type">
+        <v-btn-toggle class="stat-type" v-model="selectedType" variant="outlined" color="blue">
+          <v-btn value="graphic" class="graphic" icon="mdi-chart-line"></v-btn>
+          <v-btn value="table" icon="mdi-format-align-justify"></v-btn>
+        </v-btn-toggle>
+      </div>
     </Filters>
-    <StatisticsTable :info="statisticsInfo" v-model:search="search"></StatisticsTable>
+    <StatisticsTable v-if="selectedType === 'table'" :info="statisticsInfo" v-model:search="search"></StatisticsTable>
+    <Chart v-else></Chart>
   </Navbar>
 </template>
 
@@ -13,18 +22,20 @@ import StatisticsTable from "@/components/Statistics/StatisticsTable.vue";
 import axios from "axios";
 import Filters from "@/components/Filters/Filters.vue";
 import Search from "@/components/Filters/Search.vue";
+import Chart from "@/components/Chart.vue";
 
 const STAT_URL = "/api/statistics/";
 
 export default {
   name: "Statistics",
-  components: {Search, Filters, StatisticsTable, Navbar },
+  components: {Chart, Search, Filters, StatisticsTable, Navbar },
 
   data() {
     return {
       statisticsInfo: [],
       name: "",
-      search: ""
+      search: "",
+      selectedType: 'table'
     };
   },
   beforeMount() {
@@ -46,7 +57,6 @@ export default {
             let firstLayer = {
               FIO: element.student,
               course: element.course,
-              group: element.group,
             };
             element.actions.forEach(action =>{
               let secondLayer = {...firstLayer};
@@ -61,10 +71,27 @@ export default {
           alert("Ошибка при получении данных");
           console.error("Ошибка при получении данных:", error);
         });
-  },
+  }
 };
 </script>
 
 <style>
+@import '@/colors.css';
+.search-info {
+  width: 25%;
+  margin: 0;
+}
+
+.choose-type {
+  margin-right: 0;
+}
+
+.stat-type {
+  transform: translateY(15%);
+}
+
+.stat-type .v-btn {
+  color: var(--grey-7);
+}
 </style>
   
