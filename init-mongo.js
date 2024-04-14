@@ -36,13 +36,12 @@ db.statistics.insertMany([
         "session": "",
         "actions": [
             {
-            "date": "2024-02-02",
-            "time": "14:00:00",
-            "page": "http://e.moevm.info/some_course",
-            "element_type": "button",
-            "element_name": "сохранить",
-            "action_type": "conversation",
-            "event_type": "mousedown"
+                "timestamp": new Date("2024-02-02T14:00:00").toISOString(),
+                "page": "http://e.moevm.info/some_course",
+                "element_type": "button",
+                "element_name": "сохранить",
+                "action_type": "conversation",
+                "event_type": "mousedown"
             }
         ]
     },
@@ -54,8 +53,7 @@ db.statistics.insertMany([
         "session": "",
         "actions": [
             {
-                "date": "2024-02-02",
-                "time": "14:00:00",
+                "timestamp": new Date("2024-02-02T14:00:00").toISOString(),
                 "page": "http://e.moevm.info/some_course",
                 "element_type": "button",
                 "element_name": "сохранить",
@@ -63,8 +61,7 @@ db.statistics.insertMany([
                 "event_type": "mousedown"
             },
             {
-                "date": "2024-02-02",
-                "time": "14:01:00",
+                "timestamp": new Date("2024-02-02T14:00:00").toISOString(),
                 "page": "http://e.moevm.info/some_course",
                 "element_type": "button",
                 "element_name": "следующая страница",

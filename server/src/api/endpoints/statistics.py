@@ -1,6 +1,7 @@
+import datetime
 from typing import List
 
-from fastapi import APIRouter, HTTPException, Body
+from fastapi import APIRouter, HTTPException, Body, Query
 from fastapi.encoders import jsonable_encoder
 from starlette import status
 
@@ -8,6 +9,7 @@ from starlette.responses import JSONResponse
 
 from src.core.modules.service.errors import SessionNotFoundError
 from src.depends import get_statistics_service
+from src.models.filter import SessionFilter
 from src.models.session_data import SessionData, CreateSessionData
 
 router = APIRouter()
@@ -21,9 +23,16 @@ service = get_statistics_service()
     response_model=List[SessionData],
     response_model_by_alias=False
 )
-async def get_all_sessions():
+async def get_all_sessions(
+        begin_timestamp=Query(datetime.datetime(1970, 1, 1, 0, 0, 0, 0).isoformat(), description="start"),
+        end_timestamp=Query(datetime.datetime.now().isoformat(), description="stop")
+):
     try:
-        return await service.get_all_sessions()
+        session_filter = SessionFilter(
+            datetime.datetime.fromisoformat(begin_timestamp),
+            datetime.datetime.fromisoformat(end_timestamp)
+        )
+        return await service.get_all_sessions(session_filter)
     except Exception as e:
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e))
 
