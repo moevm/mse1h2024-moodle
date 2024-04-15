@@ -228,9 +228,6 @@ components:
         student:
           type: string
           title: Student
-        group:
-          type: integer
-          title: Group
         email:
           type: string
           format: email
@@ -249,7 +246,6 @@ components:
       type: object
       required:
       - student
-      - group
       - email
       - course
       - session
@@ -266,7 +262,6 @@ components:
         course: "\u041A\u0443\u0440\u0441 \u043C\u043E\u043B\u043E\u0434\u043E\u0433\
           \u043E \u0431\u043E\u0439\u0446\u0430"
         email: iiivanov@edu.ru
-        group: 1303
         session: sessionId
         student: "\u0418\u0432\u0430\u043D\u043E\u0432 \u0418\u0432\u0430\u043D"
     CreateUser:
@@ -371,9 +366,6 @@ components:
         student:
           type: string
           title: Student
-        group:
-          type: integer
-          title: Group
         email:
           type: string
           format: email
@@ -392,7 +384,6 @@ components:
       type: object
       required:
       - student
-      - group
       - email
       - course
       - session
@@ -409,7 +400,6 @@ components:
         course: "\u041A\u0443\u0440\u0441 \u043C\u043E\u043B\u043E\u0434\u043E\u0433\
           \u043E \u0431\u043E\u0439\u0446\u0430"
         email: iiivanov@edu.ru
-        group: 1303
         id: 16775ef6-2055-474f-8bb0-17129a9e9bb4
         session: sessionId
         student: "\u0418\u0432\u0430\u043D\u043E\u0432 \u0418\u0432\u0430\u043D"
