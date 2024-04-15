@@ -72,6 +72,7 @@ class Payload(BaseModel):
 
 class SessionData(BaseModel):
     id: str = Field(default_factory=lambda: str(uuid.uuid4()), alias="_id")
+    student_id: int = Field(...)
     student: str = Field(...)
     email: EmailStr = Field(...)
     course: str = Field(...)
@@ -84,6 +85,7 @@ class SessionData(BaseModel):
         json_schema_extra = {
             "examples": [{
                 "id": str(uuid.uuid4()),
+                "student_id": 1,
                 "student": "Иванов Иван",
                 "email": "iiivanov@edu.ru",
                 "course": "Курс молодого бойца",
@@ -99,6 +101,7 @@ class SessionData(BaseModel):
             },
                 {
                     "id": str(uuid.uuid4()),
+                    "student_id": 1,
                     "student": "Иванов Иван",
                     "email": "iiivanov@edu.ru",
                     "course": "Курс молодого бойца",
@@ -115,6 +118,7 @@ class SessionData(BaseModel):
                 {
                     "id": str(uuid.uuid4()),
                     "student": "Иванов Иван",
+                    "student_id": 1,
                     "email": "iiivanov@edu.ru",
                     "course": "Курс молодого бойца",
                     "session": "sessionId",
@@ -131,6 +135,7 @@ class SessionData(BaseModel):
 
 
 class CreateSessionData(BaseModel):
+    student_id: int = Field(...)
     student: str = Field(...)
     email: EmailStr = Field(...)
     course: str = Field(...)
@@ -143,6 +148,7 @@ class CreateSessionData(BaseModel):
         json_schema_extra = {
             "examples": [{
                 "id": str(uuid.uuid4()),
+                "student_id": 1,
                 "student": "Иванов Иван",
                 "email": "iiivanov@edu.ru",
                 "course": "Курс молодого бойца",
@@ -158,6 +164,7 @@ class CreateSessionData(BaseModel):
             },
                 {
                     "id": str(uuid.uuid4()),
+                    "student_id": 1,
                     "student": "Иванов Иван",
                     "email": "iiivanov@edu.ru",
                     "course": "Курс молодого бойца",
@@ -173,6 +180,7 @@ class CreateSessionData(BaseModel):
                 },
                 {
                     "id": str(uuid.uuid4()),
+                    "student_id": 1,
                     "student": "Иванов Иван",
                     "email": "iiivanov@edu.ru",
                     "course": "Курс молодого бойца",
