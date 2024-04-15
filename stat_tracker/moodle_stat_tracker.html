@@ -10,7 +10,8 @@
             var interactor = this;
 
             interactor.interactions = typeof (config.interactions) == "boolean" ? config.interactions : true,
-                interactor.trackAll = typeof (config.trackAll) == "boolean" ? config.trackAll : flase,
+                interactor.trackAll = typeof (config.trackAll) == "boolean" ? config.trackAll : false,
+                interactor.numberActionsToSend = typeof (config.numberActionsToSend) == "number" ? config.numberActionsToSend : 15,
                 interactor.trackPagePresence = typeof (config.trackPagePresence) == "boolean" ? config.trackPagePresence : true,
                 interactor.interactionElement = Array.isArray(config.interactionElement) === true ? config.interactionElement : [],
                 interactor.interactionEvents = Array.isArray(config.interactionEvents) === true ? config.interactionEvents : ['mouseup', 'touchend'],
@@ -99,7 +100,10 @@
                 interactor.__closeSession__();
                 console.log("Session:\n", interactor.session);
             }
-
+            if (interactor.numberActionsToSend === interactor.records.length){    
+                interactor.__sendInteractions__()
+                interactor.records = []
+            }
             return interactor;
         },
 
@@ -151,8 +155,9 @@
 
         __sendInteractions__: function () {
 
-            var interactor = this,
-                xhr = new XMLHttpRequest();
+            var interactor = this;
+            if (interactor.records.length === 0) return interactor;
+            var xhr = new XMLHttpRequest();
 
             interactor.__closeSession__();
 
@@ -194,6 +199,7 @@
 
     var interactions = new Interactor({
         trackAll: false,
+        numberActionsToSend: 15,
         trackPagePresence: true,
         interactions: true,
         interactionElement: ["A", "BUTTON", "TEXTAREA", "INPUT"],
