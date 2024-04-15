@@ -20,8 +20,11 @@
     "selenium-webdriver": "^4.15.0",
     "vue": "^3.2.13",
     "vue-chartjs": "^5.2.0",
+    "vue-ctk-date-time-picker": "^3.0.0-alpha.0",
+    "vue-date-pick": "^1.5.1",
     "vue-router": "^4.2.5",
     "vuetify": "^3.5.8",
+    "vuetify-datetime-picker": "^2.1.1",
     "webfontloader": "^1.0.0"
   },
   "devDependencies": {
