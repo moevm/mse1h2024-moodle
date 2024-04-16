@@ -1,6 +1,5 @@
 [{
     "student": "Диана Романенко",
-    "group": 9303,
     "email": "diana@mail.ru",
     "course": "Курс молодого бойца",
     "session": "",
@@ -17,7 +16,6 @@
 },
 {
     "student": "Беззубов Даниил",
-    "group": 1303,
     "email": "daniil@mail.ru",
     "course": "Курс молодого бойца",
     "session": "",
