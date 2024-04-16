@@ -1,3 +1,5 @@
+import logging
+
 from bson.objectid import ObjectId
 
 from src.core.modules.database.errors import RepoNotFoundError, RepoAlreadyExistsError, RepoEmptyDataError
@@ -20,6 +22,15 @@ class MongoUserRepo:
             user['_id'] = str(user['_id'])
             return user
         raise RepoNotFoundError(f"user with id {user_id} not found")
+
+    async def get_user_by_email(self, email: str) -> dict:
+        if len(email) == 0:
+            raise RepoEmptyDataError(f"invalid email length")
+        user = await self.client.users.find_one({"email": email})
+        if user:
+            user['_id'] = str(user['_id'])
+            return user
+        raise RepoNotFoundError(f"user with email {email} not found")
 
     async def add_user(self, user_data: dict) -> dict:
         if await self.client.users.find_one({"email": user_data["email"]}) is not None:

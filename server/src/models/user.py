@@ -74,3 +74,17 @@ class CreateUser(BaseModel):
                 "password": "sdfsdfwgesdgcx"
             }
         }
+
+
+class SignInData(BaseModel):
+    email: EmailStr = Field(...)
+    password: str = Field(...)
+
+    class Config:
+        populate_by_field_name = True
+        json_schema_extra = {
+            "example": {
+                "email": "iiivanov@edu.ru",
+                "password": "sdfsdfwgesdgcx"
+            }
+        }
