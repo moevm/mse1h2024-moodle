@@ -4,6 +4,18 @@
       <div class="search-info">
         <Search v-model="search"></Search>
       </div>
+      <div class="date-time-info">
+        <DateTime
+            v-model="beginTimestamp"
+            :max="endTimestamp || today"
+        ></DateTime>
+        <p>—</p>
+        <DateTime
+            v-model="endTimestamp"
+            :min="beginTimestamp"
+            :max="today"
+        ></DateTime>
+      </div>
       <div class="choose-type">
         <v-btn-toggle class="stat-type" v-model="selectedType" variant="outlined" color="blue">
           <v-btn value="graphic" class="graphic" icon="mdi-chart-line"></v-btn>
@@ -23,54 +35,99 @@ import axios from "axios";
 import Filters from "@/components/Filters/Filters.vue";
 import Search from "@/components/Filters/Search.vue";
 import Chart from "@/components/Chart.vue";
+import DateTime from "@/components/Filters/DateTime.vue";
 
 const STAT_URL = "/api/statistics/";
 
 export default {
   name: "Statistics",
-  components: {Chart, Search, Filters, StatisticsTable, Navbar },
+  components: {DateTime, Chart, Search, Filters, StatisticsTable, Navbar },
 
   data() {
     return {
       statisticsInfo: [],
       name: "",
       search: "",
-      selectedType: 'table'
+      selectedType: 'table',
+      beginTimestamp: '',
+      endTimestamp: '',
+      today: ''
     };
   },
   beforeMount() {
-    let name = localStorage.getItem("name"); //name будет уже слепленным из имени и фамилии
+    this.today = new Date().toISOString().slice(0, 16);
+    let name = localStorage.getItem("name");
     if (name) {
       this.name = name;
     } else {
       console.log("нет имени");
-      this.$router.push("/start"); //переход на авторизацию, если не авторизован
+      this.$router.push("/start");
     }
     //TODO редирект на страницу с ошибкой 401: не авторизован
   },
   mounted() {
-    axios
-        .get(STAT_URL)
-        .then((response) => {
-          console.log(response.data);
-          response.data.forEach(element => {
-            let firstLayer = {
-              FIO: element.student,
-              course: element.course,
-            };
-            element.actions.forEach(action =>{
-              let secondLayer = {...firstLayer};
-              secondLayer.action = `${action.action_type}\npage: ${action.page}\n${action.element_type} ${action.event_type}: "${action.element_name}"\n`;
-              secondLayer.time = action.time;
-              secondLayer.date = action.date;
-              this.statisticsInfo.push(secondLayer);
-            })
+    this.getStatistics();
+  },
+  watch: {
+    beginTimestamp() {
+      this.getStatistics();
+    },
+    endTimestamp() {
+      this.getStatistics();
+    }
+  },
+  methods: {
+    getStatistics() {
+      this.statisticsInfo = []
+      let params = {}
+      if (this.beginTimestamp.length === 0 && this.endTimestamp.length === 0) {
+        params = {}
+      }
+      else if (this.beginTimestamp.length !== 0 && this.endTimestamp.length === 0) {
+        params = {
+          begin_timestamp: this.beginTimestamp
+        }
+      }
+      else if (this.beginTimestamp.length === 0 && this.endTimestamp.length !== 0) {
+        params = {
+          end_timestamp: this.endTimestamp
+        }
+      }
+      else {
+        params = {
+          begin_timestamp: this.beginTimestamp,
+          end_timestamp: this.endTimestamp
+        }
+      }
+
+
+      axios
+          .get(STAT_URL, { params })
+          .then((response) => {
+            response.data.forEach(element => {
+              let firstLayer = {
+                FIO: element.student,
+                course: element.course,
+              };
+              element.actions.forEach(action =>{
+                let secondLayer = {...firstLayer};
+                secondLayer.action = `${action.action_type}\npage: ${action.page}\n${action.element_type} ${action.event_type}: "${action.element_name}"\n`;
+                const dateTime = new Date(action.timestamp);
+                const hours = dateTime.getHours().toString().padStart(2, '0');
+                const minutes = dateTime.getMinutes().toString().padStart(2, '0');
+                const seconds = dateTime.getSeconds().toString().padStart(2, '0');
+                const milliseconds = dateTime.getMilliseconds().toString().padStart(3, '0');
+                secondLayer.time = `${hours}:${minutes}:${seconds}.${milliseconds}`;
+                secondLayer.date = dateTime.toLocaleDateString('ru-RU');
+                this.statisticsInfo.push(secondLayer);
+              })
+            });
+          })
+          .catch((error) => {
+            alert("Ошибка при получении данных");
+            console.error("Ошибка при получении данных:", error);
           });
-        })
-        .catch((error) => {
-          alert("Ошибка при получении данных");
-          console.error("Ошибка при получении данных:", error);
-        });
+    }
   }
 };
 </script>
@@ -80,6 +137,21 @@ export default {
 .search-info {
   width: 25%;
   margin: 0;
+}
+
+.date-time-info {
+  margin: 0;
+  display: flex;
+  align-items: center;
+}
+
+.date-time-info p {
+  margin-top: 1%;
+  margin-right: 2%;
+  margin-left: 2%;
+  font-size: 16px;
+  font-family: Inter, sans-serif;
+  color: var(--grey-6);
 }
 
 .choose-type {
