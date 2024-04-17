@@ -2,7 +2,6 @@
   <AuthForm
       :title="title"
       :width="containerWidth"
-      :height="containerHeight"
   >
     <DataForm fast-fail @submit.prevent="signIn">
       <DataInput
@@ -42,7 +41,6 @@ export default {
     return {
       title: 'e.moevm statistics',
       containerWidth: '31%',
-      containerHeight: '45%',
       email: '',
       password: '',
       show1: false,
