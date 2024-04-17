@@ -42,7 +42,9 @@ export default {
         { title: "Дата", key: "date", sortable: false, align: "center" },
         { title: "Время", key: "time", sortable: false, align: "center" },
         { title: "Название курса", key: "course", sortable: false, align: "center"},
+        { title: "Тип действия", key: "typeAction", sortable: false, align: "center" },
         { title: "Действие", key: "action", sortable: false, align: "center" },
+        { title: "Страница", key: "page", sortable: false, align: "center" },
       ],
     };
   },
