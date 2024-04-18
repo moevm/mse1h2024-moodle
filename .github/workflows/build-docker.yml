@@ -22,4 +22,5 @@ jobs:
       - name: Check health
         uses: thegabriele97/dockercompose-health-action@main
         with:
-          timeout: '60'
+          timeout: '20'
+          workdir: '.'
