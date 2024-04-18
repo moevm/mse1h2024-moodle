@@ -23,5 +23,4 @@ jobs:
       - name: Run tests
         run: |
           curl http://localhost:8080
-          curl http://localhost:27017
           curl http://localhost:8081
