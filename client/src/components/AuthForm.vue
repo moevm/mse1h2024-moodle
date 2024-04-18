@@ -1,8 +1,10 @@
 <template>
-  <div class="auth-container" :style="{ width: width, height: height }">
-    <p class="title"> {{ title }} </p>
+  <div ref="containerRef" class="auth-container" :style="{ width: width }">
     <div class="content">
-      <slot></slot>
+      <p class="title"> {{ title }} </p>
+      <v-container class="content-input">
+        <slot></slot>
+      </v-container>
     </div>
   </div>
 </template>
@@ -10,7 +12,17 @@
 <script>
 export default {
   name: 'AuthForm',
-  props: ['title', 'width', 'height']
+  props: ['title', 'width'],
+  mounted() {
+    this.setContainerHeight();
+  },
+  methods: {
+    setContainerHeight() {
+      const container = this.$refs.containerRef;
+      const contentHeight = container.querySelector('.content').offsetHeight;
+      container.style.height = contentHeight + 'px';
+    }
+  }
 }
 </script>
 
@@ -19,11 +31,12 @@ export default {
 
 .auth-container {
   margin: auto;
+  padding: 0;
   position: absolute;
   top: 0; left: 0; bottom: 0; right: 0;
   border-radius: 5px;
   background-color: var(--white-1);
-  box-shadow: 0 2px 5px 0 rgba(117, 106, 106, 0.5);
+  box-shadow: 0 1px 2px 0 rgba(117, 106, 106, 0.5);
 }
 
 .title {
@@ -38,7 +51,7 @@ export default {
   margin-bottom: 5%;
 }
 
-.content {
+.content-input {
   background-color: var(--white-1);
 }
 </style>
