@@ -13,11 +13,11 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Build the Docker image for frontend
-        run: docker build --file client/Dockerfile --tag client-image:$(date +%s)
+        run: docker build client/. --tag client-image:$(date +%s)
 
   build_backend:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - name: Build the Docker image for backend
-        run: docker build backend/. --file backend/Dockerfile --tag server-image:$(date +%s)
+        run: docker build server/. --tag server-image:$(date +%s)
