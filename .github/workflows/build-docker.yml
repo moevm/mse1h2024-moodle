@@ -10,7 +10,6 @@ jobs:
 
   build_frontend:
     runs-on: ubuntu-latest
-    if: github.event_name == 'push' && github.event.head_commit.modified_files | contains('client/')
     steps:
       - uses: actions/checkout@v3
       - name: Build the Docker image for frontend
@@ -18,7 +17,6 @@ jobs:
 
   build_backend:
     runs-on: ubuntu-latest
-    if: github.event_name == 'push' && github.event.head_commit.modified_files | contains('server/')
     steps:
       - uses: actions/checkout@v3
       - name: Build the Docker image for backend
