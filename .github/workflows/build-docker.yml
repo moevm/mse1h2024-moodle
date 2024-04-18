@@ -18,7 +18,7 @@ jobs:
           docker-compose -f docker-compose.yaml build
       - name: Run docker-compose
         run: |
-          docker-compose up mongodb backend frontend -d
+          docker-compose up -d mongodb backend frontend 
           sleep 10
       - name: Run tests
         run: |
