@@ -1,0 +1,31 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ "main" ]
+    paths:
+      - 'client/**'
+      - 'server/**'
+  pull_request:
+    branches: [ "main" ]
+    paths:
+      - 'client/**'
+      - 'server/**'
+
+jobs:
+
+  build_frontend:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && github.event.head_commit.modified_files | contains('client/')
+    steps:
+      - uses: actions/checkout@v3
+      - name: Build the Docker image for frontend
+        run: docker build --file client/Dockerfile --tag client-image:$(date +%s)
+
+  build_backend:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && github.event.head_commit.modified_files | contains('server/')
+    steps:
+      - uses: actions/checkout@v3
+      - name: Build the Docker image for backend
+        run: docker build backend/. --file backend/Dockerfile --tag server-image:$(date +%s)
