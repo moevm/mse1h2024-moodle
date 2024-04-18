@@ -6,8 +6,8 @@
     Interactor.prototype = {
 
         __init__: function (config) {
-
             var interactor = this;
+            getUserEmail((email) => interactor.email = email)
 
             interactor.interactions = typeof (config.interactions) == "boolean" ? config.interactions : true,
                 interactor.trackAll = typeof (config.trackAll) == "boolean" ? config.trackAll : false,
@@ -156,22 +156,23 @@
         __sendInteractions__: function () {
 
             var interactor = this;
+            if (interactor.records.length === 0 || !interactor.email) sleep(50000);
             if (interactor.records.length === 0) return interactor;
+            
             var xhr = new XMLHttpRequest();
 
             interactor.__closeSession__();
-
             xhr.open('POST', interactor.endpoint, interactor.async);
             xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
             var trackingEntity = {
-                student: "Иванов Иван", // getUserName()
-                email: "iiivanov@edu.ru", //getUserEmail(function(email))
-                //user_id: getUserID(),
-                course: "Курс молодого бойца", // getCourseName()
+                student: getUserName(), // getUserName()
+                email: interactor.email, //getUserEmail(function(email))
+                user_id: getUserID(),
+                course: getCourseName(), // getCourseName()
                 session: "123",
                 actions: interactor.records
             }
-            
+            console.log(trackingEntity)
             xhr.send(JSON.stringify(trackingEntity));
 
             return interactor;
@@ -182,7 +183,7 @@
 
 
 
-<script type="module">
+<script>
     function getUserName() { // works only on e.moevm.info
         return document
             .getElementById('action-menu-toggle-1')
@@ -214,16 +215,16 @@
             if (xhr.readyState === 4) {
             var doc = xhr.response;
             var email = doc.getElementById('region-main')
-              .getElementsByTagName('a')[1].innerText;
+            .getElementsByTagName('a')[1].innerText;
             callback(email);
     }
-  }
-}
+    }
+    }
 
 
     var interactions = new Interactor({
         trackAll: false,
-        numberActionsToSend: 15,
+        numberActionsToSend: 5,
         trackPagePresence: true,
         interactions: true,
         interactionElement: ["A", "BUTTON", "TEXTAREA", "INPUT"],
