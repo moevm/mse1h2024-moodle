@@ -1,5 +1,5 @@
 <template>
-  <Navbar :username="name">
+  <Navbar :username="name" :position="position">
     <Filters>
       <div class="search-info">
         <Search v-model="search"></Search>
@@ -51,19 +51,22 @@ export default {
       selectedType: 'table',
       beginTimestamp: '',
       endTimestamp: '',
-      today: ''
+      today: '',
+      position: ''
     };
   },
   beforeMount() {
     this.today = new Date().toISOString().slice(0, 16);
-    let name = localStorage.getItem("name");
+    let name = sessionStorage.getItem("name");
     if (name) {
       this.name = name;
+      this.position = sessionStorage.getItem("position");
     } else {
-      console.log("нет имени");
-      this.$router.push("/start");
+      const error = 'Request failed with status code 401. You are not sign in!'
+      alert(error)
+      console.log("Не авторизован");
+      this.$router.push("/e.moevm.statistics/auth");
     }
-    //TODO редирект на страницу с ошибкой 401: не авторизован
   },
   mounted() {
     this.getStatistics();
@@ -104,6 +107,7 @@ export default {
       axios
           .get(STAT_URL, { params })
           .then((response) => {
+            console.log(response);
             response.data.forEach(element => {
               let firstLayer = {
                 FIO: element.student,
@@ -111,7 +115,9 @@ export default {
               };
               element.actions.forEach(action =>{
                 let secondLayer = {...firstLayer};
-                secondLayer.action = `${action.action_type}\npage: ${action.page}\n${action.element_type} ${action.event_type}: "${action.element_name}"\n`;
+                secondLayer.typeAction = action.action_type
+                secondLayer.action = `${action.event_type} ${action.element_type} "${action.element_name}"`;
+                secondLayer.page = action.page
                 const dateTime = new Date(action.timestamp);
                 const hours = dateTime.getHours().toString().padStart(2, '0');
                 const minutes = dateTime.getMinutes().toString().padStart(2, '0');

@@ -5,10 +5,20 @@
         <template v-slot:activator="{ props }">
           <v-btn icon="mdi-menu" class="menu" v-bind="props"></v-btn>
         </template>
-        <v-list rounded="0">
+        <v-list v-if="position === 'admin'" rounded="0">
           <v-list-item
               class="custom-list-item"
-              v-for="(item, i) in items"
+              v-for="(item, i) in adminItems"
+              :key="i"
+              @click="navigateTo(item.path)"
+          >
+            <v-list-item-title>{{ item.title }}</v-list-item-title>
+          </v-list-item>
+        </v-list>
+        <v-list v-if="position === 'regular'" rounded="0">
+          <v-list-item
+              class="custom-list-item"
+              v-for="(item, i) in regularItems"
               :key="i"
               @click="navigateTo(item.path)"
           >
@@ -31,12 +41,16 @@
 <script>
 export default {
   name: 'Navbar',
-  props: ['username'],
+  props: ['username', 'position'],
   data() {
     return {
-      items: [
+      adminItems: [
         { title: "Добавить пользователя", path: '/e.moevm.statistics/user' },
-        { title: "Выдать новый пароль", path: '/newPassword' }
+        { title: "Выдать новый пароль", path: '/newPassword' },
+        { title: "Выход", path: '/e.moevm.statistics/auth' },
+      ],
+      regularItems: [
+        { title: "Выход", path: '/e.moevm.statistics/auth' }
       ],
       appBarHeight: 0
     };

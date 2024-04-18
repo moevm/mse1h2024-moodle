@@ -50,6 +50,24 @@ export default {
     };
   },
 
+  beforeMount() {
+    let name = sessionStorage.getItem("name");
+    if (name) {
+      const position = sessionStorage.getItem("position");
+      if (position === "regular") {
+        const error = 'Request failed. You dont have enough rights to perform the action!'
+        alert(error)
+        console.log("Недостаточно прав");
+        this.$router.push("/e.moevm.statistics/statistics");
+      }
+    } else {
+      const error = 'Request failed with status code 401. You are not sign in!'
+      alert(error)
+      console.log("Не авторизован");
+      this.$router.push("/e.moevm.statistics/auth");
+    }
+  },
+
   methods: {
     async createUser() {
       const userData = {
