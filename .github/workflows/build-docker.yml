@@ -7,17 +7,21 @@ on:
     branches: [ "main" ]
 
 jobs:
-
-  build_frontend:
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Build the Docker image for frontend
-        run: docker build client/. --tag client-image:$(date +%s)
 
-  build_backend:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: Build the Docker image for backend
-        run: docker build server/. --tag server-image:$(date +%s)
+      - name: Build docker-compose
+        run: |
+          cp server/.env .env
+          docker-compose -f docker-compose.yaml build
+      - name: Run docker-compose
+        run: |
+          docker-compose up mongodb backend frontend -d
+          sleep 10
+      - name: Run tests
+        run: |
+          curl http://localhost:8080
+          curl http://localhost:27017
+          curl http://localhost:8081
