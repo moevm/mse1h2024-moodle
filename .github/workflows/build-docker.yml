@@ -14,13 +14,12 @@ jobs:
 
       - name: Build docker-compose
         run: |
-          cp server/.env .env
           docker-compose -f docker-compose.yaml build
       - name: Run docker-compose
         run: |
           docker-compose up -d mongodb backend frontend 
           sleep 10
-      - name: Run tests
-        run: |
-          curl http://localhost:8080
-          curl http://localhost:8081
+      - name: Check health
+        uses: thegabriele97/dockercompose-health-action@main
+        with:
+          timeout: '60'

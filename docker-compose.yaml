@@ -16,6 +16,12 @@ services:
       - backend
       - moodle
       - frontend
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost" ]
+      interval: 10s
+      timeout: 1s
+      retries: 2
+      start_period: 4s
 
   mongodb:
     container_name: mongodb 
@@ -49,6 +55,12 @@ services:
     networks:
       - backend
       - frontend
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost" ]
+      interval: 10s
+      timeout: 1s
+      retries: 2
+      start_period: 4s
 
   moodle:
     container_name: moodle
