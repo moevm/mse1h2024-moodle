@@ -3,14 +3,8 @@ name: Docker Image CI
 on:
   push:
     branches: [ "main" ]
-    paths:
-      - 'client/**'
-      - 'server/**'
   pull_request:
     branches: [ "main" ]
-    paths:
-      - 'client/**'
-      - 'server/**'
 
 jobs:
 
