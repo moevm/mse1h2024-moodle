@@ -30,7 +30,7 @@
 
 <script>
 import Navbar from "@/components/Navbar.vue";
-import StatisticsTable from "@/components/Statistics/StatisticsTable.vue";
+import StatisticsTable from "@/components/Tables/StatisticsTable.vue";
 import axios from "axios";
 import Filters from "@/components/Filters/Filters.vue";
 import Search from "@/components/Filters/Search.vue";

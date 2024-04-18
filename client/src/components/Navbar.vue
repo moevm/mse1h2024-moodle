@@ -45,8 +45,9 @@ export default {
   data() {
     return {
       adminItems: [
+        { title: "Просмотр статистики", path: '/e.moevm.statistics/statistics' },
         { title: "Добавить пользователя", path: '/e.moevm.statistics/user' },
-        { title: "Выдать новый пароль", path: '/newPassword' },
+        { title: "Просмотр пользователей", path: '/e.moevm.statistics/all-users'},
         { title: "Выход", path: '/e.moevm.statistics/auth' },
       ],
       regularItems: [
@@ -56,7 +57,6 @@ export default {
     };
   },
   mounted() {
-    // Получаем высоту v-app-bar после рендеринга
     this.appBarHeight = this.$refs.appBar.$el.clientHeight + 'px';
   },
   methods: {
