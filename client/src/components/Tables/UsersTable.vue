@@ -6,15 +6,23 @@
       outlined
   >
 
-    <template v-slot:[`item.actions`]>
-      <v-icon>mdi-pencil</v-icon>
-      <v-icon>mdi-delete</v-icon>
+    <template v-slot:[`item.actions`]="{ item }">
+      <v-container v-if="item['position'] !== 'администратор'">
+        <v-icon>mdi-pencil</v-icon>
+        <v-icon @click="deleteItem(item)">mdi-delete</v-icon>
+      </v-container>
+      <v-container v-else>
+        <v-icon>mdi-pencil</v-icon>
+        <v-icon>mdi-delete</v-icon>
+      </v-container>
     </template>
 
   </v-data-table>
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   name: "UsersTable",
   props: {
@@ -22,6 +30,10 @@ export default {
       type: Array,
       required: true,
     },
+    getUsers: {
+      type: Function,
+      required: true
+    }
   },
   data() {
     return {
@@ -30,8 +42,23 @@ export default {
         { title: "Почта", key: "email", sortable: false, align: "center" },
         { title: "Роль", key: "position", sortable: false, align: "center" },
         { title: "Действия", key: "actions", sortable: false, align: "center" },
-      ],
+      ]
     };
+  },
+  methods: {
+    deleteItem(item) {
+      const userId = item.id;
+      const DEl_USER_URL = `/api/user/${userId}`
+      axios
+          .delete(DEl_USER_URL)
+          .then(() => {
+            this.getUsers();
+          })
+          .catch((error) => {
+            alert("Ошибка при удалении пользователя");
+            console.error("Ошибка при удалении пользователя:", error);
+          });
+    }
   }
 };
 </script>
