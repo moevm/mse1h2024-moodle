@@ -1,5 +1,5 @@
 <template>
-  <Line :data="chartData" />
+  <Line :data="chartData"/>
 </template>
 
 
@@ -28,17 +28,38 @@ ChartJS.register(
 export default {
   name: "Chart",
   components: { Line },
-  props: ["stock"],
+  props: {
+    info: {
+      type: Array,
+      required: true,
+    },
+  },
   data() {
-    return { chartOptions: { responsive: true } };
+    return {
+      chartOptions: {
+      },
+    };
   },
   computed: {
     chartData() {
-      let labels = ["один", "два", "три"];
-      let data = [1, 2, 3];
+      let labels = [];
+      let data = [];
+      // let maxTime = null;
+      // let minTime = null;
+      function compareDate(a, b) {
+        if (a.Date < b.Date) return -1;
+        if (a.Date > b.Date) return 1;
+        return 0;
+      }
+      let cloneInfo = this.info.slice(0);
+      cloneInfo.sort(compareDate);
+      console.log("After sort", cloneInfo);
+
       return {
         labels,
-        datasets: [{ data, borderColor: "#61dafb", label: "график", pointRadius: 1 }],
+        datasets: [
+          {data, borderColor: "#61dafb", label: "график", pointRadius: 1 },
+        ],
       };
     },
   },

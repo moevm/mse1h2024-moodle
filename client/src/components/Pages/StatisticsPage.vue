@@ -24,7 +24,7 @@
       </div>
     </Filters>
     <StatisticsTable v-if="selectedType === 'table'" :info="statisticsInfo" v-model:search="search"></StatisticsTable>
-    <Chart v-else></Chart>
+    <Chart v-else :info="statisticsInfo" :search="search"></Chart>
   </Navbar>
 </template>
 
@@ -37,7 +37,8 @@ import Search from "@/components/Filters/Search.vue";
 import Chart from "@/components/Chart.vue";
 import DateTime from "@/components/Filters/DateTime.vue";
 
-const STAT_URL = "/api/statistics/";
+//const STAT_URL = "/api/statistics/";
+const STAT_URL = "/data.json";
 
 export default {
   name: "Statistics",
@@ -125,6 +126,7 @@ export default {
                 const milliseconds = dateTime.getMilliseconds().toString().padStart(3, '0');
                 secondLayer.time = `${hours}:${minutes}:${seconds}.${milliseconds}`;
                 secondLayer.date = dateTime.toLocaleDateString('ru-RU');
+                secondLayer.Date = dateTime;
                 this.statisticsInfo.push(secondLayer);
               })
             });
@@ -133,6 +135,7 @@ export default {
             alert("Ошибка при получении данных");
             console.error("Ошибка при получении данных:", error);
           });
+        console.log(this.statisticsInfo)
     }
   }
 };
