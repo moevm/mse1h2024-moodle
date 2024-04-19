@@ -70,7 +70,7 @@ export default {
 
       const dateCount = new Map();
       cloneInfo.forEach((action) => {
-        let key = action.date + action.time;
+        let key = action.date + ' ' + action.time;
         if (!dateCount.has(key)) {
           dateCount.set(key, 1);
         } else {
