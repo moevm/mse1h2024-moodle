@@ -1,5 +1,5 @@
 <template>
-  <Line :data="chartData"/>
+  <Line :data="chartData" :options="chartOptions" />
 </template>
 
 
@@ -37,6 +37,19 @@ export default {
   data() {
     return {
       chartOptions: {
+        scales: {
+          x: {
+            display: true,
+          },
+          y: {
+            suggestedMin: 0,
+            display: true,
+            ticks: {
+              stepSize: 1
+            },
+          },
+        },
+        responsive: true,
       },
     };
   },
