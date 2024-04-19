@@ -55,6 +55,21 @@ export default {
       cloneInfo.sort(compareDate);
       console.log("After sort", cloneInfo);
 
+      const dateCount = new Map();
+      cloneInfo.forEach((action) => {
+        let key = action.date + action.time;
+        if (!dateCount.has(key)) {
+          dateCount.set(key, 1);
+        } else {
+          let val = dateCount.get(key);
+          dateCount.set(key, val + 1);
+        }
+      });
+      console.log(dateCount);
+      dateCount.entries().forEach(([key, value]) => {
+        labels.push(key);
+        data.push(value);
+      });
       return {
         labels,
         datasets: [
