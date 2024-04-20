@@ -9,12 +9,12 @@ import {
   Chart as ChartJS,
   CategoryScale,
   LinearScale,
+  TimeScale,
   PointElement,
   LineElement,
   Title,
   Tooltip,
   Legend,
-elements,
 BarElement,
 } from "chart.js";
 import { Bar } from "vue-chartjs";
@@ -22,6 +22,7 @@ import { Bar } from "vue-chartjs";
 ChartJS.register(
   CategoryScale,
   LinearScale,
+  TimeScale,
   PointElement,
   LineElement,
   Title,
@@ -47,7 +48,10 @@ export default {
       chartOptions: {
         scales: {
           x: {
-            type: 'linear',
+            type: 'time',
+            time:{
+              unit: "day"
+            },
             barThickness: 10,
             title: {
               display: true,
@@ -118,11 +122,7 @@ export default {
       if(cloneInfo.length > limit){
         let min = cloneInfo.at(0).Date;
         let max = cloneInfo.at(-1).Date;
-        delta = 100//(max - min)/(limit*10)
-      //   //cloneInfo.forEach()
-      //   arr = cloneInfo
-      // }else{
-      //   arr = cloneInfo
+        delta = (max - min)/(limit*100)
       }
 
       const dateCount = [];
@@ -137,13 +137,13 @@ export default {
       });
       dateCount.forEach(([key, value]) => {
         labels.push(key)
-        data.push(value);
+        data.push(new Date(value));
       });
       console.log(data);
       return {
         labels,
         datasets: [
-          {data,showLine: true, backgroundColor: "#61dafb", borderColor: "#61dafb", label: "график", pointRadius: 3, label: "активность", barThickness: 2},
+          {data,showLine: true, backgroundColor: "#61dafb", borderColor: "#61dafb", label: "график", label: "активность", barThickness: 2},
         ],
       };
     },

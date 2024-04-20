@@ -1,5 +1,4 @@
 <template>
-  
   <AuthForm
       :title="title"
       :width="containerWidth"
@@ -25,7 +24,6 @@
 </template>
 
 <script>
-/* eslint-disable */
 import DataInput from "@/components/Data/DataInput.vue";
 import DataForm from "@/components/Data/DataForm.vue";
 import DataButton from "@/components/Data/DataButton.vue";
@@ -75,7 +73,7 @@ export default {
       };
 
       try {
-        const response = {data: {name: "poli", surname: "koroleva", position: 1}}//await axios.post(SIGN_IN_URL, userData);
+        const response = await axios.post(SIGN_IN_URL, userData);
         console.log('Вход в систему выполнен успешно!', response.data);
         const userName = `${response.data.name} ${response.data.surname}`;
         sessionStorage.setItem("name", userName);
