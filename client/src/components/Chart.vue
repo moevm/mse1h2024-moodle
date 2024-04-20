@@ -98,48 +98,7 @@ export default {
       let data = [];
       // let maxTime = null;
       // let minTime = null;
-      function compareDate(a, b) {
-        if (a.Date < b.Date) return -1;
-        if (a.Date > b.Date) return 1;
-        return 0;
-      }
-      console.log(typeof this.search, this.search)
-      let searchLow = this.search.toLocaleLowerCase();
-      let cloneInfo = this.info.filter((action, index)=>{
-        return (index+1).toString().toLocaleLowerCase().includes(searchLow)
-         || action.FIO.toLocaleLowerCase().includes(searchLow)
-         || action.course.toLocaleLowerCase().includes(searchLow) 
-         || action.typeAction.toLocaleLowerCase().includes(searchLow) 
-         || action.action.toLocaleLowerCase().includes(searchLow)
-         || action.page.toLocaleLowerCase().includes(searchLow) 
-         || action.time.toLocaleLowerCase().includes(searchLow) 
-         || action.date.toLocaleLowerCase().includes(searchLow)
-      })
-      cloneInfo.sort(compareDate);
-      let arr = cloneInfo
-      let limit = 20;
-      let delta = 100;
-      if(cloneInfo.length > limit){
-        let min = cloneInfo.at(0).Date;
-        let max = cloneInfo.at(-1).Date;
-        delta = (max - min)/(limit*100)
-      }
-
-      const dateCount = [];
-      arr.forEach((action) => {
-        let key = +action.Date;
-        let ind = dateCount.findIndex(element => Math.abs(element[0]-key)<delta)
-        if (ind<0) {
-          dateCount.push([key, 1]);
-        } else {
-          dateCount[ind][1] +=1;
-        }
-      });
-      dateCount.forEach(([key, value]) => {
-        labels.push(key)
-        data.push(new Date(value));
-      });
-      console.log(data);
+      
       return {
         labels,
         datasets: [
