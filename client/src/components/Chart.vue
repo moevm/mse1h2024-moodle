@@ -100,15 +100,16 @@ export default {
         return 0;
       }
       console.log(typeof this.search, this.search)
+      let searchLow = this.search.toLocaleLowerCase();
       let cloneInfo = this.info.filter((action, index)=>{
-        return (index+1).toString().includes(this.search)
-         || action.FIO.includes(this.search)
-         || action.course.includes(this.search) 
-         || action.typeAction.includes(this.search) 
-         || action.action.includes(this.search)
-         || action.page.includes(this.search) 
-         || action.time.includes(this.search) 
-         || action.date.includes(this.search)
+        return (index+1).toString().toLocaleLowerCase().includes(searchLow)
+         || action.FIO.toLocaleLowerCase().includes(searchLow)
+         || action.course.toLocaleLowerCase().includes(searchLow) 
+         || action.typeAction.toLocaleLowerCase().includes(searchLow) 
+         || action.action.toLocaleLowerCase().includes(searchLow)
+         || action.page.toLocaleLowerCase().includes(searchLow) 
+         || action.time.toLocaleLowerCase().includes(searchLow) 
+         || action.date.toLocaleLowerCase().includes(searchLow)
       })
       cloneInfo.sort(compareDate);
       let arr = cloneInfo
