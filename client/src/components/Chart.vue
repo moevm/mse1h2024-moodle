@@ -99,8 +99,16 @@ export default {
         if (a.Date > b.Date) return 1;
         return 0;
       }
-      let cloneInfo = this.info.filter(action=>{
-        return action.FIO.includes(this.search)
+      console.log(typeof this.search, this.search)
+      let cloneInfo = this.info.filter((action, index)=>{
+        return (index+1).toString().includes(this.search)
+         || action.FIO.includes(this.search)
+         || action.course.includes(this.search) 
+         || action.typeAction.includes(this.search) 
+         || action.action.includes(this.search)
+         || action.page.includes(this.search) 
+         || action.time.includes(this.search) 
+         || action.date.includes(this.search)
       })
       cloneInfo.sort(compareDate);
       let arr = cloneInfo
@@ -120,11 +128,9 @@ export default {
       arr.forEach((action) => {
         let key = +action.Date;
         let ind = dateCount.findIndex(element => Math.abs(element[0]-key)<delta)
-        console.log("ind", ind)
         if (ind<0) {
           dateCount.push([key, 1]);
         } else {
-          console.log("here")
           dateCount[ind][1] +=1;
         }
       });
