@@ -31,7 +31,7 @@ class EventTypeEnum(str, Enum):
 
 
 class Payload(BaseModel):
-    timestamp: datetime = Field(default_factory=lambda: datetime.datetime.now().isoformat())
+    timestamp: datetime | str = Field(default_factory=lambda: datetime.datetime.now().isoformat())
     page: HttpUrl = Field(...)
     element_type: ElementTypeEnum = Field(...)
     element_name: str = Field(...)
