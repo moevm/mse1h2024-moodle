@@ -37,6 +37,10 @@ export default {
       type: Array,
       required: true,
     },
+    search:{
+      type: String,
+      required: true
+    }
   },
   data() {
     return {
@@ -95,15 +99,17 @@ export default {
         if (a.Date > b.Date) return 1;
         return 0;
       }
-      let cloneInfo = this.info.slice(0);
+      let cloneInfo = this.info.filter(action=>{
+        return action.FIO.includes(this.search)
+      })
       cloneInfo.sort(compareDate);
       let arr = cloneInfo
       let limit = 20;
-      let delta = 0;
+      let delta = 100;
       if(cloneInfo.length > limit){
         let min = cloneInfo.at(0).Date;
         let max = cloneInfo.at(-1).Date;
-        delta = 100000//(max - min)/(limit*10)
+        delta = 100//(max - min)/(limit*10)
       //   //cloneInfo.forEach()
       //   arr = cloneInfo
       // }else{
@@ -130,7 +136,7 @@ export default {
       return {
         labels,
         datasets: [
-          {data,showLine: true, backgroundColor: "#61dafb", borderColor: "#61dafb", label: "график", pointRadius: 3, label: "активность", spanGaps: 500000000, barThickness: 2},
+          {data,showLine: true, backgroundColor: "#61dafb", borderColor: "#61dafb", label: "график", pointRadius: 3, label: "активность", barThickness: 2},
         ],
       };
     },
