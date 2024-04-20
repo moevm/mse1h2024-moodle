@@ -1,6 +1,6 @@
 import uuid
 from pydantic import BaseModel, EmailStr, HttpUrl, Field
-import datetime
+from datetime import datetime
 from typing import List
 from enum import Enum
 
@@ -31,7 +31,7 @@ class EventTypeEnum(str, Enum):
 
 
 class Payload(BaseModel):
-    timestamp: datetime | str = Field(default_factory=lambda: datetime.datetime.now().isoformat())
+    timestamp: datetime = Field(default_factory=lambda: datetime.now().isoformat())
     page: HttpUrl = Field(...)
     element_type: ElementTypeEnum = Field(...)
     element_name: str = Field(...)
@@ -44,7 +44,7 @@ class Payload(BaseModel):
         json_schema_extra = {
             "examples": [
                 {
-                    "timestamp": datetime.datetime.now().isoformat(),
+                    "timestamp": datetime.now().isoformat(),
                     "page": "https://example.com",
                     "element_type": "button",
                     "element_name": "отправить",
@@ -52,14 +52,14 @@ class Payload(BaseModel):
                     "event_type": "mousedown"
                 },
                 {
-                    "timestamp": datetime.datetime.now().isoformat(),
+                    "timestamp": datetime.now().isoformat(),
                     "page": "https://example.com",
                     "element_type": "page",
                     "element_name": "сохранить",
                     "action_type": "hidden",
                     "event_type": "visibilitychange"},
                 {
-                    "timestamp": datetime.datetime.now().isoformat(),
+                    "timestamp": datetime.now().isoformat(),
                     "page": "https://example.com",
                     "element_type": "page",
                     "element_name": "сохранить",
@@ -91,7 +91,7 @@ class SessionData(BaseModel):
                 "course": "Курс молодого бойца",
                 "session": "sessionId",
                 "actions": [{
-                    "timestamp": datetime.datetime.now().isoformat(),
+                    "timestamp": datetime.now().isoformat(),
                     "page": "http://e.moevm.info/some_course",
                     "element_type": "button",
                     "element_name": "сохранить",
@@ -107,7 +107,7 @@ class SessionData(BaseModel):
                     "course": "Курс молодого бойца",
                     "session": "sessionId",
                     "actions": [{
-                        "timestamp": datetime.datetime.now().isoformat(),
+                        "timestamp": datetime.now().isoformat(),
                         "page": "http://e.moevm.info/some_course",
                         "element_type": "button",
                         "element_name": "сохранить",
@@ -123,7 +123,7 @@ class SessionData(BaseModel):
                     "course": "Курс молодого бойца",
                     "session": "sessionId",
                     "actions": [{
-                        "timestamp": datetime.datetime.now().isoformat(),
+                        "timestamp": datetime.now().isoformat(),
                         "page": "http://e.moevm.info/some_course",
                         "element_type": "page",
                         "element_name": "сохранить",
@@ -154,7 +154,7 @@ class CreateSessionData(BaseModel):
                 "course": "Курс молодого бойца",
                 "session": "sessionId",
                 "actions": [{
-                    "timestamp": datetime.datetime.now().isoformat(),
+                    "timestamp": datetime.now().isoformat(),
                     "page": "http://e.moevm.info/some_course",
                     "element_type": "button",
                     "element_name": "сохранить",
@@ -170,7 +170,7 @@ class CreateSessionData(BaseModel):
                     "course": "Курс молодого бойца",
                     "session": "sessionId",
                     "actions": [{
-                        "timestamp": datetime.datetime.now().isoformat(),
+                        "timestamp": datetime.now().isoformat(),
                         "page": "http://e.moevm.info/some_course",
                         "element_type": "page",
                         "element_name": "сохранить",
@@ -186,7 +186,7 @@ class CreateSessionData(BaseModel):
                     "course": "Курс молодого бойца",
                     "session": "sessionId",
                     "actions": [{
-                        "timestamp": datetime.datetime.now().isoformat(),
+                        "timestamp": datetime.now().isoformat(),
                         "page": "http://e.moevm.info/some_course",
                         "element_type": "page",
                         "element_name": "сохранить",

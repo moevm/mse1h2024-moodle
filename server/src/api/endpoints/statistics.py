@@ -1,4 +1,5 @@
 import datetime
+import logging
 from typing import List
 
 from fastapi import APIRouter, HTTPException, Body, Query
@@ -64,7 +65,6 @@ async def get_session_by_id(session_id: str):
 async def create_session(session: CreateSessionData = Body()):
     try:
         session = jsonable_encoder(session)
-        session["timestamp"] = datetime.datetime.fromisoformat(session["timestamp"])
         return await service.create_session(session)
     except Exception as e:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
