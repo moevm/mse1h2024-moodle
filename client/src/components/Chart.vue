@@ -1,5 +1,5 @@
 <template>
-  <Scatter :data="chartData" :options="chartOptions" />
+  <Bar :data="chartData" :options="chartOptions" />
 </template>
 
 
@@ -15,8 +15,9 @@ import {
   Tooltip,
   Legend,
 elements,
+BarElement,
 } from "chart.js";
-import { Scatter } from "vue-chartjs";
+import { Bar } from "vue-chartjs";
 
 ChartJS.register(
   CategoryScale,
@@ -25,11 +26,12 @@ ChartJS.register(
   LineElement,
   Title,
   Tooltip,
-  Legend
+  Legend,
+  BarElement
 );
 export default {
   name: "Chart",
-  components: { Scatter },
+  components: { Bar },
   props: {
     info: {
       type: Array,
@@ -41,13 +43,15 @@ export default {
       chartOptions: {
         scales: {
           x: {
+            type: 'linear',
+            barThickness: 10,
             title: {
               display: true,
               text: "Временной промежуток"
             },
             display: true,
             ticks:{
-              autoSkip: false,
+              // autoSkip: false,
               maxTicksLimit: 20,
               minRotation: 80,
               callback: function(value){
@@ -82,7 +86,7 @@ export default {
   },
   computed: {
     chartData() {
-      // let labels = ['u', 'a', 'y'];
+      let labels = [];
       let data = [];
       // let maxTime = null;
       // let minTime = null;
@@ -99,7 +103,7 @@ export default {
       if(cloneInfo.length > limit){
         let min = cloneInfo.at(0).Date;
         let max = cloneInfo.at(-1).Date;
-        delta = (max - min)/(limit*10)
+        delta = 100000//(max - min)/(limit*10)
       //   //cloneInfo.forEach()
       //   arr = cloneInfo
       // }else{
@@ -119,13 +123,14 @@ export default {
         }
       });
       dateCount.forEach(([key, value]) => {
-        data.push({x:key, y:value});
+        labels.push(key)
+        data.push(value);
       });
       console.log(data);
-      console.log(data.length)
       return {
+        labels,
         datasets: [
-          {data,showLine: true, borderColor: "#61dafb", label: "график", pointRadius: 3, label: "активность", spanGaps: 500000000},
+          {data,showLine: true, backgroundColor: "#61dafb", borderColor: "#61dafb", label: "график", pointRadius: 3, label: "активность", spanGaps: 500000000, barThickness: 2},
         ],
       };
     },
