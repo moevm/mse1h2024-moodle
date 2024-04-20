@@ -2,7 +2,7 @@
   <v-data-table
     class="custom-table"
     :headers="headers"
-    :items="statistics"
+    :items="info"
     item-value="number"
     outlined
     v-model="selected"
@@ -47,13 +47,6 @@ export default {
         { title: "Страница", key: "page", sortable: false, align: "center" },
       ],
     };
-  },
-  computed: {
-    statistics() {
-      return this.info.map((item) => ({
-        ...item
-      }));
-    },
   }
 };
 </script>
