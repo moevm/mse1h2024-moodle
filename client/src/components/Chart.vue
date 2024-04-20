@@ -4,6 +4,7 @@
 
 
 <script>
+/* eslint-disable */
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -13,6 +14,7 @@ import {
   Title,
   Tooltip,
   Legend,
+elements,
 } from "chart.js";
 import { Scatter } from "vue-chartjs";
 
@@ -39,15 +41,40 @@ export default {
       chartOptions: {
         scales: {
           x: {
+            title: {
+              display: true,
+              text: "Временной промежуток"
+            },
             display: true,
+            ticks:{
+              autoSkip: false,
+              maxTicksLimit: 20,
+              minRotation: 80,
+              callback: function(value){
+                let date = new Date(value);
+                const hours = date.getHours().toString().padStart(2, '0');
+                const minutes = date.getMinutes().toString().padStart(2, '0');
+                const seconds = date.getSeconds().toString().padStart(2, '0');
+                const milliseconds = date.getMilliseconds().toString().padStart(3, '0');
+                return `${date.toLocaleDateString('ru-RU')} ${hours}:${minutes}:${seconds}.${milliseconds}`;
+                }
+            }
           },
           y: {
+            title: {
+              display: true,
+              text: "Количество событий"
+            },
             suggestedMin: 0,
             display: true,
             ticks: {
               stepSize: 1
             },
           },
+        },
+        zoom: {
+          enabled: true,
+          drag: true
         },
         responsive: true,
       },
@@ -67,36 +94,38 @@ export default {
       let cloneInfo = this.info.slice(0);
       cloneInfo.sort(compareDate);
       let arr = cloneInfo
-      // if(cloneInfo.length > 10){
-        // let min = cloneInfo.at(0).Date;
-        // let max = cloneInfo.at(-1).Date;
-      //   let medium = +min + (max - min)/2
-      //   console.log(new Date(medium))
+      let limit = 20;
+      let delta = 0;
+      if(cloneInfo.length > limit){
+        let min = cloneInfo.at(0).Date;
+        let max = cloneInfo.at(-1).Date;
+        delta = (max - min)/(limit*10)
       //   //cloneInfo.forEach()
       //   arr = cloneInfo
       // }else{
       //   arr = cloneInfo
-      // }
+      }
 
-      const dateCount = new Map();
+      const dateCount = [];
       arr.forEach((action) => {
         let key = +action.Date;
-        if (!dateCount.has(key)) {
-          dateCount.set(key, 1);
+        let ind = dateCount.findIndex(element => Math.abs(element[0]-key)<delta)
+        console.log("ind", ind)
+        if (ind<0) {
+          dateCount.push([key, 1]);
         } else {
-          let val = dateCount.get(key);
-          dateCount.set(key, val + 1);
+          console.log("here")
+          dateCount[ind][1] +=1;
         }
       });
-      dateCount.entries().forEach(([key, value]) => {
+      dateCount.forEach(([key, value]) => {
         data.push({x:key, y:value});
       });
       console.log(data);
       console.log(data.length)
       return {
-        // labels,
         datasets: [
-          {data, showLine: true, borderColor: "#61dafb", label: "график", pointRadius: 3 },
+          {data,showLine: true, borderColor: "#61dafb", label: "график", pointRadius: 3, label: "активность", spanGaps: 500000000},
         ],
       };
     },
