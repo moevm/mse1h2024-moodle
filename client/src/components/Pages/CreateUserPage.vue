@@ -1,25 +1,27 @@
 <template>
-  <AuthForm
-      :title="title"
-      :width="containerWidth"
-      :height="containerHeight"
-  >
-    <DataForm fast-fail>
-      <DataInput v-model="email" label="Почта"></DataInput>
-      <DataInput v-model="surname" label="Фамилия"></DataInput>
-      <DataInput v-model="name" label="Имя"></DataInput>
-      <DataInput v-model="lastname" label="Отчество"></DataInput>
-      <DataInput
-          :append-inner-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
-          v-model="password"
-          label="Пароль"
-          :type="show1 ? 'text' : 'password'"
-          @click:append-inner="show1 = !show1">
-      </DataInput>
-      <DataButton title='готово' @click="createUser"></DataButton>
-      <DataButton class="cancel" title='отмена' @click.prevent="cancel"></DataButton>
-    </DataForm>
-  </AuthForm>
+  <Navbar :username="username" :position="position">
+    <AuthForm
+        :title="title"
+        :width="containerWidth"
+        :height="containerHeight"
+    >
+      <DataForm fast-fail>
+        <DataInput v-model="email" label="Почта"></DataInput>
+        <DataInput v-model="surname" label="Фамилия"></DataInput>
+        <DataInput v-model="name" label="Имя"></DataInput>
+        <DataInput v-model="lastname" label="Отчество"></DataInput>
+        <DataInput
+            :append-inner-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
+            v-model="password"
+            label="Пароль"
+            :type="show1 ? 'text' : 'password'"
+            @click:append-inner="show1 = !show1">
+        </DataInput>
+        <DataButton title='готово' @click="createUser"></DataButton>
+        <DataButton class="cancel" title='отмена' @click.prevent="cancel"></DataButton>
+      </DataForm>
+    </AuthForm>
+  </Navbar>
 </template>
 
 <script>
@@ -29,15 +31,18 @@ import DataButton from "@/components/Data/DataButton.vue";
 import AuthForm from "@/components/AuthForm.vue";
 
 import axios from 'axios';
+import Navbar from "@/components/Navbar.vue";
 
 const CREATE_URL = '/api/user/'
 
 export default {
   name: "CreateUser",
-  components: {AuthForm, DataButton, DataForm, DataInput},
+  components: {Navbar, AuthForm, DataButton, DataForm, DataInput},
 
   data() {
     return {
+      username: '',
+      position: '',
       title: 'Регистрация',
       containerWidth: '27%',
       containerHeight: '75%',
@@ -59,6 +64,10 @@ export default {
         alert(error)
         console.log("Недостаточно прав");
         this.$router.push("/e.moevm.statistics/statistics");
+      }
+      else {
+        this.username = name;
+        this.position = position;
       }
     } else {
       const error = 'Request failed with status code 401. You are not sign in!'
