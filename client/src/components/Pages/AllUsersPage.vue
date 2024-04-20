@@ -1,6 +1,6 @@
 <template>
   <Navbar :username="name" :position="position">
-    <UsersTable :info="usersInfo"></UsersTable>
+    <UsersTable :info="usersInfo" :get-users="getUsers"></UsersTable>
   </Navbar>
 </template>
 
