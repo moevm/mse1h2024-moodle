@@ -22,7 +22,7 @@
         "event_type": "mousedown"
       },
       {
-        "timestamp": "2023-02-02T17:00:00",
+        "timestamp": "2024-02-02T17:00:00",
         "page": "http://e.moevm.info/some_course",
         "element_type": "button",
         "element_name": "сохранить",
@@ -30,7 +30,7 @@
         "event_type": "mousedown"
       },
       {
-        "timestamp": "2023-02-02T17:00:00",
+        "timestamp": "2024-02-02T17:00:00",
         "page": "http://e.moevm.info/some_course",
         "element_type": "button",
         "element_name": "сохранить",
@@ -38,7 +38,7 @@
         "event_type": "mousedown"
       },
       {
-        "timestamp": "2023-02-02T17:00:00",
+        "timestamp": "2024-02-02T17:00:00",
         "page": "http://e.moevm.info/some_course",
         "element_type": "button",
         "element_name": "сохранить",
@@ -46,7 +46,7 @@
         "event_type": "mousedown"
       },
       {
-        "timestamp": "2023-02-02T17:00:00",
+        "timestamp": "2024-02-02T17:00:00",
         "page": "http://e.moevm.info/some_course",
         "element_type": "button",
         "element_name": "сохранить",
@@ -94,7 +94,7 @@
         "event_type": "mousedown"
       },
       {
-        "timestamp": "2024-03-02T16:00:00",
+        "timestamp": "2024-02-02T16:00:00",
         "page": "http://e.moevm.info/some_course",
         "element_type": "button",
         "element_name": "следующая страница",
@@ -102,7 +102,7 @@
         "event_type": "mousedown"
       },
       {
-        "timestamp": "2024-03-02T17:00:00",
+        "timestamp": "2024-02-02T17:00:00",
         "page": "http://e.moevm.info/some_course",
         "element_type": "button",
         "element_name": "следующая страница",
@@ -110,7 +110,7 @@
         "event_type": "mousedown"
       },
       {
-        "timestamp": "2024-03-02T19:00:00",
+        "timestamp": "2024-02-02T19:00:00",
         "page": "http://e.moevm.info/some_course",
         "element_type": "button",
         "element_name": "следующая страница",
@@ -118,7 +118,7 @@
         "event_type": "mousedown"
       },
       {
-        "timestamp": "2025-03-02T17:00:00",
+        "timestamp": "2024-01-02T17:00:00",
         "page": "http://e.moevm.info/some_course",
         "element_type": "button",
         "element_name": "следующая страница",
@@ -126,7 +126,7 @@
         "event_type": "mousedown"
       },
       {
-        "timestamp": "2025-03-02T17:00:00",
+        "timestamp": "2024-01-02T17:00:00",
         "page": "http://e.moevm.info/some_course",
         "element_type": "button",
         "element_name": "следующая страница",
@@ -134,7 +134,7 @@
         "event_type": "mousedown"
       },
       {
-        "timestamp": "2025-03-02T17:01:00",
+        "timestamp": "2024-01-02T17:01:00",
         "page": "http://e.moevm.info/some_course",
         "element_type": "button",
         "element_name": "следующая страница",
@@ -142,7 +142,7 @@
         "event_type": "mousedown"
       },
       {
-        "timestamp": "2025-03-02T17:01:00",
+        "timestamp": "2024-01-02T17:01:00",
         "page": "http://e.moevm.info/some_course",
         "element_type": "button",
         "element_name": "следующая страница",
@@ -150,7 +150,7 @@
         "event_type": "mousedown"
       },
       {
-        "timestamp": "2025-03-10T17:01:00",
+        "timestamp": "2024-01-10T17:01:00",
         "page": "http://e.moevm.info/some_course",
         "element_type": "button",
         "element_name": "следующая страница",
@@ -158,7 +158,7 @@
         "event_type": "mousedown"
       },
       {
-        "timestamp": "2025-03-11T17:01:00",
+        "timestamp": "2024-01-11T17:01:00",
         "page": "http://e.moevm.info/some_course",
         "element_type": "button",
         "element_name": "следующая страница",
@@ -166,7 +166,7 @@
         "event_type": "mousedown"
       },
       {
-        "timestamp": "2025-03-12T17:01:00",
+        "timestamp": "2024-01-12T17:01:00",
         "page": "http://e.moevm.info/some_course",
         "element_type": "button",
         "element_name": "следующая страница",
@@ -174,7 +174,7 @@
         "event_type": "mousedown"
       },
       {
-        "timestamp": "2025-03-10T17:10:00",
+        "timestamp": "2024-01-15T17:10:00",
         "page": "http://e.moevm.info/some_course",
         "element_type": "button",
         "element_name": "следующая страница",

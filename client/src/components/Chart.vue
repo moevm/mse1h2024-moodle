@@ -1,5 +1,5 @@
 <template>
-  <Line :data="chartData" :options="chartOptions" />
+  <Scatter :data="chartData" :options="chartOptions" />
 </template>
 
 
@@ -14,7 +14,7 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
-import { Line } from "vue-chartjs";
+import { Scatter } from "vue-chartjs";
 
 ChartJS.register(
   CategoryScale,
@@ -27,7 +27,7 @@ ChartJS.register(
 );
 export default {
   name: "Chart",
-  components: { Line },
+  components: { Scatter },
   props: {
     info: {
       type: Array,
@@ -55,7 +55,7 @@ export default {
   },
   computed: {
     chartData() {
-      let labels = [];
+      // let labels = ['u', 'a', 'y'];
       let data = [];
       // let maxTime = null;
       // let minTime = null;
@@ -66,11 +66,21 @@ export default {
       }
       let cloneInfo = this.info.slice(0);
       cloneInfo.sort(compareDate);
-      console.log("After sort", cloneInfo);
+      let arr = cloneInfo
+      // if(cloneInfo.length > 10){
+        // let min = cloneInfo.at(0).Date;
+        // let max = cloneInfo.at(-1).Date;
+      //   let medium = +min + (max - min)/2
+      //   console.log(new Date(medium))
+      //   //cloneInfo.forEach()
+      //   arr = cloneInfo
+      // }else{
+      //   arr = cloneInfo
+      // }
 
       const dateCount = new Map();
-      cloneInfo.forEach((action) => {
-        let key = action.date + ' ' + action.time;
+      arr.forEach((action) => {
+        let key = +action.Date;
         if (!dateCount.has(key)) {
           dateCount.set(key, 1);
         } else {
@@ -78,15 +88,15 @@ export default {
           dateCount.set(key, val + 1);
         }
       });
-      console.log(dateCount);
       dateCount.entries().forEach(([key, value]) => {
-        labels.push(key);
-        data.push(value);
+        data.push({x:key, y:value});
       });
+      console.log(data);
+      console.log(data.length)
       return {
-        labels,
+        // labels,
         datasets: [
-          {data, borderColor: "#61dafb", label: "график", pointRadius: 1 },
+          {data, showLine: true, borderColor: "#61dafb", label: "график", pointRadius: 3 },
         ],
       };
     },
