@@ -37,7 +37,7 @@ export default {
       selected: [],
       selectedRows: [],
       headers: [
-        { title: "№", key: "number", sortable: false, align: "center" },
+        { title: "ID", key: "studentId", sortable: false, align: "center" },
         { title: "ФИО", key: "FIO", sortable: false, align: "center" },
         { title: "Дата", key: "date", sortable: false, align: "center" },
         { title: "Время", key: "time", sortable: false, align: "center" },
@@ -50,9 +50,8 @@ export default {
   },
   computed: {
     statistics() {
-      return this.info.map((item, index) => ({
-        ...item,
-        number: (index + 1).toString(),
+      return this.info.map((item) => ({
+        ...item
       }));
     },
   }

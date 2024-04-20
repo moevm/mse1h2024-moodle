@@ -103,7 +103,6 @@ export default {
         }
       }
 
-
       axios
           .get(STAT_URL, { params })
           .then((response) => {
@@ -112,6 +111,7 @@ export default {
               let firstLayer = {
                 FIO: element.student,
                 course: element.course,
+                studentId: element.student_id
               };
               element.actions.forEach(action =>{
                 let secondLayer = {...firstLayer};
