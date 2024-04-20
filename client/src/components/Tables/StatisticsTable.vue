@@ -2,7 +2,7 @@
   <v-data-table
     class="custom-table"
     :headers="headers"
-    :items="statistics"
+    :items="info"
     item-value="number"
     outlined
     v-model="selected"
@@ -37,7 +37,7 @@ export default {
       selected: [],
       selectedRows: [],
       headers: [
-        { title: "№", key: "number", sortable: false, align: "center" },
+        { title: "ID", key: "studentId", sortable: false, align: "center" },
         { title: "ФИО", key: "FIO", sortable: false, align: "center" },
         { title: "Дата", key: "date", sortable: false, align: "center" },
         { title: "Время", key: "time", sortable: false, align: "center" },
@@ -47,14 +47,6 @@ export default {
         { title: "Страница", key: "page", sortable: false, align: "center" },
       ],
     };
-  },
-  computed: {
-    statistics() {
-      return this.info.map((item, index) => ({
-        ...item,
-        number: (index + 1).toString(),
-      }));
-    },
   }
 };
 </script>
