@@ -1,6 +1,6 @@
 from bson.objectid import ObjectId
-
 from src.core.modules.database.errors import RepoNotFoundError
+from src.models.filter import SessionFilter
 
 
 class MongoStatisticRepo:
@@ -9,17 +9,7 @@ class MongoStatisticRepo:
 
     async def get_all_sessions(self, filters) -> list:
         stats = []
-        query = {
-            'actions': {
-                '$elemMatch': {
-                    'timestamp': {
-                        '$gte': filters.timestamp__gte,
-                        '$lte': filters.timestamp__lte
-                    }
-                }
-            }
-        }
-        for session in await self.client.statistics.find(query).to_list(length=None):
+        for session in await self.client.statistics.find(time_query(filters)).to_list(length=None):
             session["_id"] = str(session["_id"])
             stats.append(session)
         return stats
@@ -42,3 +32,16 @@ class MongoStatisticRepo:
         if stat:
             return await self.client.statistics.delete_one({"_id": ObjectId(record_id)})
         raise RepoNotFoundError(f'record {record_id} not found')
+
+
+def time_query(filters: SessionFilter) -> dict:
+    return {
+        'actions': {
+            '$elemMatch': {
+                'timestamp': {
+                    '$gte': filters.timestamp__gte,
+                    '$lte': filters.timestamp__lte
+                }
+            }
+        }
+    }
