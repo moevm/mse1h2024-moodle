@@ -1,6 +1,9 @@
 <template>
   <div class="window">
-    <Bar :data="chartData" :options="chartOptions" />
+    <div id="wrap">
+      <button id="reset" @click="resetGraph">Reset</button>
+    </div>
+    <Bar ref="myChart" :data="chartData" :options="chartOptions" />
   </div>
 </template>
 
@@ -166,8 +169,7 @@ export default {
           {
             data,
             showLine: true,
-            backgroundColor: "#61dafb",
-            borderColor: "#61dafb",
+            backgroundColor: "#5e93b9",
             label: "график",
             label: "активность",
             barThickness: 2,
@@ -176,6 +178,11 @@ export default {
       };
     },
   },
+  methods: {
+    resetGraph(){
+      this.$refs.myChart.chart.resetZoom();
+    }
+  }
 };
 </script>
 
@@ -184,7 +191,22 @@ export default {
 .window {
   height: 85%;
   display: flex;
+  align-items: stretch;
+  flex-direction: row;
   justify-content: center;
-  align-items: center;
 }
+
+
+#reset{
+  padding: 6px 10px 6px 10px;
+  border-radius: 10px;
+  background-color: #f4f5f6;
+  color: #5e93b9;
+}
+
+#reset:hover {
+  background-color: #eaecee;
+}
+
+
 </style>
