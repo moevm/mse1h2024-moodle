@@ -10,16 +10,39 @@ paths:
       - statistics
       summary: Get All Sessions
       operationId: get_all_sessions_api_statistics__get
+      parameters:
+      - name: begin_timestamp
+        in: query
+        required: false
+        schema:
+          description: start
+          default: '1970-01-01T00:00:00'
+          title: Begin Timestamp
+        description: start
+      - name: end_timestamp
+        in: query
+        required: false
+        schema:
+          description: stop
+          default: '2024-04-21T01:21:12.434765'
+          title: End Timestamp
+        description: stop
       responses:
         '200':
           description: Get statistics
           content:
             application/json:
               schema:
+                type: array
                 items:
                   $ref: '#/components/schemas/SessionData'
-                type: array
                 title: Response Get All Sessions Api Statistics  Get
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
     post:
       tags:
       - api
@@ -27,11 +50,11 @@ paths:
       summary: Create Session
       operationId: create_session_api_statistics__post
       requestBody:
+        required: true
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/CreateSessionData'
-        required: true
       responses:
         '201':
           description: Add new session
@@ -217,14 +240,46 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/HTTPValidationError'
+  /api/auth/sign-in:
+    post:
+      tags:
+      - api
+      - authorization
+      summary: Signin
+      operationId: signin_api_auth_sign_in_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SignInData'
+        required: true
+      responses:
+        '200':
+          description: User authorization
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
     ActionTypeEnum:
       type: string
-      const: conversation
+      enum:
+      - conversation
+      - visible
+      - hidden
       title: ActionTypeEnum
     CreateSessionData:
       properties:
+        student_id:
+          type: integer
+          title: Student Id
         student:
           type: string
           title: Student
@@ -245,25 +300,55 @@ components:
           title: Actions
       type: object
       required:
+      - student_id
       - student
       - email
       - course
       - session
       title: CreateSessionData
-      example:
-        actions:
+      examples:
+      - actions:
         - action_type: conversation
-          date: '2024-02-02'
           element_name: "\u0441\u043E\u0445\u0440\u0430\u043D\u0438\u0442\u044C"
           element_type: button
           event_type: mousedown
           page: http://e.moevm.info/some_course
-          time: '14:00:00'
+          timestamp: '2024-04-21T01:21:12.425537'
         course: "\u041A\u0443\u0440\u0441 \u043C\u043E\u043B\u043E\u0434\u043E\u0433\
           \u043E \u0431\u043E\u0439\u0446\u0430"
         email: iiivanov@edu.ru
+        id: d51e21c5-38d9-4db5-a131-fa57378be70b
         session: sessionId
         student: "\u0418\u0432\u0430\u043D\u043E\u0432 \u0418\u0432\u0430\u043D"
+        student_id: 1
+      - actions:
+        - action_type: hidden
+          element_name: "\u0441\u043E\u0445\u0440\u0430\u043D\u0438\u0442\u044C"
+          element_type: page
+          event_type: visibilitychange
+          page: http://e.moevm.info/some_course
+          timestamp: '2024-04-21T01:21:12.425620'
+        course: "\u041A\u0443\u0440\u0441 \u043C\u043E\u043B\u043E\u0434\u043E\u0433\
+          \u043E \u0431\u043E\u0439\u0446\u0430"
+        email: iiivanov@edu.ru
+        id: d6e40d55-6927-4140-8bf4-a68e404e0326
+        session: sessionId
+        student: "\u0418\u0432\u0430\u043D\u043E\u0432 \u0418\u0432\u0430\u043D"
+        student_id: 1
+      - actions:
+        - action_type: visible
+          element_name: "\u0441\u043E\u0445\u0440\u0430\u043D\u0438\u0442\u044C"
+          element_type: page
+          event_type: visibilitychange
+          page: http://e.moevm.info/some_course
+          timestamp: '2024-04-21T01:21:12.425620'
+        course: "\u041A\u0443\u0440\u0441 \u043C\u043E\u043B\u043E\u0434\u043E\u0433\
+          \u043E \u0431\u043E\u0439\u0446\u0430"
+        email: iiivanov@edu.ru
+        id: d57a7710-4260-4629-8fa5-5615dbc5c042
+        session: sessionId
+        student: "\u0418\u0432\u0430\u043D\u043E\u0432 \u0418\u0432\u0430\u043D"
+        student_id: 1
     CreateUser:
       properties:
         name:
@@ -298,11 +383,15 @@ components:
         surname: "\u0418\u0432\u0430\u043D\u043E\u0432"
     ElementTypeEnum:
       type: string
-      const: button
+      enum:
+      - button
+      - page
       title: ElementTypeEnum
     EventTypeEnum:
       type: string
-      const: mousedown
+      enum:
+      - mousedown
+      - visibilitychange
       title: EventTypeEnum
     HTTPValidationError:
       properties:
@@ -315,12 +404,10 @@ components:
       title: HTTPValidationError
     Payload:
       properties:
-        date:
+        timestamp:
           type: string
-          title: Date
-        time:
-          type: string
-          title: Time
+          format: date-time
+          title: Timestamp
         page:
           type: string
           maxLength: 2083
@@ -344,14 +431,25 @@ components:
       - action_type
       - event_type
       title: Payload
-      example:
-        action_type: conversation
-        date: '2024-03-16'
+      examples:
+      - action_type: conversation
         element_name: "\u043E\u0442\u043F\u0440\u0430\u0432\u0438\u0442\u044C"
         element_type: button
         event_type: mousedown
         page: https://example.com
-        time: '16:16:05.879157'
+        timestamp: '2024-04-21T01:21:12.408827'
+      - action_type: hidden
+        element_name: "\u0441\u043E\u0445\u0440\u0430\u043D\u0438\u0442\u044C"
+        element_type: page
+        event_type: visibilitychange
+        page: https://example.com
+        timestamp: '2024-04-21T01:21:12.408827'
+      - action_type: visible
+        element_name: "\u0441\u043E\u0445\u0440\u0430\u043D\u0438\u0442\u044C"
+        element_type: page
+        event_type: visibilitychange
+        page: https://example.com
+        timestamp: '2024-04-21T01:21:12.408827'
     Role:
       type: string
       enum:
@@ -363,6 +461,9 @@ components:
         _id:
           type: string
           title: ' Id'
+        student_id:
+          type: integer
+          title: Student Id
         student:
           type: string
           title: Student
@@ -383,26 +484,72 @@ components:
           title: Actions
       type: object
       required:
+      - student_id
       - student
       - email
       - course
       - session
       title: SessionData
-      example:
-        actions:
+      examples:
+      - actions:
         - action_type: conversation
-          date: '2024-02-02'
           element_name: "\u0441\u043E\u0445\u0440\u0430\u043D\u0438\u0442\u044C"
           element_type: button
           event_type: mousedown
           page: http://e.moevm.info/some_course
-          time: '14:00:00'
+          timestamp: '2024-04-21T01:21:12.414387'
         course: "\u041A\u0443\u0440\u0441 \u043C\u043E\u043B\u043E\u0434\u043E\u0433\
           \u043E \u0431\u043E\u0439\u0446\u0430"
         email: iiivanov@edu.ru
-        id: 16775ef6-2055-474f-8bb0-17129a9e9bb4
+        id: 2505421e-d7cf-4f37-9009-a73252c67154
         session: sessionId
         student: "\u0418\u0432\u0430\u043D\u043E\u0432 \u0418\u0432\u0430\u043D"
+        student_id: 1
+      - actions:
+        - action_type: hidden
+          element_name: "\u0441\u043E\u0445\u0440\u0430\u043D\u0438\u0442\u044C"
+          element_type: button
+          event_type: visibilitychange
+          page: http://e.moevm.info/some_course
+          timestamp: '2024-04-21T01:21:12.414387'
+        course: "\u041A\u0443\u0440\u0441 \u043C\u043E\u043B\u043E\u0434\u043E\u0433\
+          \u043E \u0431\u043E\u0439\u0446\u0430"
+        email: iiivanov@edu.ru
+        id: 9b3a23a9-e6cf-4bb6-94ec-b7e1ea6c44d0
+        session: sessionId
+        student: "\u0418\u0432\u0430\u043D\u043E\u0432 \u0418\u0432\u0430\u043D"
+        student_id: 1
+      - actions:
+        - action_type: visible
+          element_name: "\u0441\u043E\u0445\u0440\u0430\u043D\u0438\u0442\u044C"
+          element_type: page
+          event_type: visibilitychange
+          page: http://e.moevm.info/some_course
+          timestamp: '2024-04-21T01:21:12.414387'
+        course: "\u041A\u0443\u0440\u0441 \u043C\u043E\u043B\u043E\u0434\u043E\u0433\
+          \u043E \u0431\u043E\u0439\u0446\u0430"
+        email: iiivanov@edu.ru
+        id: cfe8b8cb-e51e-4997-9de6-431b1fc35734
+        session: sessionId
+        student: "\u0418\u0432\u0430\u043D\u043E\u0432 \u0418\u0432\u0430\u043D"
+        student_id: 1
+    SignInData:
+      properties:
+        email:
+          type: string
+          format: email
+          title: Email
+        password:
+          type: string
+          title: Password
+      type: object
+      required:
+      - email
+      - password
+      title: SignInData
+      example:
+        email: iiivanov@edu.ru
+        password: sdfsdfwgesdgcx
     UpdateUser:
       properties:
         name:
@@ -485,7 +632,7 @@ components:
       title: User
       example:
         email: iiivanov@edu.ru
-        id: 93847760-2d50-44f2-b524-b2d167c91016
+        id: 9ab5557a-4e57-46b4-a245-ca3abcf2eedb
         lastname: "\u0418\u0432\u0430\u043D\u043E\u0432\u0438\u0447"
         name: "\u0418\u0432\u0430\u043D"
         password: sdfsdfwgesdgcx
