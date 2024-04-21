@@ -24,7 +24,7 @@
       </div>
     </Filters>
     <StatisticsTable v-if="selectedType === 'table'" :info="statisticsInfo" v-model:search="search"></StatisticsTable>
-    <Chart v-else></Chart>
+    <Chart v-else :info="statisticsInfo" :search="search"></Chart>
   </Navbar>
 </template>
 
@@ -125,6 +125,7 @@ export default {
                 const milliseconds = dateTime.getMilliseconds().toString().padStart(3, '0');
                 secondLayer.time = `${hours}:${minutes}:${seconds}.${milliseconds}`;
                 secondLayer.date = dateTime.toLocaleDateString('ru-RU');
+                secondLayer.Date = dateTime;
                 this.statisticsInfo.push(secondLayer);
               })
             });
