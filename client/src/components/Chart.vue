@@ -101,9 +101,12 @@ export default {
         return 0;
       }
       console.log(typeof this.search, this.search)
-      let searchLow = this.search.toLocaleLowerCase();
-      let cloneInfo = this.info.filter((action, index)=>{
-        return (index+1).toString().toLocaleLowerCase().includes(searchLow)
+      let searchLow = '';
+      if(this.search){
+        searchLow = this.search.toLocaleLowerCase()
+      };
+      let cloneInfo = this.info.filter((action)=>{
+        return action.studentId.toString().toLocaleLowerCase().includes(searchLow)
          || action.FIO.toLocaleLowerCase().includes(searchLow)
          || action.course.toLocaleLowerCase().includes(searchLow) 
          || action.typeAction.toLocaleLowerCase().includes(searchLow) 
