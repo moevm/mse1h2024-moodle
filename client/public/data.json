@@ -4,7 +4,6 @@
     "email": "diana@mail.ru",
     "student_id": "7348",
     "course": "Курс молодого бойца",
-    "session": "",
     "actions": [
       {
         "timestamp": "2024-02-02T15:00:00",
@@ -61,7 +60,6 @@
     "email": "daniil@mail.ru",
     "student_id": "1634",
     "course": "Курс молодого бойца",
-    "session": "",
     "actions": [
       {
         "timestamp": "2024-02-02T13:00:00",

@@ -76,7 +76,6 @@ class SessionData(BaseModel):
     student: str = Field(...)
     email: EmailStr = Field(...)
     course: str = Field(...)
-    session: str = Field(...)
     actions: List[Payload] = Field(default_factory=list)
 
     class Config:
@@ -89,7 +88,6 @@ class SessionData(BaseModel):
                 "student": "Иванов Иван",
                 "email": "iiivanov@edu.ru",
                 "course": "Курс молодого бойца",
-                "session": "sessionId",
                 "actions": [{
                     "timestamp": datetime.now().isoformat(),
                     "page": "http://e.moevm.info/some_course",
@@ -105,7 +103,6 @@ class SessionData(BaseModel):
                     "student": "Иванов Иван",
                     "email": "iiivanov@edu.ru",
                     "course": "Курс молодого бойца",
-                    "session": "sessionId",
                     "actions": [{
                         "timestamp": datetime.now().isoformat(),
                         "page": "http://e.moevm.info/some_course",
@@ -121,7 +118,6 @@ class SessionData(BaseModel):
                     "student_id": 1,
                     "email": "iiivanov@edu.ru",
                     "course": "Курс молодого бойца",
-                    "session": "sessionId",
                     "actions": [{
                         "timestamp": datetime.now().isoformat(),
                         "page": "http://e.moevm.info/some_course",
@@ -130,6 +126,7 @@ class SessionData(BaseModel):
                         "action_type": "visible",
                         "event_type": "visibilitychange"
                     }]
+                    
                 }]
         }
 
@@ -139,7 +136,6 @@ class CreateSessionData(BaseModel):
     student: str = Field(...)
     email: EmailStr = Field(...)
     course: str = Field(...)
-    session: str = Field(...)
     actions: List[Payload] = Field(default_factory=list)
 
     class Config:
@@ -152,7 +148,6 @@ class CreateSessionData(BaseModel):
                 "student": "Иванов Иван",
                 "email": "iiivanov@edu.ru",
                 "course": "Курс молодого бойца",
-                "session": "sessionId",
                 "actions": [{
                     "timestamp": datetime.now().isoformat(),
                     "page": "http://e.moevm.info/some_course",
@@ -168,7 +163,6 @@ class CreateSessionData(BaseModel):
                     "student": "Иванов Иван",
                     "email": "iiivanov@edu.ru",
                     "course": "Курс молодого бойца",
-                    "session": "sessionId",
                     "actions": [{
                         "timestamp": datetime.now().isoformat(),
                         "page": "http://e.moevm.info/some_course",
@@ -184,7 +178,6 @@ class CreateSessionData(BaseModel):
                     "student": "Иванов Иван",
                     "email": "iiivanov@edu.ru",
                     "course": "Курс молодого бойца",
-                    "session": "sessionId",
                     "actions": [{
                         "timestamp": datetime.now().isoformat(),
                         "page": "http://e.moevm.info/some_course",

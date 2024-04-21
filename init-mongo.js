@@ -33,7 +33,6 @@ db.statistics.insertMany([
         "student": "Диана Романенко",
         "email": "diana@mail.ru",
         "course": "Курс молодого бойца",
-        "session": "123",
         "actions": [
             {
                 "timestamp": new Date("2024-02-02T14:00:00"),
@@ -50,7 +49,6 @@ db.statistics.insertMany([
         "student": "Беззубов Даниил",
         "email": "daniil@mail.ru",
         "course": "Курс молодого бойца",
-        "session": "1234",
         "actions": [
             {
                 "timestamp": new Date("2024-02-02T14:00:00"),
