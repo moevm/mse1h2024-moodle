@@ -70,4 +70,5 @@ docker compose -f .\docker-compose.prod.yaml up
  - `debug` $-$ необходимо лишь для дальнейшей разработки. По умолчанию будет `false`.
 
 В ветке `main` находится скрипт, работающий на e.moevm.info
+
 В ветке `#137-local-moodle-tracker` находится версия скрипта для работы с локальной чистой версией moodle.
