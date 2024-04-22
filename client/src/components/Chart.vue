@@ -93,6 +93,8 @@ export default {
                 let date = tooltipItem[0].parsed.x;
                 return new Date(date).toISOString();
               },
+            },
+          },
           zoom: {
             zoom: {
               wheel: {
