@@ -180,6 +180,62 @@
         "element_name": "следующая страница",
         "action_type": "conversation",
         "event_type": "mousedown"
+      },
+      {
+        "timestamp": "2024-01-15T17:10:00",
+        "page": "http://e.moevm.info/some_course",
+        "element_type": "button",
+        "element_name": "следующая страница",
+        "action_type": "conversation",
+        "event_type": "mousedown"
+      },
+      {
+        "timestamp": "2024-01-15T17:10:00",
+        "page": "http://e.moevm.info/some_course",
+        "element_type": "button",
+        "element_name": "следующая страница",
+        "action_type": "conversation",
+        "event_type": "mousedown"
+      },
+      {
+        "timestamp": "2024-01-15T17:10:00",
+        "page": "http://e.moevm.info/some_course",
+        "element_type": "button",
+        "element_name": "следующая страница",
+        "action_type": "conversation",
+        "event_type": "mousedown"
+      },
+      {
+        "timestamp": "2024-01-15T17:10:00",
+        "page": "http://e.moevm.info/some_course",
+        "element_type": "button",
+        "element_name": "следующая страница",
+        "action_type": "conversation",
+        "event_type": "mousedown"
+      },
+      {
+        "timestamp": "2024-01-15T17:10:00",
+        "page": "http://e.moevm.info/some_course",
+        "element_type": "button",
+        "element_name": "следующая страница",
+        "action_type": "conversation",
+        "event_type": "mousedown"
+      },
+      {
+        "timestamp": "2024-01-15T17:10:00",
+        "page": "http://e.moevm.info/some_course",
+        "element_type": "button",
+        "element_name": "следующая страница",
+        "action_type": "conversation",
+        "event_type": "mousedown"
+      },
+      {
+        "timestamp": "2024-01-15T17:10:00",
+        "page": "http://e.moevm.info/some_course",
+        "element_type": "button",
+        "element_name": "следующая страница",
+        "action_type": "conversation",
+        "event_type": "mousedown"
       }
     ]
   }
