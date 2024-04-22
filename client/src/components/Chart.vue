@@ -23,6 +23,7 @@ import {
   BarElement,
 } from "chart.js";
 import { Bar } from "vue-chartjs";
+import "chartjs-adapter-moment";
 import zoomPlugin from "chartjs-plugin-zoom";
 
 ChartJS.register(
@@ -55,7 +56,12 @@ export default {
       chartOptions: {
         scales: {
           x: {
-            type: "linear",
+            type: "time",
+            time: {
+              displayFormats: {
+                day: "DD MMM YYYY HH:mm:ss.sss",
+              },
+            },
             barThickness: 10,
             title: {
               display: true,
@@ -63,17 +69,8 @@ export default {
             },
             display: true,
             ticks: {
-              // autoSkip: false,
               maxTicksLimit: 20,
               minRotation: 45,
-              callback: function (value) {
-                let date = new Date(value);
-                const hours = date.getHours().toString().padStart(2, "0");
-                const minutes = date.getMinutes().toString().padStart(2, "0");
-                const seconds = date.getSeconds().toString().padStart(2, "0");
-                const milliseconds = date.getMilliseconds().toString().padStart(3, "0");
-                return `${date.toLocaleDateString("ru-RU")} ${hours}:${minutes}:${seconds}.${milliseconds}`;
-              },
             },
           },
           y: {
@@ -89,6 +86,15 @@ export default {
           },
         },
         plugins: {
+          tooltip: {
+            callbacks: {
+              title: function (tooltipItem) {
+                console.log("tooltipItem", tooltipItem);
+                let date = tooltipItem[0].parsed.x;
+                return new Date(date).toISOString();
+              },
+            },
+          },
           zoom: {
             zoom: {
               wheel: {
@@ -172,7 +178,7 @@ export default {
             backgroundColor: "#5e93b9",
             label: "график",
             label: "активность",
-            barThickness: 2,
+            barThickness: 4,
           },
         ],
       };
