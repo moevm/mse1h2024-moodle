@@ -1,5 +1,10 @@
 <template>
-  <Bar :data="chartData" :options="chartOptions" />
+  <div class="window">
+    <div id="wrap">
+      <button id="reset" @click="resetGraph">Reset</button>
+    </div>
+    <Bar ref="myChart" :data="chartData" :options="chartOptions" />
+  </div>
 </template>
 
 
@@ -19,6 +24,7 @@ import {
 } from "chart.js";
 import { Bar } from "vue-chartjs";
 import "chartjs-adapter-moment";
+import zoomPlugin from "chartjs-plugin-zoom";
 
 ChartJS.register(
   CategoryScale,
@@ -29,7 +35,8 @@ ChartJS.register(
   Title,
   Tooltip,
   Legend,
-  BarElement
+  BarElement,
+  zoomPlugin
 );
 export default {
   name: "Chart",
@@ -63,8 +70,7 @@ export default {
             display: true,
             ticks: {
               maxTicksLimit: 20,
-              minRotation: 80,
-              
+              minRotation: 45,
             },
           },
           y: {
@@ -87,6 +93,20 @@ export default {
                 let date = tooltipItem[0].parsed.x;
                 return new Date(date).toISOString();
               },
+          zoom: {
+            zoom: {
+              wheel: {
+                enabled: true,
+              },
+              mode: "xy",
+            },
+            pan: {
+              enabled: true,
+              mode: "xy",
+            },
+            limits: {
+              x: { min: 0},
+              y: { min: 0},
             },
           },
         },
@@ -135,9 +155,7 @@ export default {
       const dateCount = [];
       arr.forEach((action) => {
         let key = +action.Date;
-        let ind = dateCount.findIndex(
-          (element) => Math.abs(element[0] - key) < delta
-        );
+        let ind = dateCount.findIndex((element) => Math.abs(element[0] - key) < delta);
         if (ind < 0) {
           dateCount.push([key, 1]);
         } else {
@@ -155,8 +173,7 @@ export default {
           {
             data,
             showLine: true,
-            backgroundColor: "#61dafb",
-            borderColor: "#61dafb",
+            backgroundColor: "#5e93b9",
             label: "график",
             label: "активность",
             barThickness: 4,
@@ -165,9 +182,35 @@ export default {
       };
     },
   },
+  methods: {
+    resetGraph(){
+      this.$refs.myChart.chart.resetZoom();
+    }
+  }
 };
 </script>
 
 
 <style>
+.window {
+  height: 85%;
+  display: flex;
+  align-items: stretch;
+  flex-direction: row;
+  justify-content: center;
+}
+
+
+#reset{
+  padding: 6px 10px 6px 10px;
+  border-radius: 10px;
+  background-color: #f4f5f6;
+  color: #5e93b9;
+}
+
+#reset:hover {
+  background-color: #eaecee;
+}
+
+
 </style>

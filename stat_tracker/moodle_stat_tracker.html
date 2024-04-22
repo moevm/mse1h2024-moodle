@@ -86,7 +86,7 @@
             else
                 name = e.target.nodeName.toLowerCase()
             trackingEntity = {
-                date: `${date.toISOString()}`,
+                timestamp: `${date.toISOString()}`,
                 page: interactor.session.page.href,
                 element_type: element_type,
                 element_name: name,
@@ -167,9 +167,8 @@
             var trackingEntity = {
                 student: getUserName(), 
                 email: interactor.email, 
-                user_id: getUserID(),
+                student_id: getUserID(),
                 course: getCourseName(), 
-                session: "123",
                 actions: interactor.records
             }
             console.log(trackingEntity)

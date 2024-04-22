@@ -29,11 +29,10 @@ db.users.insertMany([
 
 db.statistics.insertMany([
     {
-        "student_id": 2,
+        "student_id": 2071,
         "student": "Диана Романенко",
         "email": "diana@mail.ru",
         "course": "Курс молодого бойца",
-        "session": "123",
         "actions": [
             {
                 "timestamp": new Date("2024-02-02T14:00:00"),
@@ -46,11 +45,10 @@ db.statistics.insertMany([
         ]
     },
     {
-        "student_id": 3,        
+        "student_id": 824,        
         "student": "Беззубов Даниил",
         "email": "daniil@mail.ru",
         "course": "Курс молодого бойца",
-        "session": "1234",
         "actions": [
             {
                 "timestamp": new Date("2024-02-02T14:00:00"),
