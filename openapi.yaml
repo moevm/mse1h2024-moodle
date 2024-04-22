@@ -15,18 +15,13 @@ paths:
         in: query
         required: false
         schema:
-          description: start
           default: '1970-01-01T00:00:00'
           title: Begin Timestamp
-        description: start
       - name: end_timestamp
         in: query
         required: false
         schema:
-          description: stop
-          default: '2024-04-21T01:21:12.434765'
           title: End Timestamp
-        description: stop
       responses:
         '200':
           description: Get statistics
@@ -290,9 +285,6 @@ components:
         course:
           type: string
           title: Course
-        session:
-          type: string
-          title: Session
         actions:
           items:
             $ref: '#/components/schemas/Payload'
@@ -304,7 +296,6 @@ components:
       - student
       - email
       - course
-      - session
       title: CreateSessionData
       examples:
       - actions:
@@ -313,12 +304,11 @@ components:
           element_type: button
           event_type: mousedown
           page: http://e.moevm.info/some_course
-          timestamp: '2024-04-21T01:21:12.425537'
+          timestamp: '2024-04-22T22:20:41.666288'
         course: "\u041A\u0443\u0440\u0441 \u043C\u043E\u043B\u043E\u0434\u043E\u0433\
           \u043E \u0431\u043E\u0439\u0446\u0430"
         email: iiivanov@edu.ru
-        id: d51e21c5-38d9-4db5-a131-fa57378be70b
-        session: sessionId
+        id: 823642bf-0e6f-40cd-8d45-9537ca7c0e7d
         student: "\u0418\u0432\u0430\u043D\u043E\u0432 \u0418\u0432\u0430\u043D"
         student_id: 1
       - actions:
@@ -327,12 +317,11 @@ components:
           element_type: page
           event_type: visibilitychange
           page: http://e.moevm.info/some_course
-          timestamp: '2024-04-21T01:21:12.425620'
+          timestamp: '2024-04-22T22:20:41.666288'
         course: "\u041A\u0443\u0440\u0441 \u043C\u043E\u043B\u043E\u0434\u043E\u0433\
           \u043E \u0431\u043E\u0439\u0446\u0430"
         email: iiivanov@edu.ru
-        id: d6e40d55-6927-4140-8bf4-a68e404e0326
-        session: sessionId
+        id: c295fcf9-e95e-4ec9-afbb-403e31ee55dc
         student: "\u0418\u0432\u0430\u043D\u043E\u0432 \u0418\u0432\u0430\u043D"
         student_id: 1
       - actions:
@@ -341,12 +330,11 @@ components:
           element_type: page
           event_type: visibilitychange
           page: http://e.moevm.info/some_course
-          timestamp: '2024-04-21T01:21:12.425620'
+          timestamp: '2024-04-22T22:20:41.666288'
         course: "\u041A\u0443\u0440\u0441 \u043C\u043E\u043B\u043E\u0434\u043E\u0433\
           \u043E \u0431\u043E\u0439\u0446\u0430"
         email: iiivanov@edu.ru
-        id: d57a7710-4260-4629-8fa5-5615dbc5c042
-        session: sessionId
+        id: 1e592f38-2097-4856-b98f-0f0f5bd26474
         student: "\u0418\u0432\u0430\u043D\u043E\u0432 \u0418\u0432\u0430\u043D"
         student_id: 1
     CreateUser:
@@ -392,6 +380,8 @@ components:
       enum:
       - mousedown
       - visibilitychange
+      - copy
+      - paste
       title: EventTypeEnum
     HTTPValidationError:
       properties:
@@ -437,19 +427,19 @@ components:
         element_type: button
         event_type: mousedown
         page: https://example.com
-        timestamp: '2024-04-21T01:21:12.408827'
+        timestamp: '2024-04-22T22:20:41.661296'
       - action_type: hidden
         element_name: "\u0441\u043E\u0445\u0440\u0430\u043D\u0438\u0442\u044C"
         element_type: page
         event_type: visibilitychange
         page: https://example.com
-        timestamp: '2024-04-21T01:21:12.408827'
+        timestamp: '2024-04-22T22:20:41.661296'
       - action_type: visible
         element_name: "\u0441\u043E\u0445\u0440\u0430\u043D\u0438\u0442\u044C"
         element_type: page
         event_type: visibilitychange
         page: https://example.com
-        timestamp: '2024-04-21T01:21:12.408827'
+        timestamp: '2024-04-22T22:20:41.661296'
     Role:
       type: string
       enum:
@@ -474,9 +464,6 @@ components:
         course:
           type: string
           title: Course
-        session:
-          type: string
-          title: Session
         actions:
           items:
             $ref: '#/components/schemas/Payload'
@@ -488,7 +475,6 @@ components:
       - student
       - email
       - course
-      - session
       title: SessionData
       examples:
       - actions:
@@ -497,12 +483,11 @@ components:
           element_type: button
           event_type: mousedown
           page: http://e.moevm.info/some_course
-          timestamp: '2024-04-21T01:21:12.414387'
+          timestamp: '2024-04-22T22:20:41.663291'
         course: "\u041A\u0443\u0440\u0441 \u043C\u043E\u043B\u043E\u0434\u043E\u0433\
           \u043E \u0431\u043E\u0439\u0446\u0430"
         email: iiivanov@edu.ru
-        id: 2505421e-d7cf-4f37-9009-a73252c67154
-        session: sessionId
+        id: b0fab966-f468-4086-8bc8-6ffd3543f5b6
         student: "\u0418\u0432\u0430\u043D\u043E\u0432 \u0418\u0432\u0430\u043D"
         student_id: 1
       - actions:
@@ -511,12 +496,11 @@ components:
           element_type: button
           event_type: visibilitychange
           page: http://e.moevm.info/some_course
-          timestamp: '2024-04-21T01:21:12.414387'
+          timestamp: '2024-04-22T22:20:41.663291'
         course: "\u041A\u0443\u0440\u0441 \u043C\u043E\u043B\u043E\u0434\u043E\u0433\
           \u043E \u0431\u043E\u0439\u0446\u0430"
         email: iiivanov@edu.ru
-        id: 9b3a23a9-e6cf-4bb6-94ec-b7e1ea6c44d0
-        session: sessionId
+        id: 90890a86-7943-41ff-9daf-2d17e6427b74
         student: "\u0418\u0432\u0430\u043D\u043E\u0432 \u0418\u0432\u0430\u043D"
         student_id: 1
       - actions:
@@ -525,12 +509,11 @@ components:
           element_type: page
           event_type: visibilitychange
           page: http://e.moevm.info/some_course
-          timestamp: '2024-04-21T01:21:12.414387'
+          timestamp: '2024-04-22T22:20:41.663291'
         course: "\u041A\u0443\u0440\u0441 \u043C\u043E\u043B\u043E\u0434\u043E\u0433\
           \u043E \u0431\u043E\u0439\u0446\u0430"
         email: iiivanov@edu.ru
-        id: cfe8b8cb-e51e-4997-9de6-431b1fc35734
-        session: sessionId
+        id: c25b1ee6-9a41-4945-8764-33885aba05a2
         student: "\u0418\u0432\u0430\u043D\u043E\u0432 \u0418\u0432\u0430\u043D"
         student_id: 1
     SignInData:
@@ -632,7 +615,7 @@ components:
       title: User
       example:
         email: iiivanov@edu.ru
-        id: 9ab5557a-4e57-46b4-a245-ca3abcf2eedb
+        id: b532b31f-0d6e-4a6e-9327-92b58eff6c0c
         lastname: "\u0418\u0432\u0430\u043D\u043E\u0432\u0438\u0447"
         name: "\u0418\u0432\u0430\u043D"
         password: sdfsdfwgesdgcx
