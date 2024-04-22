@@ -25,6 +25,8 @@ class ActionTypeEnum(str, Enum):
 class EventTypeEnum(str, Enum):
     mousedown = "mousedown"
     visibilitychange = "visibilitychange"
+    copy = "copy"
+    paste = "paste"
 
     def __str__(self):
         return self.value
