@@ -18,7 +18,7 @@
           :rules="passwordRules">
       </DataInput>
       <p class="problems">В случае проблем пишите на admin@mail.ru</p>
-      <DataButton title='вход'></DataButton>
+      <DataButton id="sign-in-button" title='вход'></DataButton>
     </DataForm>
   </AuthForm>
 </template>
