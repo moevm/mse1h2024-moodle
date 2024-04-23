@@ -8,6 +8,7 @@
           v-model="email"
           label="Почта"
           :rules="emailRules"
+          id="email-input"
       ></DataInput>
       <DataInput
           :append-inner-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
@@ -15,7 +16,8 @@
           label="Пароль"
           :type="show1 ? 'text' : 'password'"
           @click:append-inner="show1 = !show1"
-          :rules="passwordRules">
+          :rules="passwordRules"
+          id="password-input">
       </DataInput>
       <p class="problems">В случае проблем пишите на admin@mail.ru</p>
       <DataButton id="sign-in-button" title='вход'></DataButton>

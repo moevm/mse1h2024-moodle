@@ -2,24 +2,26 @@
   <Navbar :username="name" :position="position">
     <Filters>
       <div class="search-info">
-        <Search v-model="search"></Search>
+        <Search v-model="search" id="search-input"></Search>
       </div>
       <div class="date-time-info">
         <DateTime
             v-model="beginTimestamp"
             :max="endTimestamp || today"
+            id="start-date"
         ></DateTime>
         <p>—</p>
         <DateTime
             v-model="endTimestamp"
             :min="beginTimestamp"
             :max="today"
+            id="end-date"
         ></DateTime>
       </div>
       <div class="choose-type">
         <v-btn-toggle class="stat-type" v-model="selectedType" variant="outlined" color="blue">
-          <v-btn value="graphic" class="graphic" icon="mdi-chart-line"></v-btn>
-          <v-btn value="table" icon="mdi-format-align-justify"></v-btn>
+          <v-btn value="graphic" class="graphic" icon="mdi-chart-line" id="graph-button"></v-btn>
+          <v-btn value="table" icon="mdi-format-align-justify" id="table-button"></v-btn>
         </v-btn-toggle>
       </div>
     </Filters>
