@@ -35,11 +35,11 @@ async function test(url) {
             logStream.write('SUCCESS! Sign in was success\n');
             logStream.write('Open page: ' + currentUrl + '\n');
             await testStatisticPage(logStream);
+            await testAllUsersPage(logStream);
         }
         else {
             logStream.write('ERROR! Catch error then sign in\n');
         }
-
     } finally {
         logStream.write('Exit browser\n');
         await driver.quit();
@@ -47,7 +47,7 @@ async function test(url) {
     }
 }
 
-async function testStatisticPage(logStream) {;
+async function testStatisticPage(logStream) {
     const searchParam = "Беззубов";
     logStream.write('Input search value: ' + searchParam + '\n');
     const inputSearchElement = await driver.findElement(By.id("search-input"));
@@ -84,6 +84,28 @@ async function testStatisticPage(logStream) {;
     const graphic = await driver.findElement(By.tagName('canvas'));
     if (graphic) {
         logStream.write('SUCCESS! Graphic was displayed\n');
+    }
+}
+
+async function testAllUsersPage(logStream) {
+    await driver.get('http://localhost:8081/e.moevm.statistics/all-users');
+    await driver.sleep(100)
+    const currentUrl = await driver.getCurrentUrl();
+    if (currentUrl === 'http://localhost:8081/e.moevm.statistics/all-users') {
+        logStream.write('SUCCESS! Redirect to all users page was correct\n');
+        logStream.write('Open page: ' + currentUrl + '\n');
+        await driver.wait(until.elementLocated(By.className('v-data-table__tr')), 100);
+        let users = await driver.findElements(By.className("v-data-table__tr"));
+        let count = users.length;
+        if (count === 3) {
+            logStream.write('SUCCESS! Users were displayed correct.\n');
+        }
+        else {
+            logStream.write('ERROR! Users were displayed incorrect.\n');
+        }
+    }
+    else {
+        logStream.write('ERROR! Redirect to all users page was incorrect\n');
     }
 }
 
