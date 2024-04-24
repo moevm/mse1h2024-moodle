@@ -6,18 +6,19 @@
         :height="containerHeight"
     >
       <DataForm fast-fail>
-        <DataInput v-model="email" label="Почта"></DataInput>
-        <DataInput v-model="surname" label="Фамилия"></DataInput>
-        <DataInput v-model="name" label="Имя"></DataInput>
-        <DataInput v-model="lastname" label="Отчество"></DataInput>
+        <DataInput v-model="email" label="Почта" id="email-input"></DataInput>
+        <DataInput v-model="surname" label="Фамилия" id="surname-input"></DataInput>
+        <DataInput v-model="name" label="Имя" id="name-input"></DataInput>
+        <DataInput v-model="lastname" label="Отчество" id="lastname-input"></DataInput>
         <DataInput
             :append-inner-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
             v-model="password"
             label="Пароль"
             :type="show1 ? 'text' : 'password'"
-            @click:append-inner="show1 = !show1">
+            @click:append-inner="show1 = !show1"
+            id="password-input">
         </DataInput>
-        <DataButton title='готово' @click="createUser"></DataButton>
+        <DataButton title='готово' @click="createUser" id="create-button"></DataButton>
         <DataButton class="cancel" title='отмена' @click.prevent="cancel"></DataButton>
       </DataForm>
     </AuthForm>
