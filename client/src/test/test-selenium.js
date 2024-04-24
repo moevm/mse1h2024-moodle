@@ -145,7 +145,7 @@ async function testAddUserPage(logStream) {
             logStream.write('SUCCESS! User was created\n');
         }
         else {
-            logStream.write('Error! User was not created\n');
+            logStream.write('ERROR! User was not created\n');
         }
     }
     else {
