@@ -1,8 +1,10 @@
 const { Builder, By, until} = require('selenium-webdriver');
 const fs = require('fs');
+const edge = require('selenium-webdriver/edge');
 
 const driver = new Builder()
     .forBrowser('MicrosoftEdge')
+    .setEdgeOptions(new edge.Options().addArguments("--enable-chrome-browser-cloud-management"))
     .build();
 
 let allUsersCount = 0;
