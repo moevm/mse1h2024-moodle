@@ -1,9 +1,12 @@
 <template>
-  <div class="window">
-    <div id="wrap">
-      <button id="reset" @click="resetGraph">Reset</button>
+  <div>
+    <p> Количество отображенных записей: {{this.number}} </p>
+    <div class="window">
+      <div id="wrap">
+        <button id="reset" @click="resetGraph">Reset</button>
+      </div>
+      <Bar ref="myChart" :data="chartData" :options="chartOptions" />
     </div>
-    <Bar ref="myChart" :data="chartData" :options="chartOptions" />
   </div>
 </template>
 
@@ -89,7 +92,6 @@ export default {
           tooltip: {
             callbacks: {
               title: function (tooltipItem) {
-                console.log("tooltipItem", tooltipItem);
                 let date = tooltipItem[0].parsed.x;
                 return new Date(date).toISOString();
               },
@@ -138,7 +140,6 @@ export default {
           action.FIO.toLocaleLowerCase().includes(searchLow) ||
           action.course.toLocaleLowerCase().includes(searchLow) ||
           action.typeAction.toLocaleLowerCase().includes(searchLow) ||
-          action.action.toLocaleLowerCase().includes(searchLow) ||
           action.page.toLocaleLowerCase().includes(searchLow) ||
           action.time.toLocaleLowerCase().includes(searchLow) ||
           action.date.toLocaleLowerCase().includes(searchLow)
@@ -183,6 +184,9 @@ export default {
         ],
       };
     },
+    number(){
+      return this.info.length;
+    }
   },
   methods: {
     resetGraph(){
@@ -195,11 +199,13 @@ export default {
 
 <style>
 .window {
-  height: 85%;
+  width: 75%;
   display: flex;
   align-items: stretch;
   flex-direction: row;
   justify-content: center;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 
