@@ -16,10 +16,6 @@
     <template v-slot:[`item.course`]="{ item }">
       <p align="start">{{ item.course }}</p>
     </template>
-
-    <template v-slot:[`item.eventType`]="{ item }">
-      <p align="start" id="eventType">{{ item.eventType }}</p>
-    </template>
   </v-data-table>
 </template>
 
