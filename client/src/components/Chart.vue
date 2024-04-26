@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="centerBox">
     <p> Количество отображенных записей: {{this.number}} </p>
     <div class="window">
       <div id="wrap">
@@ -220,5 +220,11 @@ export default {
   background-color: #eaecee;
 }
 
+.centerBox{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
 
 </style>
