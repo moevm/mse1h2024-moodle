@@ -117,8 +117,10 @@ export default {
               };
               element.actions.forEach(action =>{
                 let secondLayer = {...firstLayer};
-                secondLayer.typeAction = action.action_type
-                secondLayer.action = `${action.event_type} ${action.element_type} "${action.element_name}"`;
+                secondLayer.typeAction = action.action_type;
+                secondLayer.eventType = action.event_type;
+                secondLayer.elementType = action.element_type;
+                secondLayer.elementName = action.element_name;
                 secondLayer.page = action.page
                 const dateTime = new Date(action.timestamp);
                 const hours = dateTime.getHours().toString().padStart(2, '0');

@@ -16,10 +16,6 @@
     <template v-slot:[`item.course`]="{ item }">
       <p align="start">{{ item.course }}</p>
     </template>
-
-    <template v-slot:[`item.action`]="{ item }">
-      <p align="start" id="action">{{ item.action }}</p>
-    </template>
   </v-data-table>
 </template>
 
@@ -43,7 +39,9 @@ export default {
         { title: "Время", key: "time", sortable: false, align: "center" },
         { title: "Название курса", key: "course", sortable: false, align: "center"},
         { title: "Тип действия", key: "typeAction", sortable: false, align: "center" },
-        { title: "Действие", key: "action", sortable: false, align: "center" },
+        { title: "Тип события", key: "eventType", sortable: false, align: "center" },
+        { title: "Тип элемента", key: "elementType", sortable: false, align: "center" },
+        { title: "Название элемента", key: "elementName", sortable: false, align: "center" },
         { title: "Страница", key: "page", sortable: false, align: "center" },
       ],
     };
