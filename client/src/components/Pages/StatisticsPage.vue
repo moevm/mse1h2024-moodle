@@ -1,9 +1,6 @@
 <template>
   <Navbar :username="name" :position="position">
-    <Filters>
-      <div class="search-info">
-        <Search v-model="search" id="search-input"></Search>
-      </div>
+    <Filters class="first-filter">
       <div class="date-time-info">
         <DateTime
             v-model="beginTimestamp"
@@ -25,6 +22,25 @@
         </v-btn-toggle>
       </div>
     </Filters>
+    <Filters class="second-filter">
+      <v-col class="v-col-filters">
+        <ColumnSearch label="ID студента"></ColumnSearch>
+        <ColumnSearch label="ФИО студента"></ColumnSearch>
+      </v-col>
+      <v-col class="v-col-filters">
+        <ColumnSearch label="email"></ColumnSearch>
+        <ColumnSearch label="Название курса"></ColumnSearch>
+      </v-col>
+      <v-col class="v-col-filters">
+        <ColumnSearch label="Тип действия"></ColumnSearch>
+        <ColumnSearch label="Тип события"></ColumnSearch>
+      </v-col>
+      <v-col class="v-col-filters">
+        <ColumnSearch label="Тип элемента"></ColumnSearch>
+        <ColumnSearch label="Название элемента"></ColumnSearch>
+      </v-col>
+      <button id="reset-search" class="reset-button">Сброс</button>
+    </Filters>
     <StatisticsTable v-if="selectedType === 'table'" :info="statisticsInfo" v-model:search="search"></StatisticsTable>
     <Chart v-else :info="statisticsInfo" :search="search"></Chart>
   </Navbar>
@@ -35,15 +51,15 @@ import Navbar from "@/components/Navbar.vue";
 import StatisticsTable from "@/components/Tables/StatisticsTable.vue";
 import axios from "axios";
 import Filters from "@/components/Filters/Filters.vue";
-import Search from "@/components/Filters/Search.vue";
 import Chart from "@/components/Chart.vue";
 import DateTime from "@/components/Filters/DateTime.vue";
+import ColumnSearch from "@/components/Filters/ColumnSearch.vue";
 
 const STAT_URL = "/api/statistics/";
 
 export default {
   name: "Statistics",
-  components: {DateTime, Chart, Search, Filters, StatisticsTable, Navbar },
+  components: {ColumnSearch, DateTime, Chart, Filters, StatisticsTable, Navbar },
 
   data() {
     return {
@@ -145,9 +161,26 @@ export default {
 
 <style>
 @import '@/colors.css';
-.search-info {
-  width: 25%;
-  margin: 0;
+.second-filter {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.v-col-filters {
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 0;
+}
+
+.reset-button {
+  transform: translateY(-27%);
+  padding: 6px 10px 6px 10px;
+  border-radius: 10px;
+  background-color: var(--white-4);
+  color: var(--blue-4);
+}
+.reset-button:hover {
+  background-color: var(--white-5);
 }
 
 .date-time-info {
