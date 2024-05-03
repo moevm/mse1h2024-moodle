@@ -113,7 +113,8 @@ export default {
               let firstLayer = {
                 FIO: element.student,
                 course: element.course,
-                studentId: element.student_id
+                studentId: element.student_id,
+                email: element.email
               };
               element.actions.forEach(action =>{
                 let secondLayer = {...firstLayer};

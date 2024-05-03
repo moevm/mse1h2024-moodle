@@ -35,6 +35,7 @@ export default {
       headers: [
         { title: "ID", key: "studentId", sortable: false, align: "center" },
         { title: "ФИО", key: "FIO", sortable: false, align: "center" },
+        { title: "Почта", key: "email", sortable: false, align: "center" },
         { title: "Дата", key: "date", sortable: false, align: "center" },
         { title: "Время", key: "time", sortable: false, align: "center" },
         { title: "Название курса", key: "course", sortable: false, align: "center"},
@@ -51,7 +52,7 @@ export default {
 
 <style>
 .custom-table {
-  width: 95%;
+  width: 96%;
   margin: 0 auto;
 }
 
@@ -61,7 +62,7 @@ export default {
 
 .custom-table tbody tr {
   font-family: Inter, sans-serif;
-  font-size: 15px;
+  font-size: 14px;
 }
 
 .v-data-table .v-data-table-header th {
@@ -72,6 +73,16 @@ export default {
 .custom-table th,
 .custom-table td {
   border: 1px solid var(--white-2);
+}
+
+.custom-table,
+.v-table > .v-table__wrapper > table > tbody > tr > td,
+.v-table > .v-table__wrapper > table > tbody > tr > th,
+.v-table > .v-table__wrapper > table > tfoot > tr > td,
+.v-table > .v-table__wrapper > table > tfoot > tr > th,
+.v-table > .v-table__wrapper > table > thead > tr > td,
+.v-table > .v-table__wrapper > table > thead > tr > th {
+  padding: 0 8px;
 }
 
 #action {
