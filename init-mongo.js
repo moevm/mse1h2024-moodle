@@ -41,7 +41,7 @@ db.statistics.insertMany([
                 "element_name": "сохранить",
                 "action_type": "conversation",
                 "event_type": "mousedown", 
-                "element_html": "<input id=\"id_q_6627c493e6c5f\" class=\"form-control\" type=\"text\" name=\"q\" placeholder=\"Поиск\" size=\"13\" tabindex=\"-1\">"
+                "element_html": `<input id="id_q_6627c493e6c5f" class="form-control" type="text" name="q" placeholder="Поиск" size="13" tabindex="-1">`
                }
         ]
     },
@@ -58,7 +58,7 @@ db.statistics.insertMany([
                 "element_name": "сохранить",
                 "action_type": "conversation",
                 "event_type": "mousedown", 
-                "element_html": "<input id=\"id_q_6627c493e6c5f\" class=\"form-control\" type=\"text\" name=\"q\" placeholder=\"Поиск\" size=\"13\" tabindex=\"-1\">"                
+                "element_html": `<input id="id_q_6627c493e6c5f" class="form-control" type="text" name="q" placeholder="Поиск" size="13" tabindex="-1">`
             },
             {
                 "timestamp": new Date("2024-02-02T14:00:00"),
@@ -67,7 +67,7 @@ db.statistics.insertMany([
                 "element_name": "следующая страница",
                 "action_type": "conversation",
                 "event_type": "mousedown", 
-                "element_html": "<input id=\"id_q_6627c493e6c5f\" class=\"form-control\" type=\"text\" name=\"q\" placeholder=\"Поиск\" size=\"13\" tabindex=\"-1\">"
+                "element_html": `<input id="id_q_6627c493e6c5f" class="form-control" type="text" name="q" placeholder="Поиск" size="13" tabindex="-1">`
             }
         ]
     }
