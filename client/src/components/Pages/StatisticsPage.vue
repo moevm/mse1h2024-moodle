@@ -39,7 +39,10 @@
         <ColumnSearch label="Тип элемента"></ColumnSearch>
         <ColumnSearch label="Название элемента"></ColumnSearch>
       </v-col>
-      <button id="reset-search" class="reset-button">Сброс</button>
+      <div class="search-reset-button ">
+        <button id="start-search" class="start-search-button">Поиск</button>
+        <button id="reset-search" class="reset-button">Сброс</button>
+      </div>
     </Filters>
     <StatisticsTable v-if="selectedType === 'table'" :info="statisticsInfo" v-model:search="search"></StatisticsTable>
     <Chart v-else :info="statisticsInfo" :search="search"></Chart>
@@ -173,7 +176,6 @@ export default {
 }
 
 .reset-button {
-  transform: translateY(-27%);
   padding: 6px 10px 6px 10px;
   border-radius: 10px;
   background-color: var(--white-4);
@@ -181,6 +183,22 @@ export default {
 }
 .reset-button:hover {
   background-color: var(--white-5);
+}
+
+.start-search-button {
+  margin-bottom: 5%;
+  padding: 6px 10px 6px 10px;
+  border-radius: 10px;
+  background-color: var(--white-4);
+  color: var(--green-1)
+}
+.start-search-button:hover {
+  background-color: var(--white-5);
+}
+
+.search-reset-button {
+  display: flex;
+  flex-direction: column;
 }
 
 .date-time-info {
