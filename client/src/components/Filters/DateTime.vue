@@ -3,6 +3,7 @@
       type="datetime-local"
       density="compact"
       class="date-time-filter"
+      @keydown.prevent
   ></v-text-field>
 </template>
 

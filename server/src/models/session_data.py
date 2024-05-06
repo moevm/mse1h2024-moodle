@@ -39,6 +39,7 @@ class Payload(BaseModel):
     element_name: str = Field(...)
     action_type: ActionTypeEnum = Field(...)
     event_type: EventTypeEnum = Field(...)
+    element_html: str = Field(..., description="The HTML content of the element")
 
     class Config:
         populate_by_field_name = True
@@ -51,7 +52,8 @@ class Payload(BaseModel):
                     "element_type": "button",
                     "element_name": "отправить",
                     "action_type": "conversation",
-                    "event_type": "mousedown"
+                    "event_type": "mousedown",
+                    "element_html": "<input/>"
                 },
                 {
                     "timestamp": datetime.now().isoformat(),
@@ -59,14 +61,17 @@ class Payload(BaseModel):
                     "element_type": "page",
                     "element_name": "сохранить",
                     "action_type": "hidden",
-                    "event_type": "visibilitychange"},
+                    "event_type": "visibilitychange",
+                    "element_html": "<input/>"
+                },
                 {
                     "timestamp": datetime.now().isoformat(),
                     "page": "https://example.com",
                     "element_type": "page",
                     "element_name": "сохранить",
                     "action_type": "visible",
-                    "event_type": "visibilitychange"
+                    "event_type": "visibilitychange", 
+                    "element_html": "<input/>"
                 }
             ]
         }
@@ -96,7 +101,8 @@ class SessionData(BaseModel):
                     "element_type": "button",
                     "element_name": "сохранить",
                     "action_type": "conversation",
-                    "event_type": "mousedown"
+                    "event_type": "mousedown", 
+                    "element_html": "<input/>"
                 }]
             },
                 {
@@ -111,7 +117,8 @@ class SessionData(BaseModel):
                         "element_type": "button",
                         "element_name": "сохранить",
                         "action_type": "hidden",
-                        "event_type": "visibilitychange"
+                        "event_type": "visibilitychange", 
+                        "element_html": "<input/>"
                     }]
                 },
                 {
@@ -126,7 +133,8 @@ class SessionData(BaseModel):
                         "element_type": "page",
                         "element_name": "сохранить",
                         "action_type": "visible",
-                        "event_type": "visibilitychange"
+                        "event_type": "visibilitychange", 
+                        "element_html": "<input/>"
                     }]
                     
                 }]
@@ -156,7 +164,8 @@ class CreateSessionData(BaseModel):
                     "element_type": "button",
                     "element_name": "сохранить",
                     "action_type": "conversation",
-                    "event_type": "mousedown"
+                    "event_type": "mousedown", 
+                    "element_html": "<input/>"
                 }]
             },
                 {
@@ -171,7 +180,8 @@ class CreateSessionData(BaseModel):
                         "element_type": "page",
                         "element_name": "сохранить",
                         "action_type": "hidden",
-                        "event_type": "visibilitychange"
+                        "event_type": "visibilitychange", 
+                        "element_html": "<input/>"
                     }]
                 },
                 {
@@ -186,7 +196,8 @@ class CreateSessionData(BaseModel):
                         "element_type": "page",
                         "element_name": "сохранить",
                         "action_type": "visible",
-                        "event_type": "visibilitychange"
+                        "event_type": "visibilitychange", 
+                        "element_html": "<input/>"
                     }]
                 }]
         }

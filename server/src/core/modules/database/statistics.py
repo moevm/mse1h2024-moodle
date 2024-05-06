@@ -1,3 +1,5 @@
+from copy import deepcopy
+
 from bson.objectid import ObjectId
 from src.core.modules.database.errors import RepoNotFoundError
 from src.models.filter import SessionFilter
@@ -7,10 +9,12 @@ class MongoStatisticRepo:
     def __init__(self, client):
         self.client = client
 
-    async def get_all_sessions(self, filters) -> list:
+    async def get_all_sessions(self, filters: SessionFilter) -> list:
         stats = []
-        for session in await self.client.statistics.find(time_query(filters)).to_list(length=None):
+        query = filters.query()
+        for session in await self.client.statistics.find(query).to_list(length=None):
             session["_id"] = str(session["_id"])
+            session['actions'] = filter_actions(filters, session['actions'])
             stats.append(session)
         return stats
 
@@ -34,14 +38,20 @@ class MongoStatisticRepo:
         raise RepoNotFoundError(f'record {record_id} not found')
 
 
-def time_query(filters: SessionFilter) -> dict:
-    return {
-        'actions': {
-            '$elemMatch': {
-                'timestamp': {
-                    '$gte': filters.timestamp__gte,
-                    '$lte': filters.timestamp__lte
-                }
-            }
-        }
-    }
+def filter_actions(query: SessionFilter, payload: list) -> list:
+    if not query:
+        return payload
+    data = deepcopy(payload)
+    if query.action_type:
+        data = filter(lambda item: query.action_type in str(item['action_type']), data)
+    if query.event_type:
+        data = filter(lambda item: query.event_type in str(item['event_type']), data)
+    if query.element_type:
+        data = filter(lambda item: query.element_type in str(item['element_type']), data)
+    if query.element_name:
+        data = filter(lambda item: query.element_name in str(item['element_name']), data)
+    if query.begin_timestamp:
+        data = filter(lambda item: query.begin_timestamp <= item['timestamp'], data)
+    if query.end_timestamp:
+        data = filter(lambda item: query.end_timestamp >= item['timestamp'], data)
+    return list(data)

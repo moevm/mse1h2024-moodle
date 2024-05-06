@@ -1,7 +1,6 @@
-import datetime as dt
 from typing import List
 
-from fastapi import APIRouter, HTTPException, Body, Query
+from fastapi import APIRouter, HTTPException, Body, Depends
 from fastapi.encoders import jsonable_encoder
 from starlette import status
 
@@ -16,10 +15,6 @@ router = APIRouter()
 service = get_statistics_service()
 
 
-def default_time() -> str:
-    return dt.datetime.now().isoformat()
-
-
 @router.get(
     "/",
     status_code=status.HTTP_200_OK,
@@ -27,16 +22,9 @@ def default_time() -> str:
     response_model=List[SessionData],
     response_model_by_alias=False
 )
-async def get_all_sessions(
-        begin_timestamp=Query(default=dt.datetime(1970, 1, 1).isoformat()),
-        end_timestamp=Query(default_factory=default_time)
-):
+async def get_all_sessions(params: SessionFilter = Depends()):
     try:
-        session_filter = SessionFilter(
-            dt.datetime.fromisoformat(begin_timestamp),
-            dt.datetime.fromisoformat(end_timestamp)
-        )
-        return await service.get_all_sessions(session_filter)
+        return await service.get_all_sessions(params)
     except Exception as e:
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e))
 

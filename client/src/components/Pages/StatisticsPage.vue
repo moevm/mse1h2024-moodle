@@ -7,6 +7,7 @@
             :max="endTimestamp || today"
             id="start-date"
         ></DateTime>
+        <button id="reset-begin-date" class="reset-date" @click="resetBeginDate">Сброс</button>
         <p>—</p>
         <DateTime
             v-model="endTimestamp"
@@ -14,6 +15,7 @@
             :max="today"
             id="end-date"
         ></DateTime>
+        <button id="reset-end-date" class="reset-date" @click="resetEndDate">Сброс</button>
       </div>
       <div class="choose-type">
         <v-btn-toggle class="stat-type" v-model="selectedType" variant="outlined" color="blue">
@@ -101,6 +103,14 @@ export default {
     }
   },
   methods: {
+    resetBeginDate() {
+      this.beginTimestamp = '';
+    },
+
+    resetEndDate() {
+      this.endTimestamp = '';
+    },
+
     getStatistics() {
       this.statisticsInfo = []
       let params = {}
@@ -132,7 +142,8 @@ export default {
               let firstLayer = {
                 FIO: element.student,
                 course: element.course,
-                studentId: element.student_id
+                studentId: element.student_id,
+                email: element.email
               };
               element.actions.forEach(action =>{
                 let secondLayer = {...firstLayer};
@@ -209,11 +220,24 @@ export default {
 
 .date-time-info p {
   margin-top: 1%;
-  margin-right: 2%;
-  margin-left: 2%;
+  margin-right: 1%;
+  margin-left: 1%;
   font-size: 16px;
   font-family: Inter, sans-serif;
   color: var(--grey-6);
+}
+
+.reset-date {
+  margin-left: 1%;
+  transform: translateY(12.5%);
+  padding: 6px 10px 6px 10px;
+  border-radius: 10px;
+  background-color: var(--white-4);
+  color: var(--blue-4);
+}
+
+.reset-date:hover {
+  background-color: var(--white-5);
 }
 
 .choose-type {

@@ -6,7 +6,7 @@
     "course": "Курс молодого бойца",
     "actions": [
       {
-        "timestamp": "2024-02-02T15:00:00",
+        "timestamp": "2024-02-02T15:00:00.010",
         "page": "http://e.moevm.info/some_course",
         "element_type": "button",
         "element_name": "сохранить",
