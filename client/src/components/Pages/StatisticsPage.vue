@@ -26,24 +26,24 @@
     </Filters>
     <Filters class="second-filter">
       <v-col class="v-col-filters">
-        <ColumnSearch label="ID студента"></ColumnSearch>
-        <ColumnSearch label="ФИО студента"></ColumnSearch>
+        <ColumnSearch label="ID студента" v-model="ID"></ColumnSearch>
+        <ColumnSearch label="ФИО студента" v-model="FIO"></ColumnSearch>
       </v-col>
       <v-col class="v-col-filters">
-        <ColumnSearch label="email"></ColumnSearch>
-        <ColumnSearch label="Название курса"></ColumnSearch>
+        <ColumnSearch label="email" v-model="email"></ColumnSearch>
+        <ColumnSearch label="Название курса" v-model="course"></ColumnSearch>
       </v-col>
       <v-col class="v-col-filters">
-        <ColumnSearch label="Тип действия"></ColumnSearch>
-        <ColumnSearch label="Тип события"></ColumnSearch>
+        <ColumnSearch label="Тип действия" v-model="actionType"></ColumnSearch>
+        <ColumnSearch label="Тип события" v-model="eventType"></ColumnSearch>
       </v-col>
       <v-col class="v-col-filters">
-        <ColumnSearch label="Тип элемента"></ColumnSearch>
-        <ColumnSearch label="Название элемента"></ColumnSearch>
+        <ColumnSearch label="Тип элемента" v-model="elementType"></ColumnSearch>
+        <ColumnSearch label="Название элемента" v-model="elementName"></ColumnSearch>
       </v-col>
       <div class="search-reset-button ">
-        <button id="start-search" class="start-search-button">Поиск</button>
-        <button id="reset-search" class="reset-button">Сброс</button>
+        <button id="start-search" class="start-search-button" @click="startSearchFilters">Поиск</button>
+        <button id="reset-search" class="reset-button" @click="resetSearch">Сброс</button>
       </div>
     </Filters>
     <StatisticsTable v-if="selectedType === 'table'" :info="statisticsInfo" v-model:search="search"></StatisticsTable>
@@ -75,9 +75,19 @@ export default {
       beginTimestamp: '',
       endTimestamp: '',
       today: '',
-      position: ''
+      position: '',
+      ID: '',
+      FIO: '',
+      email: '',
+      course: '',
+      actionType: '',
+      eventType: '',
+      elementType: '',
+      elementName: '',
+      startSearch: false
     };
   },
+
   beforeMount() {
     this.today = new Date().toISOString().slice(0, 16);
     let name = sessionStorage.getItem("name");
@@ -91,17 +101,60 @@ export default {
       this.$router.push("/e.moevm.statistics/auth");
     }
   },
+
   mounted() {
     this.getStatistics();
   },
+
   watch: {
     beginTimestamp() {
       this.getStatistics();
     },
     endTimestamp() {
       this.getStatistics();
-    }
+    },
+    ID() {
+      if (this.ID === null && this.startSearch === true) {
+        this.getStatistics();
+      }
+    },
+    FIO() {
+      if (this.FIO === null && this.startSearch === true) {
+        this.getStatistics();
+      }
+    },
+    email() {
+      if (this.email === null && this.startSearch === true) {
+        this.getStatistics();
+      }
+    },
+    course() {
+      if (this.course === null && this.startSearch === true) {
+        this.getStatistics();
+      }
+    },
+    actionType() {
+      if (this.actionType === null && this.startSearch === true) {
+        this.getStatistics();
+      }
+    },
+    eventType() {
+      if (this.eventType === null && this.startSearch === true) {
+        this.getStatistics();
+      }
+    },
+    elementType() {
+      if (this.elementType === null && this.startSearch === true) {
+        this.getStatistics();
+      }
+    },
+    elementName() {
+      if (this.elementName === null && this.startSearch === true) {
+        this.getStatistics();
+      }
+    },
   },
+
   methods: {
     resetBeginDate() {
       this.beginTimestamp = '';
@@ -111,9 +164,40 @@ export default {
       this.endTimestamp = '';
     },
 
+    startSearchFilters() {
+      this.startSearch = true;
+      this.getStatistics();
+    },
+
+    resetSearch() {
+      this.ID = '';
+      this.FIO = '';
+      this.email = '';
+      this.course = '';
+      this.actionType = '';
+      this.eventType = '';
+      this.elementType = '';
+      this.elementName = '';
+      if (this.startSearch === true) {
+        this.getStatistics();
+        this.startSearch = false;
+      }
+    },
+
     getStatistics() {
       this.statisticsInfo = []
       let params = {}
+      const searchParams = {
+        student_id: Number(this.ID),
+        student_name: this.FIO,
+        student_email: this.email,
+        course_title: this.course,
+        action_type: this.actionType,
+        event_type: this.eventType,
+        element_type: this.eventType,
+        element_name: this.elementName
+      }
+
       if (this.beginTimestamp.length === 0 && this.endTimestamp.length === 0) {
         params = {}
       }
@@ -133,6 +217,8 @@ export default {
           end_timestamp: this.endTimestamp
         }
       }
+
+      Object.assign(params, searchParams)
 
       axios
           .get(STAT_URL, { params })
