@@ -101,7 +101,7 @@ export default {
                     second: 'numeric',
                 }
                 let date = new Date(tooltipItem[0].parsed.x);
-                return date.toLocaleString('ru-RU', options) + "." + date.getMilliseconds(); //toLocaleString
+                return date.toLocaleString('ru-RU', options) + "." + date.getMilliseconds().toString().padStart(3, '0');; //toLocaleString
               },
             },
           },
