@@ -26,7 +26,7 @@
     </Filters>
     <Filters class="second-filter">
       <v-col class="v-col-filters">
-        <ColumnSearch label="ID студента" v-model="ID"></ColumnSearch>
+        <ColumnSearch label="ID студента" v-model="ID" :rules="idRules"></ColumnSearch>
         <ColumnSearch label="ФИО студента" v-model="FIO"></ColumnSearch>
       </v-col>
       <v-col class="v-col-filters">
@@ -77,6 +77,12 @@ export default {
       today: '',
       position: '',
       ID: '',
+      idRules: [
+        value => {
+          if (/^\d+$/.test(value) || value === null || value.length === 0) return true
+          else return 'Допустимые значения только цифры!'
+        },
+      ],
       FIO: '',
       email: '',
       course: '',
