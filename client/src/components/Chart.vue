@@ -92,8 +92,16 @@ export default {
           tooltip: {
             callbacks: {
               title: function (tooltipItem) {
-                let date = tooltipItem[0].parsed.x;
-                return new Date(date).toISOString();
+                let options = {
+                    year: 'numeric',
+                    month: 'numeric',
+                    day: 'numeric',
+                    hour: 'numeric',
+                    minute: 'numeric',
+                    second: 'numeric',
+                }
+                let date = new Date(tooltipItem[0].parsed.x);
+                return date.toLocaleString('ru-RU', options) + "." + date.getMilliseconds().toString().padStart(3, '0');; //toLocaleString
               },
             },
           },
