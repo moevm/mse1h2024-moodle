@@ -1,5 +1,3 @@
-import logging
-
 from bson.objectid import ObjectId
 
 from src.core.modules.database.errors import RepoNotFoundError, RepoAlreadyExistsError, RepoEmptyDataError
