@@ -6,7 +6,7 @@
     "course": "Курс молодого бойца",
     "actions": [
       {
-        "timestamp": "2024-02-02T15:00:00",
+        "timestamp": "2024-02-02T15:00:00.010",
         "page": "http://e.moevm.info/some_course",
         "element_type": "button",
         "element_name": "сохранить",
@@ -14,7 +14,7 @@
         "event_type": "mousedown"
       },
       {
-        "timestamp": "2024-02-02T17:00:00",
+        "timestamp": "2024-02-02T17:00:00.500",
         "page": "http://e.moevm.info/some_course",
         "element_type": "button",
         "element_name": "сохранить",
@@ -22,7 +22,7 @@
         "event_type": "mousedown"
       },
       {
-        "timestamp": "2024-02-02T17:00:00",
+        "timestamp": "2024-02-02T17:00:00.505",
         "page": "http://e.moevm.info/some_course",
         "element_type": "button",
         "element_name": "сохранить",
@@ -30,7 +30,7 @@
         "event_type": "mousedown"
       },
       {
-        "timestamp": "2024-02-02T17:00:00",
+        "timestamp": "2024-02-02T17:00:00.200",
         "page": "http://e.moevm.info/some_course",
         "element_type": "button",
         "element_name": "сохранить",

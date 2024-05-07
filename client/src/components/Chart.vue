@@ -58,7 +58,9 @@ export default {
   },
   data() {
     return {
+      zoom: 1,
       chartOptions: {
+        animations: false,
         scales: {
           x: {
             type: "time",
@@ -74,6 +76,8 @@ export default {
             },
             display: true,
             ticks: {
+              stackWeight: 10,
+              sampleSize: 1,
               maxTicksLimit: 20,
               minRotation: 45,
             },
@@ -105,8 +109,9 @@ export default {
                 enabled: true,
               },
               mode: "xy",
-              onZoom: ()=>{
+              onZoom: ({chart})=>{
                 console.log(this)
+                this.zoom = chart.getZoomLevel();
                 this.con()
                 this.$emit('zoom')
               },
@@ -154,13 +159,13 @@ export default {
       });
       cloneInfo.sort(compareDate);
       let arr = cloneInfo;
-      let limit = 20;
+      let limit = 30;
       let delta = 100;
-      if (cloneInfo.length > limit) {
-        let min = cloneInfo.at(0).Date;
-        let max = cloneInfo.at(-1).Date;
-        delta = (max - min) / (limit * 100);
-      }
+      let min = cloneInfo.at(0).Date;
+      let max = cloneInfo.at(-1).Date;
+      delta = (max - min) / (limit * this.zoom);
+      console.log(delta)
+    
 
       const dateCount = [];
       arr.forEach((action) => {
