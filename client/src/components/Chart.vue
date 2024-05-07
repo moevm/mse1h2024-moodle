@@ -141,7 +141,7 @@ export default {
         if (a.Date > b.Date) return 1;
         return 0;
       }
-      console.log(typeof this.search, this.search);
+      console.log("zoom", this.zoom);
       let searchLow = "";
       if (this.search) {
         searchLow = this.search.toLocaleLowerCase();
@@ -159,7 +159,7 @@ export default {
       });
       cloneInfo.sort(compareDate);
       let arr = cloneInfo;
-      let limit = 30;
+      let limit = 200;
       let delta = 100;
       let min = cloneInfo.at(0).Date;
       let max = cloneInfo.at(-1).Date;
@@ -203,6 +203,7 @@ export default {
   methods: {
     resetGraph(){
       this.$refs.myChart.chart.resetZoom();
+      this.zoom = 1;
     },
     con(){
       console.log("confirm")
