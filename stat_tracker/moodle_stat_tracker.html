@@ -49,6 +49,18 @@
             }
         }
     }
+
+    function trackDevtoolsOpening(interactor) {
+        document.addEventListener('keydown', e => {
+            if (e.code === 'F12' || e.code === 'KeyI' && e.ctrlKey && e.shiftKey){
+                e.stopPropagation();
+                if(interactor.debug)
+                    console.log(e.target)
+                interactor.__addInteraction__(e, "devtools", 'page');
+            }
+        })
+    }
+
     var Interactor = function (config) {
         this.__init__(config);
     };
@@ -105,15 +117,27 @@
                 
 
             }
-            else if (interactor.interactions === true) {
+            if (!interactor.trackAll && interactor.interactions === true) {
                 for (var i = 0; i < interactor.interactionEvents.length; i++) {
                     document.querySelector('body').addEventListener(interactor.interactionEvents[i], function (e) {
                         e.stopPropagation();
                         if (interactor.interactionElement.includes(e.target.nodeName)) {
                             if(interactor.debug)
                                 console.log(e.target)
-                            interactor.__addInteraction__(e, "conversation", 'button');
+                            interactor.__addInteraction__(e, "interactions", e.target);
                         }
+                    });
+                }
+            }
+
+            if (!interactor.trackAll && interactor.conversions === true) {
+                trackDevtoolsOpening(interactor)
+                for (var i = 0; i < interactor.conversionEvents.length; i++) {
+                    document.addEventListener(interactor.conversionEvents[i], function (e) {
+                        e.stopPropagation();
+                        if(interactor.debug)
+                            console.log(e.target)
+                        interactor.__addInteraction__(e, "conversation", e.target);
                     });
                 }
             }
@@ -241,7 +265,7 @@
         interactionEvents: ["mousedown", "copy", "paste"],
         conversions: true,
         conversionElement: "conversion",
-        conversionEvents: ["mouseup", "touchend"],
+        conversionEvents: ["scroll", "contextmenu"],
         endpoint: 'http://localhost:8080/api/statistics',
         async: true,
         debug: true
