@@ -5,7 +5,7 @@
       <div id="wrap">
         <button id="reset" @click="resetGraph">Reset</button>
       </div>
-      <Bar ref="myChart" :data="chartData" :options="chartOptions" />
+      <Bar ref="myChart" :data="chartData" :options="chartOptions" @zoom="console.log('eee')"/>
     </div>
   </div>
 </template>
@@ -28,6 +28,8 @@ import {
 import { Bar } from "vue-chartjs";
 import "chartjs-adapter-moment";
 import zoomPlugin from "chartjs-plugin-zoom";
+// import { defineEmits } from "vue";
+// const emit = defineEmits(['onZoom'])
 
 ChartJS.register(
   CategoryScale,
@@ -103,6 +105,11 @@ export default {
                 enabled: true,
               },
               mode: "xy",
+              onZoom: ()=>{
+                console.log(this)
+                this.con()
+                this.$emit('zoom')
+              },
             },
             pan: {
               enabled: true,
@@ -191,8 +198,11 @@ export default {
   methods: {
     resetGraph(){
       this.$refs.myChart.chart.resetZoom();
+    },
+    con(){
+      console.log("confirm")
     }
-  }
+  },
 };
 </script>
 
