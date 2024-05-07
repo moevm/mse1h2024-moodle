@@ -20,6 +20,7 @@
         ></DateTime>
         <button id="reset-end-date" class="reset-date" @click="resetEndDate">Сброс</button>
       </div>
+      <v-btn value="download" icon="mdi-download" id="download-button"></v-btn>
       <div class="choose-type">
         <v-btn-toggle class="stat-type" v-model="selectedType" variant="outlined" color="blue">
           <v-btn value="graphic" class="graphic" icon="mdi-chart-line" id="graph-button"></v-btn>
@@ -41,7 +42,8 @@ import Search from "@/components/Filters/Search.vue";
 import Chart from "@/components/Chart.vue";
 import DateTime from "@/components/Filters/DateTime.vue";
 
-const STAT_URL = "/api/statistics/";
+//const STAT_URL = "/api/statistics/";
+const STAT_URL = "/data.json";
 
 export default {
   name: "Statistics",
@@ -199,6 +201,11 @@ export default {
 
 .stat-type .v-btn {
   color: var(--grey-7);
+}
+
+#download-button{
+  border-radius: 10px;
+  color: black;
 }
 </style>
   
