@@ -26,20 +26,20 @@
     </Filters>
     <Filters class="second-filter">
       <v-col class="v-col-filters">
-        <ColumnSearch label="ID студента" v-model="ID" :rules="idRules"></ColumnSearch>
-        <ColumnSearch label="ФИО студента" v-model="FIO"></ColumnSearch>
+        <ColumnSearch label="ID студента" v-model="ID" :rules="idRules" @keydown.enter="startSearchFilters"></ColumnSearch>
+        <ColumnSearch label="ФИО студента" v-model="FIO" @keydown.enter="startSearchFilters"></ColumnSearch>
       </v-col>
       <v-col class="v-col-filters">
-        <ColumnSearch label="email" v-model="email"></ColumnSearch>
-        <ColumnSearch label="Название курса" v-model="course"></ColumnSearch>
+        <ColumnSearch label="email" v-model="email" @keydown.enter="startSearchFilters"></ColumnSearch>
+        <ColumnSearch label="Название курса" v-model="course" @keydown.enter="startSearchFilters"></ColumnSearch>
       </v-col>
       <v-col class="v-col-filters">
-        <ColumnSearch label="Тип действия" v-model="actionType"></ColumnSearch>
-        <ColumnSearch label="Тип события" v-model="eventType"></ColumnSearch>
+        <ColumnSearch label="Тип действия" v-model="actionType" @keydown.enter="startSearchFilters"></ColumnSearch>
+        <ColumnSearch label="Тип события" v-model="eventType" @keydown.enter="startSearchFilters"></ColumnSearch>
       </v-col>
       <v-col class="v-col-filters">
-        <ColumnSearch label="Тип элемента" v-model="elementType"></ColumnSearch>
-        <ColumnSearch label="Название элемента" v-model="elementName"></ColumnSearch>
+        <ColumnSearch label="Тип элемента" v-model="elementType" @keydown.enter="startSearchFilters"></ColumnSearch>
+        <ColumnSearch label="Название элемента" v-model="elementName" @keydown.enter="startSearchFilters"></ColumnSearch>
       </v-col>
       <div class="search-reset-button ">
         <button id="start-search" class="start-search-button" @click="startSearchFilters">Поиск</button>
