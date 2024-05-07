@@ -5,7 +5,7 @@
       <div id="wrap">
         <button id="reset" @click="resetGraph">Reset</button>
       </div>
-      <Bar ref="myChart" :data="chartData" :options="chartOptions" @zoom="console.log('eee')"/>
+      <Bar ref="myChart" :data="chartData" :options="chartOptions"/>
     </div>
   </div>
 </template>
@@ -28,8 +28,6 @@ import {
 import { Bar } from "vue-chartjs";
 import "chartjs-adapter-moment";
 import zoomPlugin from "chartjs-plugin-zoom";
-// import { defineEmits } from "vue";
-// const emit = defineEmits(['onZoom'])
 
 ChartJS.register(
   CategoryScale,
@@ -76,8 +74,6 @@ export default {
             },
             display: true,
             ticks: {
-              stackWeight: 10,
-              sampleSize: 1,
               maxTicksLimit: 20,
               minRotation: 45,
             },
@@ -131,8 +127,6 @@ export default {
     chartData() {
       let labels = [];
       let data = [];
-      // let maxTime = null;
-      // let minTime = null;
       function compareDate(a, b) {
         if (a.Date < b.Date) return -1;
         if (a.Date > b.Date) return 1;

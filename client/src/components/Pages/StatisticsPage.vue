@@ -39,8 +39,7 @@ import Search from "@/components/Filters/Search.vue";
 import Chart from "@/components/Chart.vue";
 import DateTime from "@/components/Filters/DateTime.vue";
 
-//const STAT_URL = "/api/statistics/";
-const STAT_URL = "/data.json";
+const STAT_URL = "/api/statistics/";
 
 export default {
   name: "Statistics",
