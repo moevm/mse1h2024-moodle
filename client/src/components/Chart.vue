@@ -110,10 +110,7 @@ export default {
               },
               mode: "xy",
               onZoom: ({chart})=>{
-                console.log(this)
                 this.zoom = chart.getZoomLevel();
-                this.con()
-                this.$emit('zoom')
               },
             },
             pan: {
@@ -141,7 +138,6 @@ export default {
         if (a.Date > b.Date) return 1;
         return 0;
       }
-      console.log("zoom", this.zoom);
       let searchLow = "";
       if (this.search) {
         searchLow = this.search.toLocaleLowerCase();
@@ -164,7 +160,6 @@ export default {
       let min = cloneInfo.at(0).Date;
       let max = cloneInfo.at(-1).Date;
       delta = (max - min) / (limit * this.zoom);
-      console.log(delta)
     
 
       const dateCount = [];
@@ -205,9 +200,6 @@ export default {
       this.$refs.myChart.chart.resetZoom();
       this.zoom = 1;
     },
-    con(){
-      console.log("confirm")
-    }
   },
 };
 </script>
