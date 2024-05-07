@@ -49,10 +49,6 @@ export default {
       type: Array,
       required: true,
     },
-    search: {
-      type: String,
-      required: true,
-    },
   },
   data() {
     return {
@@ -137,22 +133,7 @@ export default {
         if (a.Date > b.Date) return 1;
         return 0;
       }
-      console.log(typeof this.search, this.search);
-      let searchLow = "";
-      if (this.search) {
-        searchLow = this.search.toLocaleLowerCase();
-      }
-      let cloneInfo = this.info.filter((action) => {
-        return (
-          action.studentId.toString().toLocaleLowerCase().includes(searchLow) ||
-          action.FIO.toLocaleLowerCase().includes(searchLow) ||
-          action.course.toLocaleLowerCase().includes(searchLow) ||
-          action.typeAction.toLocaleLowerCase().includes(searchLow) ||
-          action.page.toLocaleLowerCase().includes(searchLow) ||
-          action.time.toLocaleLowerCase().includes(searchLow) ||
-          action.date.toLocaleLowerCase().includes(searchLow)
-        );
-      });
+      let cloneInfo = this.info.slice()
       cloneInfo.sort(compareDate);
       let arr = cloneInfo;
       let limit = 20;
