@@ -20,7 +20,7 @@
         ></DateTime>
         <button id="reset-end-date" class="reset-date" @click="resetEndDate">Сброс</button>
       </div>
-      <v-btn value="download" icon="mdi-download" id="download-button" @click="downloadDialog=true"></v-btn>
+      <v-btn variant="outlined" value="download" icon="mdi-download" class="download-button" @click="downloadDialog=true"></v-btn>
       <Dialog v-model="downloadDialog" @close="downloadDialog=false"></Dialog>
       <div class="choose-type">
         <v-btn-toggle class="stat-type" v-model="selectedType" variant="outlined" color="blue">
@@ -206,9 +206,12 @@ export default {
   color: var(--grey-7);
 }
 
-#download-button{
-  border-radius: 10px;
-  color: black;
+.download-button{
+  border-radius: 7px;
+  border: 1px solid var(--grey-1);
+  color: var(--grey-7);
+  transform: translateY(12.5%);
+  
 }
 </style>
   
