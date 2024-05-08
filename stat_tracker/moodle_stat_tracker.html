@@ -124,7 +124,7 @@
                         if (interactor.interactionElement.includes(e.target.nodeName)) {
                             if(interactor.debug)
                                 console.log(e.target)
-                            interactor.__addInteraction__(e, "interactions", e.target);
+                            interactor.__addInteraction__(e, "interactions", e.target.toString());
                         }
                     });
                 }
@@ -137,7 +137,7 @@
                         e.stopPropagation();
                         if(interactor.debug)
                             console.log(e.target)
-                        interactor.__addInteraction__(e, "conversation", e.target);
+                        interactor.__addInteraction__(e, "conversation", e.target.toString());
                     });
                 }
             }
@@ -229,7 +229,6 @@
         __sendInteractions__: function () {
 
             var interactor = this;
-            if (interactor.records.length === 0 || !interactor.email) sleep(50000);
             if (interactor.records.length === 0) return interactor;
             
             var xhr = new XMLHttpRequest();
