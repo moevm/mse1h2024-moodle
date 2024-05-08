@@ -2,43 +2,14 @@ import uuid
 from pydantic import BaseModel, EmailStr, HttpUrl, Field
 from datetime import datetime
 from typing import List
-from enum import Enum
-
-
-class ElementTypeEnum(str, Enum):
-    button = "button"
-    page = "page"
-
-    def __str__(self):
-        return self.value
-
-
-class ActionTypeEnum(str, Enum):
-    conversation = "conversation"
-    visible = "visible"
-    hidden = "hidden"
-
-    def __str__(self):
-        return self.value
-
-
-class EventTypeEnum(str, Enum):
-    mousedown = "mousedown"
-    visibilitychange = "visibilitychange"
-    copy = "copy"
-    paste = "paste"
-
-    def __str__(self):
-        return self.value
-
 
 class Payload(BaseModel):
     timestamp: datetime = Field(default_factory=lambda: datetime.now().isoformat())
     page: HttpUrl = Field(...)
-    element_type: ElementTypeEnum = Field(...)
+    element_type: str = Field(...)
     element_name: str = Field(...)
-    action_type: ActionTypeEnum = Field(...)
-    event_type: EventTypeEnum = Field(...)
+    action_type: str = Field(...)
+    event_type: str = Field(...)
     element_html: str = Field(..., description="The HTML content of the element")
 
     class Config:
