@@ -352,11 +352,11 @@ export default {
 }
 
 .download-button{
-  border-radius: 7px;
+  border-radius: 4px;
   border: 1px solid var(--grey-1);
   color: var(--grey-7);
-  transform: translateY(12.5%);
-  
+  transform: translateY(14%);
+  margin-left: 50%;
 }
 </style>
   
