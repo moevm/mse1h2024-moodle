@@ -5,7 +5,7 @@
       <div id="wrap">
         <button id="reset" @click="resetGraph">Reset</button>
       </div>
-      <Bar ref="myChart" :data="chartData" :options="chartOptions" />
+      <Bar ref="myChart" :data="chartData" :options="chartOptions"/>
     </div>
   </div>
 </template>
@@ -56,7 +56,9 @@ export default {
   },
   data() {
     return {
+      zoom: 1,
       chartOptions: {
+        animations: false,
         scales: {
           x: {
             type: "time",
@@ -111,6 +113,9 @@ export default {
                 enabled: true,
               },
               mode: "xy",
+              onZoom: ({chart})=>{
+                this.zoom = chart.getZoomLevel();
+              },
             },
             pan: {
               enabled: true,
@@ -130,14 +135,11 @@ export default {
     chartData() {
       let labels = [];
       let data = [];
-      // let maxTime = null;
-      // let minTime = null;
       function compareDate(a, b) {
         if (a.Date < b.Date) return -1;
         if (a.Date > b.Date) return 1;
         return 0;
       }
-      console.log(typeof this.search, this.search);
       let searchLow = "";
       if (this.search) {
         searchLow = this.search.toLocaleLowerCase();
@@ -155,13 +157,12 @@ export default {
       });
       cloneInfo.sort(compareDate);
       let arr = cloneInfo;
-      let limit = 20;
+      let limit = 200;
       let delta = 100;
-      if (cloneInfo.length > limit) {
-        let min = cloneInfo.at(0).Date;
-        let max = cloneInfo.at(-1).Date;
-        delta = (max - min) / (limit * 100);
-      }
+      let min = cloneInfo.at(0).Date;
+      let max = cloneInfo.at(-1).Date;
+      delta = (max - min) / (limit * this.zoom);
+    
 
       const dateCount = [];
       arr.forEach((action) => {
@@ -199,8 +200,9 @@ export default {
   methods: {
     resetGraph(){
       this.$refs.myChart.chart.resetZoom();
-    }
-  }
+      this.zoom = 1;
+    },
+  },
 };
 </script>
 
