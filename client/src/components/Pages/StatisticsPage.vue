@@ -1,9 +1,6 @@
 <template>
   <Navbar :username="name" :position="position">
-    <Filters>
-      <div class="search-info">
-        <Search v-model="search" id="search-input"></Search>
-      </div>
+    <Filters class="first-filter">
       <div class="date-time-info">
         <DateTime
             v-model="beginTimestamp"
@@ -27,6 +24,28 @@
         </v-btn-toggle>
       </div>
     </Filters>
+    <Filters class="second-filter">
+      <v-col class="v-col-filters">
+        <ColumnSearch label="ID студента" v-model="ID" :rules="idRules" @keydown.enter="startSearchFilters"></ColumnSearch>
+        <ColumnSearch label="ФИО студента" v-model="FIO" @keydown.enter="startSearchFilters"></ColumnSearch>
+      </v-col>
+      <v-col class="v-col-filters">
+        <ColumnSearch label="email" v-model="email" @keydown.enter="startSearchFilters"></ColumnSearch>
+        <ColumnSearch label="Название курса" v-model="course" @keydown.enter="startSearchFilters"></ColumnSearch>
+      </v-col>
+      <v-col class="v-col-filters">
+        <ColumnSearch label="Тип действия" v-model="actionType" @keydown.enter="startSearchFilters"></ColumnSearch>
+        <ColumnSearch label="Тип события" v-model="eventType" @keydown.enter="startSearchFilters"></ColumnSearch>
+      </v-col>
+      <v-col class="v-col-filters">
+        <ColumnSearch label="Тип элемента" v-model="elementType" @keydown.enter="startSearchFilters"></ColumnSearch>
+        <ColumnSearch label="Название элемента" v-model="elementName" @keydown.enter="startSearchFilters"></ColumnSearch>
+      </v-col>
+      <div class="search-reset-button ">
+        <button id="start-search" class="start-search-button" @click="startSearchFilters">Поиск</button>
+        <button id="reset-search" class="reset-button" @click="resetSearch">Сброс</button>
+      </div>
+    </Filters>
     <StatisticsTable v-if="selectedType === 'table'" :info="statisticsInfo" v-model:search="search"></StatisticsTable>
     <Chart v-else :info="statisticsInfo"></Chart>
   </Navbar>
@@ -37,15 +56,15 @@ import Navbar from "@/components/Navbar.vue";
 import StatisticsTable from "@/components/Tables/StatisticsTable.vue";
 import axios from "axios";
 import Filters from "@/components/Filters/Filters.vue";
-import Search from "@/components/Filters/Search.vue";
 import Chart from "@/components/Chart.vue";
 import DateTime from "@/components/Filters/DateTime.vue";
+import ColumnSearch from "@/components/Filters/ColumnSearch.vue";
 
 const STAT_URL = "/api/statistics/";
 
 export default {
   name: "Statistics",
-  components: {DateTime, Chart, Search, Filters, StatisticsTable, Navbar },
+  components: {ColumnSearch, DateTime, Chart, Filters, StatisticsTable, Navbar },
 
   data() {
     return {
@@ -56,9 +75,25 @@ export default {
       beginTimestamp: '',
       endTimestamp: '',
       today: '',
-      position: ''
+      position: '',
+      ID: '',
+      idRules: [
+        value => {
+          if (/^\d+$/.test(value) || value === null || value.length === 0) return true
+          else return 'Допустимые значения только цифры!'
+        },
+      ],
+      FIO: '',
+      email: '',
+      course: '',
+      actionType: '',
+      eventType: '',
+      elementType: '',
+      elementName: '',
+      startSearch: false
     };
   },
+
   beforeMount() {
     this.today = new Date().toISOString().slice(0, 16);
     let name = sessionStorage.getItem("name");
@@ -72,17 +107,60 @@ export default {
       this.$router.push("/e.moevm.statistics/auth");
     }
   },
+
   mounted() {
     this.getStatistics();
   },
+
   watch: {
     beginTimestamp() {
       this.getStatistics();
     },
     endTimestamp() {
       this.getStatistics();
-    }
+    },
+    ID() {
+      if (this.ID === null && this.startSearch === true) {
+        this.getStatistics();
+      }
+    },
+    FIO() {
+      if (this.FIO === null && this.startSearch === true) {
+        this.getStatistics();
+      }
+    },
+    email() {
+      if (this.email === null && this.startSearch === true) {
+        this.getStatistics();
+      }
+    },
+    course() {
+      if (this.course === null && this.startSearch === true) {
+        this.getStatistics();
+      }
+    },
+    actionType() {
+      if (this.actionType === null && this.startSearch === true) {
+        this.getStatistics();
+      }
+    },
+    eventType() {
+      if (this.eventType === null && this.startSearch === true) {
+        this.getStatistics();
+      }
+    },
+    elementType() {
+      if (this.elementType === null && this.startSearch === true) {
+        this.getStatistics();
+      }
+    },
+    elementName() {
+      if (this.elementName === null && this.startSearch === true) {
+        this.getStatistics();
+      }
+    },
   },
+
   methods: {
     resetBeginDate() {
       this.beginTimestamp = '';
@@ -92,9 +170,40 @@ export default {
       this.endTimestamp = '';
     },
 
+    startSearchFilters() {
+      this.startSearch = true;
+      this.getStatistics();
+    },
+
+    resetSearch() {
+      this.ID = '';
+      this.FIO = '';
+      this.email = '';
+      this.course = '';
+      this.actionType = '';
+      this.eventType = '';
+      this.elementType = '';
+      this.elementName = '';
+      if (this.startSearch === true) {
+        this.getStatistics();
+        this.startSearch = false;
+      }
+    },
+
     getStatistics() {
       this.statisticsInfo = []
       let params = {}
+      const searchParams = {
+        student_id: Number(this.ID),
+        student_name: this.FIO,
+        student_email: this.email,
+        course_title: this.course,
+        action_type: this.actionType,
+        event_type: this.eventType,
+        element_type: this.eventType,
+        element_name: this.elementName
+      }
+
       if (this.beginTimestamp.length === 0 && this.endTimestamp.length === 0) {
         params = {}
       }
@@ -114,6 +223,8 @@ export default {
           end_timestamp: this.endTimestamp
         }
       }
+
+      Object.assign(params, searchParams)
 
       axios
           .get(STAT_URL, { params })
@@ -156,9 +267,41 @@ export default {
 
 <style>
 @import '@/colors.css';
-.search-info {
-  width: 25%;
-  margin: 0;
+.second-filter {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.v-col-filters {
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 0;
+}
+
+.reset-button {
+  padding: 6px 10px 6px 10px;
+  border-radius: 10px;
+  background-color: var(--white-4);
+  color: var(--blue-4);
+}
+.reset-button:hover {
+  background-color: var(--white-5);
+}
+
+.start-search-button {
+  margin-bottom: 5%;
+  padding: 6px 10px 6px 10px;
+  border-radius: 10px;
+  background-color: var(--white-4);
+  color: var(--green-1)
+}
+.start-search-button:hover {
+  background-color: var(--white-5);
+}
+
+.search-reset-button {
+  display: flex;
+  flex-direction: column;
 }
 
 .date-time-info {
