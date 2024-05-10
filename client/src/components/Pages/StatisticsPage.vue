@@ -47,7 +47,7 @@
       </div>
     </Filters>
     <StatisticsTable v-if="selectedType === 'table'" :info="statisticsInfo" v-model:search="search"></StatisticsTable>
-    <Chart v-else :info="statisticsInfo" :search="search"></Chart>
+    <Chart v-else :info="statisticsInfo"></Chart>
   </Navbar>
 </template>
 
