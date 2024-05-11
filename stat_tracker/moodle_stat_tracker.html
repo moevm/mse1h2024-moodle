@@ -165,7 +165,7 @@
                 element_name: name,
                 action_type: type,
                 event_type: e.type,
-                element_html: ' ' // TODO: make  a real function to collect element_html
+                element_html: `${e.target.outerHTML}`
             }
             interactor.records.push(trackingEntity);
 
