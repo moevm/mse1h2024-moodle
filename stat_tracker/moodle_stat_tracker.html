@@ -255,7 +255,9 @@
 
 
 <script type="module">
-    var interactions = new Interactor({
+
+    function initTracker(){
+        var interactions = new Interactor({
         trackAll: false,
         numberActionsToSend: 5,
         trackPagePresence: true,
@@ -269,4 +271,38 @@
         async: true,
         debug: true
     });
+    }
+
+    async function healthCheck(retries){
+        const apiHealthCheck = "http://localhost:8080/api/healthcheck"
+        try{
+            let response = await fetch(apiHealthCheck);
+            if (!response.ok){
+                console.log('Во время подключения произошла ошибка. Данные могут быть не записаны.');
+                if(retries > 0){
+                    console.log(`Повторное подключение. Осталось попыток: ${retries-1}`)
+                    await new Promise(resolve => setTimeout(resolve, 20000));
+                    await healthCheck(retries - 1)
+                }else{
+                    console.log("Попытки подключения исчерпаны. Moodle работает без сбора статистики.")
+                }
+            }
+            else {
+                console.log("Скрипт подключен успешно. Соединение с сервером установлено.");
+                initTracker();
+            }
+        } catch(error){
+            console.log('Во время подключения произошла ошибка. Данные могут быть не записаны.');
+            if(retries > 0){
+                    console.log(`Повторное подключение. Осталось попыток: ${retries-1}`)
+                    await new Promise(resolve => setTimeout(resolve, 20000));
+                    await healthCheck(retries - 1)
+                }else{
+                    console.log("Попытки подключения исчерпаны. Moodle работает без сбора статистики.")
+                }
+        }
+    }
+
+    healthCheck(3)
+
 </script>
