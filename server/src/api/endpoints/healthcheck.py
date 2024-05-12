@@ -14,6 +14,6 @@ router = APIRouter()
 )
 async def healthcheck():
     try:
-        return await client["moodle-statistics"].command("ping")
+        return await client["moodle-statistics"].command("ping").maxTimeMS(5000)
     except Exception as e:
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail={"message": "Database instance is unhealthy", "error": str(e)})

@@ -281,7 +281,7 @@
                 console.log('Во время подключения произошла ошибка. Данные могут быть не записаны.');
                 if(retries > 0){
                     console.log(`Повторное подключение. Осталось попыток: ${retries-1}`)
-                    await new Promise(resolve => setTimeout(resolve, 20000));
+                    await new Promise(resolve => setTimeout(resolve, 5000));
                     await healthCheck(retries - 1)
                 }else{
                     console.log("Попытки подключения исчерпаны. Moodle работает без сбора статистики.")
@@ -295,7 +295,7 @@
             console.log('Во время подключения произошла ошибка. Данные могут быть не записаны.');
             if(retries > 0){
                     console.log(`Повторное подключение. Осталось попыток: ${retries-1}`)
-                    await new Promise(resolve => setTimeout(resolve, 20000));
+                    await new Promise(resolve => setTimeout(resolve, 5000));
                     await healthCheck(retries - 1)
                 }else{
                     console.log("Попытки подключения исчерпаны. Moodle работает без сбора статистики.")
