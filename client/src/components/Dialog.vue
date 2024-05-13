@@ -22,8 +22,7 @@ export default {
   props: ["info"],
   data() {
     return {
-      selected: ['statistics'],
-      dis: false
+      selected: ['statistics']
     };
   },
   methods: {
