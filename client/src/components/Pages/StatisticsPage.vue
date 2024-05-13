@@ -18,7 +18,7 @@
         <button id="reset-end-date" class="reset-date" @click="resetEndDate">Сброс</button>
       </div>
       <v-btn variant="outlined" value="download" icon="mdi-download" class="download-button" @click="downloadDialog=true"></v-btn>
-      <Dialog v-model="downloadDialog" @close="downloadDialog=false"></Dialog>
+      <Dialog v-model="downloadDialog" @close="downloadDialog=false" :info="statisticsInfo"></Dialog>
       <div class="choose-type">
         <v-btn-toggle class="stat-type" v-model="selectedType" variant="outlined" color="blue">
           <v-btn value="graphic" class="graphic" icon="mdi-chart-line" id="graph-button"></v-btn>
