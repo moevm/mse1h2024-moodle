@@ -18,7 +18,7 @@
         <button id="reset-end-date" class="reset-date" @click="resetEndDate">Сброс</button>
       </div>
       <v-btn variant="outlined" value="download" icon="mdi-download" class="download-button" @click="downloadDialog=true"></v-btn>
-      <Dialog v-model="downloadDialog" @close="downloadDialog=false" :info="statisticsInfo"></Dialog>
+      <Dialog v-model="downloadDialog" @close="downloadDialog=false" :params="params"></Dialog>
       <div class="choose-type">
         <v-btn-toggle class="stat-type" v-model="selectedType" variant="outlined" color="blue">
           <v-btn value="graphic" class="graphic" icon="mdi-chart-line" id="graph-button"></v-btn>
@@ -97,7 +97,8 @@ export default {
       eventType: '',
       elementType: '',
       elementName: '',
-      startSearch: false
+      startSearch: false,
+      params: {}
     };
   },
 
@@ -199,7 +200,7 @@ export default {
 
     getStatistics() {
       this.statisticsInfo = []
-      let params = {}
+      this.params = {}
       const searchParams = {
         student_id: Number(this.ID),
         student_name: this.FIO,
@@ -212,29 +213,29 @@ export default {
       }
 
       if (this.beginTimestamp.length === 0 && this.endTimestamp.length === 0) {
-        params = {}
+        this.params = {}
       }
       else if (this.beginTimestamp.length !== 0 && this.endTimestamp.length === 0) {
-        params = {
+        this.params = {
           begin_timestamp: this.beginTimestamp
         }
       }
       else if (this.beginTimestamp.length === 0 && this.endTimestamp.length !== 0) {
-        params = {
+        this.params = {
           end_timestamp: this.endTimestamp
         }
       }
       else {
-        params = {
+        this.params = {
           begin_timestamp: this.beginTimestamp,
           end_timestamp: this.endTimestamp
         }
       }
 
-      Object.assign(params, searchParams)
+      Object.assign(this.params, searchParams)
 
       axios
-          .get(STAT_URL, { params })
+          .get(STAT_URL, this.params)
           .then((response) => {
             console.log(response);
             response.data.forEach(element => {

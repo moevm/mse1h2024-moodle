@@ -1,6 +1,7 @@
 <template>
   <v-dialog width="auto">
     <v-card text="Выберите файлы, которые вы хотите скачать:" title="Скачать">
+      params {{ params }}
       <v-container fluid>
         <v-checkbox
           v-model="selected"
@@ -35,7 +36,7 @@ const STAT_FILE_URL = "/data.json";
 export default {
   emits: ["close"],
   name: "Dialog",
-  props: ["info"],
+  props: ["params"],
   data() {
     return {
       selected: ["statistics"],
