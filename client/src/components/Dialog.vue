@@ -1,8 +1,7 @@
 <template>
   <v-dialog width="auto">
     <v-card text="Выберите файлы, которые вы хотите скачать:" title="Скачать">
-      params {{ params }}
-      <v-container fluid>
+      <v-container>
         <v-checkbox
           v-model="selected"
           label="Выбранная статистика в формате json"
@@ -32,6 +31,7 @@
 import axios from "axios";
 // const STAT_FILE_URL = "/api/download/";
 const STAT_FILE_URL = "/data.json";
+const HTMLPAGE_FILE_URL = "/page.json";
 
 export default {
   emits: ["close"],
@@ -43,18 +43,24 @@ export default {
     };
   },
   methods: {
+    getUrl(file){
+      if (file === "statistics") return STAT_FILE_URL
+      return HTMLPAGE_FILE_URL
+    },
     download() {
-      axios
-        .get(STAT_FILE_URL, { responseType: "json" })
-        .then((response) => {
-          const blob = new Blob([JSON.stringify(response.data)], { type: "text/json" });
-          const link = document.createElement("a");
-          link.href = URL.createObjectURL(blob);
-          link.download = "download.json";
-          link.click();
-          URL.revokeObjectURL(link.href);
-        })
-        .catch(console.error);
+      for (let file of this.selected){
+        axios
+          .get(this.getUrl(file), this.params)
+          .then((response) => {
+            const blob = new Blob([JSON.stringify(response.data)], { type: "text/json" });
+            const link = document.createElement("a");
+            link.href = URL.createObjectURL(blob);
+            link.download = `${file}.json`;
+            link.click();
+            URL.revokeObjectURL(link.href);
+          })
+          .catch(console.error);
+      }
       this.$emit("close");
     },
   },
