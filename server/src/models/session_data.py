@@ -6,7 +6,6 @@ from typing import List
 
 class Payload(BaseModel):
     timestamp: datetime = Field(default_factory=lambda: datetime.now().isoformat())
-    page: HttpUrl = Field(...)
     element_type: str = Field(...)
     element_name: str = Field(...)
     action_type: str = Field(...)
@@ -20,7 +19,6 @@ class Payload(BaseModel):
             "examples": [
                 {
                     "timestamp": datetime.now().isoformat(),
-                    "page": "https://example.com",
                     "element_type": "button",
                     "element_name": "отправить",
                     "action_type": "conversation",
@@ -29,7 +27,6 @@ class Payload(BaseModel):
                 },
                 {
                     "timestamp": datetime.now().isoformat(),
-                    "page": "https://example.com",
                     "element_type": "page",
                     "element_name": "сохранить",
                     "action_type": "hidden",
@@ -38,7 +35,6 @@ class Payload(BaseModel):
                 },
                 {
                     "timestamp": datetime.now().isoformat(),
-                    "page": "https://example.com",
                     "element_type": "page",
                     "element_name": "сохранить",
                     "action_type": "visible",
@@ -72,7 +68,6 @@ class SessionData(BaseModel):
                     "course": "Курс молодого бойца",
                     "actions": [{
                         "timestamp": datetime.now().isoformat(),
-                        "page": "http://e.moevm.info/some_course",
                         "element_type": "button",
                         "element_name": "сохранить",
                         "action_type": "conversation",
@@ -89,7 +84,6 @@ class SessionData(BaseModel):
                     "course": "Курс молодого бойца",
                     "actions": [{
                         "timestamp": datetime.now().isoformat(),
-                        "page": "http://e.moevm.info/some_course",
                         "element_type": "button",
                         "element_name": "сохранить",
                         "action_type": "hidden",
@@ -106,7 +100,6 @@ class SessionData(BaseModel):
                     "course": "Курс молодого бойца",
                     "actions": [{
                         "timestamp": datetime.now().isoformat(),
-                        "page": "http://e.moevm.info/some_course",
                         "element_type": "page",
                         "element_name": "сохранить",
                         "action_type": "visible",
@@ -139,7 +132,6 @@ class CreateSessionData(BaseModel):
                     "course": "Курс молодого бойца",
                     "actions": [{
                         "timestamp": datetime.now().isoformat(),
-                        "page": "http://e.moevm.info/some_course",
                         "element_type": "button",
                         "element_name": "сохранить",
                         "action_type": "conversation",
@@ -155,7 +147,6 @@ class CreateSessionData(BaseModel):
                     "course": "Курс молодого бойца",
                     "actions": [{
                         "timestamp": datetime.now().isoformat(),
-                        "page": "http://e.moevm.info/some_course",
                         "element_type": "page",
                         "element_name": "сохранить",
                         "action_type": "hidden",
@@ -171,7 +162,6 @@ class CreateSessionData(BaseModel):
                     "course": "Курс молодого бойца",
                     "actions": [{
                         "timestamp": datetime.now().isoformat(),
-                        "page": "http://e.moevm.info/some_course",
                         "element_type": "page",
                         "element_name": "сохранить",
                         "action_type": "visible",
@@ -192,6 +182,7 @@ class PageData(BaseModel):
     id: str = Field(default_factory=lambda: str(uuid.uuid4()), alias="_id")
     page: HttpUrl = Field(...)
     browser: str = Field(...)
+    title: str = Field(...)
     page_html: str = Field(...)
     window: Window = Field(...)
 
@@ -202,6 +193,7 @@ class PageData(BaseModel):
             "example": {
                 "id": str(uuid.uuid4()),
                 "page": "http://e.moevm.info",
+                "title": "kakoy-to title",
                 "browser": "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit",
                 "page_html": '<html></html>',
                 "window": {
@@ -215,6 +207,7 @@ class PageData(BaseModel):
 class CreatePageData(BaseModel):
     page: HttpUrl = Field(...)
     browser: str = Field(...)
+    title: str = Field(...)
     page_html: str = Field(...)
     window: Window = Field(...)
 
@@ -224,6 +217,7 @@ class CreatePageData(BaseModel):
         json_schema_extra = {
             "example": {
                 "page": "http://e.moevm.info",
+                "title": "kakoy-to title",
                 "browser": "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit",
                 "page_html": '<html></html>',
                 "window": {
