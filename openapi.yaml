@@ -540,6 +540,9 @@ components:
         browser:
           type: string
           title: Browser
+        title:
+          type: string
+          title: Title
         page_html:
           type: string
           title: Page Html
@@ -549,6 +552,7 @@ components:
       required:
       - page
       - browser
+      - title
       - page_html
       - window
       title: CreatePageData
@@ -556,6 +560,7 @@ components:
         browser: Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit
         page: http://e.moevm.info
         page_html: <html></html>
+        title: kakoy-to title
         window:
           height: 800
           width: 1200
@@ -597,12 +602,11 @@ components:
           element_name: "\u0441\u043E\u0445\u0440\u0430\u043D\u0438\u0442\u044C"
           element_type: button
           event_type: mousedown
-          page: http://e.moevm.info/some_course
-          timestamp: '2024-05-15T01:38:18.342592'
+          timestamp: '2024-05-15T20:25:43.654699'
         course: "\u041A\u0443\u0440\u0441 \u043C\u043E\u043B\u043E\u0434\u043E\u0433\
           \u043E \u0431\u043E\u0439\u0446\u0430"
         email: iiivanov@edu.ru
-        session_id: 86a2e0ff-10af-420c-b83f-d48a147173c7
+        session_id: 00155b7d-0f9a-44f6-93d4-8a97834460f5
         student: "\u0418\u0432\u0430\u043D\u043E\u0432 \u0418\u0432\u0430\u043D"
         student_id: 1
       - actions:
@@ -611,12 +615,11 @@ components:
           element_name: "\u0441\u043E\u0445\u0440\u0430\u043D\u0438\u0442\u044C"
           element_type: page
           event_type: visibilitychange
-          page: http://e.moevm.info/some_course
-          timestamp: '2024-05-15T01:38:18.342592'
+          timestamp: '2024-05-15T20:25:43.654699'
         course: "\u041A\u0443\u0440\u0441 \u043C\u043E\u043B\u043E\u0434\u043E\u0433\
           \u043E \u0431\u043E\u0439\u0446\u0430"
         email: iiivanov@edu.ru
-        session_id: 88df22f7-7d98-48e8-9ba5-314c6f2c85ba
+        session_id: 2f09173e-01dd-49e6-8c74-cb195de13fbe
         student: "\u0418\u0432\u0430\u043D\u043E\u0432 \u0418\u0432\u0430\u043D"
         student_id: 1
       - actions:
@@ -625,12 +628,11 @@ components:
           element_name: "\u0441\u043E\u0445\u0440\u0430\u043D\u0438\u0442\u044C"
           element_type: page
           event_type: visibilitychange
-          page: http://e.moevm.info/some_course
-          timestamp: '2024-05-15T01:38:18.342592'
+          timestamp: '2024-05-15T20:25:43.654699'
         course: "\u041A\u0443\u0440\u0441 \u043C\u043E\u043B\u043E\u0434\u043E\u0433\
           \u043E \u0431\u043E\u0439\u0446\u0430"
         email: iiivanov@edu.ru
-        session_id: d88e2d2e-dc6e-437a-b5b9-ef42126d6e60
+        session_id: c3244ef1-d270-4217-8feb-7760b4fbfda1
         student: "\u0418\u0432\u0430\u043D\u043E\u0432 \u0418\u0432\u0430\u043D"
         student_id: 1
     CreateUser:
@@ -680,12 +682,6 @@ components:
           type: string
           format: date-time
           title: Timestamp
-        page:
-          type: string
-          maxLength: 2083
-          minLength: 1
-          format: uri
-          title: Page
         element_type:
           type: string
           title: Element Type
@@ -704,7 +700,6 @@ components:
           description: The HTML content of the element
       type: object
       required:
-      - page
       - element_type
       - element_name
       - action_type
@@ -717,22 +712,19 @@ components:
         element_name: "\u043E\u0442\u043F\u0440\u0430\u0432\u0438\u0442\u044C"
         element_type: button
         event_type: mousedown
-        page: https://example.com
-        timestamp: '2024-05-15T01:38:18.338827'
+        timestamp: '2024-05-15T20:25:43.650178'
       - action_type: hidden
         element_html: <input/>
         element_name: "\u0441\u043E\u0445\u0440\u0430\u043D\u0438\u0442\u044C"
         element_type: page
         event_type: visibilitychange
-        page: https://example.com
-        timestamp: '2024-05-15T01:38:18.338827'
+        timestamp: '2024-05-15T20:25:43.650178'
       - action_type: visible
         element_html: <input/>
         element_name: "\u0441\u043E\u0445\u0440\u0430\u043D\u0438\u0442\u044C"
         element_type: page
         event_type: visibilitychange
-        page: https://example.com
-        timestamp: '2024-05-15T01:38:18.338827'
+        timestamp: '2024-05-15T20:25:43.650178'
     Role:
       type: string
       enum:
@@ -780,13 +772,12 @@ components:
           element_name: "\u0441\u043E\u0445\u0440\u0430\u043D\u0438\u0442\u044C"
           element_type: button
           event_type: mousedown
-          page: http://e.moevm.info/some_course
-          timestamp: '2024-05-15T01:38:18.339880'
+          timestamp: '2024-05-15T20:25:43.652179'
         course: "\u041A\u0443\u0440\u0441 \u043C\u043E\u043B\u043E\u0434\u043E\u0433\
           \u043E \u0431\u043E\u0439\u0446\u0430"
         email: iiivanov@edu.ru
-        id: 39a932ad-a522-4f05-819d-fe30c6ea0205
-        session_id: d30243af-1a71-4537-9f4e-d9a3a132ee90
+        id: 6a1d086b-31b2-4b5e-94c7-0e8def042374
+        session_id: 643893a9-f996-4955-beed-d81084148976
         student: "\u0418\u0432\u0430\u043D\u043E\u0432 \u0418\u0432\u0430\u043D"
         student_id: 1
       - actions:
@@ -795,13 +786,12 @@ components:
           element_name: "\u0441\u043E\u0445\u0440\u0430\u043D\u0438\u0442\u044C"
           element_type: button
           event_type: visibilitychange
-          page: http://e.moevm.info/some_course
-          timestamp: '2024-05-15T01:38:18.339880'
+          timestamp: '2024-05-15T20:25:43.652179'
         course: "\u041A\u0443\u0440\u0441 \u043C\u043E\u043B\u043E\u0434\u043E\u0433\
           \u043E \u0431\u043E\u0439\u0446\u0430"
         email: iiivanov@edu.ru
-        id: 9cd84ccf-bbb5-446f-b656-2d22652f0cca
-        session_id: 6616f435-f20e-4f5c-957c-16b54b6fe3a2
+        id: 1ac86753-1ba2-45bf-af19-9f6d6a91a082
+        session_id: 17f99931-19f9-4a7f-a8c6-a55b15d9438a
         student: "\u0418\u0432\u0430\u043D\u043E\u0432 \u0418\u0432\u0430\u043D"
         student_id: 1
       - actions:
@@ -810,13 +800,12 @@ components:
           element_name: "\u0441\u043E\u0445\u0440\u0430\u043D\u0438\u0442\u044C"
           element_type: page
           event_type: visibilitychange
-          page: http://e.moevm.info/some_course
-          timestamp: '2024-05-15T01:38:18.339880'
+          timestamp: '2024-05-15T20:25:43.652179'
         course: "\u041A\u0443\u0440\u0441 \u043C\u043E\u043B\u043E\u0434\u043E\u0433\
           \u043E \u0431\u043E\u0439\u0446\u0430"
         email: iiivanov@edu.ru
-        id: db77bfe7-3090-4850-813f-88404ad375d9
-        session_id: f0d4207b-b49a-44f2-a1f9-896b1a996441
+        id: 8e548bb3-b0ab-42f7-8010-97ee0cff09b1
+        session_id: 48f97b9d-b035-4578-b1fb-eaa3f5600868
         student: "\u0418\u0432\u0430\u043D\u043E\u0432 \u0418\u0432\u0430\u043D"
         student_id: 1
     SignInData:
@@ -918,7 +907,7 @@ components:
       title: User
       example:
         email: iiivanov@edu.ru
-        id: 478f6ddd-a069-4de8-b7d5-50831e5097fc
+        id: 42ea02b5-0e50-430f-bc68-aa6017122fde
         lastname: "\u0418\u0432\u0430\u043D\u043E\u0432\u0438\u0447"
         name: "\u0418\u0432\u0430\u043D"
         password: sdfsdfwgesdgcx
