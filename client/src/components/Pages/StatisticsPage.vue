@@ -64,8 +64,7 @@ import Dialog from "@/components/Dialog.vue";
 import ColumnSearch from "@/components/Filters/ColumnSearch.vue";
 
 
-//const STAT_URL = "/api/statistics/";
-const STAT_URL = "/data.json";
+const STAT_URL = "/api/statistics/";
 
 export default {
   name: "Statistics",
