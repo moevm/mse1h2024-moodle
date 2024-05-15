@@ -47,17 +47,20 @@ export default {
   },
   methods: {
     deleteItem(item) {
-      const userId = item.id;
-      const DEl_USER_URL = `/api/user/${userId}`
-      axios
-          .delete(DEl_USER_URL)
-          .then(() => {
-            this.getUsers();
-          })
-          .catch((error) => {
-            alert("Ошибка при удалении пользователя");
-            console.error("Ошибка при удалении пользователя:", error);
-          });
+      let answer = confirm(`Пользователь ${item.FIO} будет безвозвратно удален. Вы уверены, что хотите продолжить операцию?`)
+      if (answer){
+        const userId = item.id;
+        const DEl_USER_URL = `/api/user/${userId}`
+        axios
+            .delete(DEl_USER_URL)
+            .then(() => {
+              this.getUsers();
+            })
+            .catch((error) => {
+              alert("Ошибка при удалении пользователя");
+              console.error("Ошибка при удалении пользователя:", error);
+            });
+      }
     }
   }
 };

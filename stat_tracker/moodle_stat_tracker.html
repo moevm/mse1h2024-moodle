@@ -49,6 +49,18 @@
             }
         }
     }
+
+    function trackDevtoolsOpening(interactor) {
+        document.addEventListener('keydown', e => {
+            if (e.code === 'F12' || e.code === 'KeyI' && e.ctrlKey && e.shiftKey){
+                e.stopPropagation();
+                if(interactor.debug)
+                    console.log(e.target)
+                interactor.__addInteraction__(e, "devtools", 'page');
+            }
+        })
+    }
+
     var Interactor = function (config) {
         this.__init__(config);
     };
@@ -105,15 +117,27 @@
                 
 
             }
-            else if (interactor.interactions === true) {
+            if (!interactor.trackAll && interactor.interactions === true) {
                 for (var i = 0; i < interactor.interactionEvents.length; i++) {
                     document.querySelector('body').addEventListener(interactor.interactionEvents[i], function (e) {
                         e.stopPropagation();
                         if (interactor.interactionElement.includes(e.target.nodeName)) {
                             if(interactor.debug)
                                 console.log(e.target)
-                            interactor.__addInteraction__(e, "conversation", 'button');
+                            interactor.__addInteraction__(e, "interactions", e.target.toString());
                         }
+                    });
+                }
+            }
+
+            if (!interactor.trackAll && interactor.conversions === true) {
+                trackDevtoolsOpening(interactor)
+                for (var i = 0; i < interactor.conversionEvents.length; i++) {
+                    document.addEventListener(interactor.conversionEvents[i], function (e) {
+                        e.stopPropagation();
+                        if(interactor.debug)
+                            console.log(e.target)
+                        interactor.__addInteraction__(e, "conversation", e.target.toString());
                     });
                 }
             }
@@ -141,7 +165,7 @@
                 element_name: name,
                 action_type: type,
                 event_type: e.type,
-                element_html: ' ' // TODO: make  a real function to collect element_html
+                element_html: `${e.target.outerHTML}`
             }
             interactor.records.push(trackingEntity);
 
@@ -205,7 +229,6 @@
         __sendInteractions__: function () {
 
             var interactor = this;
-            if (interactor.records.length === 0 || !interactor.email) sleep(50000);
             if (interactor.records.length === 0) return interactor;
             
             var xhr = new XMLHttpRequest();
@@ -232,7 +255,9 @@
 
 
 <script type="module">
-    var interactions = new Interactor({
+
+    function initTracker(){
+        var interactions = new Interactor({
         trackAll: false,
         numberActionsToSend: 5,
         trackPagePresence: true,
@@ -241,9 +266,43 @@
         interactionEvents: ["mousedown", "copy", "paste"],
         conversions: true,
         conversionElement: "conversion",
-        conversionEvents: ["mouseup", "touchend"],
+        conversionEvents: ["scroll", "contextmenu"],
         endpoint: 'http://localhost:8080/api/statistics',
         async: true,
         debug: true
     });
+    }
+
+    async function healthCheck(retries){
+        const apiHealthCheck = "http://localhost:8080/api/healthcheck"
+        try{
+            let response = await fetch(apiHealthCheck);
+            if (!response.ok){
+                console.log('Во время подключения произошла ошибка. Данные могут быть не записаны.');
+                if(retries > 0){
+                    console.log(`Повторное подключение. Осталось попыток: ${retries-1}`)
+                    await new Promise(resolve => setTimeout(resolve, 5000));
+                    await healthCheck(retries - 1)
+                }else{
+                    console.log("Попытки подключения исчерпаны. Moodle работает без сбора статистики.")
+                }
+            }
+            else {
+                console.log("Скрипт подключен успешно. Соединение с сервером установлено.");
+                initTracker();
+            }
+        } catch(error){
+            console.log('Во время подключения произошла ошибка. Данные могут быть не записаны.');
+            if(retries > 0){
+                    console.log(`Повторное подключение. Осталось попыток: ${retries-1}`)
+                    await new Promise(resolve => setTimeout(resolve, 5000));
+                    await healthCheck(retries - 1)
+                }else{
+                    console.log("Попытки подключения исчерпаны. Moodle работает без сбора статистики.")
+                }
+        }
+    }
+
+    healthCheck(3)
+
 </script>

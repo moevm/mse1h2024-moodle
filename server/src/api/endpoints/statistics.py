@@ -1,10 +1,13 @@
+import os
+import tempfile
 from typing import List
 
+import bson.json_util as json
 from fastapi import APIRouter, HTTPException, Body, Depends
 from fastapi.encoders import jsonable_encoder
 from starlette import status
 
-from starlette.responses import JSONResponse
+from starlette.responses import JSONResponse, FileResponse
 
 from src.core.modules.service.errors import SessionNotFoundError
 from src.depends import get_statistics_service
@@ -12,6 +15,7 @@ from src.models.filter import SessionFilter
 from src.models.session_data import SessionData, CreateSessionData
 
 router = APIRouter()
+download_router = APIRouter()
 service = get_statistics_service()
 
 
@@ -79,3 +83,22 @@ async def delete_session(session_id: str):
             )
         else:
             raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e))
+
+
+@download_router.get(
+    "/",
+    response_description="Download statistics"
+)
+async def download_data(params: SessionFilter = Depends()):
+    try:
+        data = await service.get_all_sessions(params)
+        with open(os.path.join(os.path.curdir, 'data.json'), mode='w+b') as f:
+            f.truncate(0)
+            f.write(json.dumps(data, ensure_ascii=False).encode('utf-8'))
+        return FileResponse(
+            os.path.join(os.path.curdir, 'data.json'),
+            filename="data.json",
+            media_type='application/octet-stream'
+        )
+    except Exception as e:
+        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e))
