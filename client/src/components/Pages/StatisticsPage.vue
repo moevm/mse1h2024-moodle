@@ -243,7 +243,6 @@ export default {
                 secondLayer.eventType = action.event_type;
                 secondLayer.elementType = action.element_type;
                 secondLayer.elementName = action.element_name;
-                secondLayer.page = action.page
                 const dateTime = new Date(action.timestamp);
                 const hours = dateTime.getHours().toString().padStart(2, '0');
                 const minutes = dateTime.getMinutes().toString().padStart(2, '0');
