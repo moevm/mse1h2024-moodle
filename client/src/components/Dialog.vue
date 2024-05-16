@@ -29,8 +29,8 @@
 
 <script>
 import axios from "axios";
-const STAT_FILE_URL = "/api/download/";
-const HTMLPAGE_FILE_URL = "/page.json";
+const STAT_FILE_URL = "/api/download/statistics/";
+const HTMLPAGE_FILE_URL = "/api/download/sessions/";
 
 export default {
   emits: ["close"],
