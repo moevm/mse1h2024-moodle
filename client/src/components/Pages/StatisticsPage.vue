@@ -289,7 +289,7 @@ export default {
 }
 
 .start-search-button {
-  margin-bottom: 5%;
+  transform: translateY(-60%);
   padding: 6px 10px 6px 10px;
   border-radius: 10px;
   background-color: var(--white-4);

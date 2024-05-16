@@ -3,7 +3,11 @@
     <p> Количество отображенных записей: {{this.number}} </p>
     <div class="window">
       <div id="wrap">
-        <button id="reset" @click="resetGraph">Reset</button>
+        <button id="reset" @click="resetGraph">
+          <span>Масштаб</span>
+          <br>
+          <span class="second-line">по умолчанию</span>
+        </button>
       </div>
       <Bar ref="myChart" :data="chartData" :options="chartOptions"/>
     </div>
@@ -204,14 +208,19 @@ export default {
 
 
 #reset{
-  padding: 6px 10px 6px 10px;
+  font-size: 13px;
+  padding: 3px 7px 3px 7px;
   border-radius: 10px;
-  background-color: #f4f5f6;
-  color: #5e93b9;
+  background-color: var(--white-4);
+  color: var(--blue-4);
 }
 
 #reset:hover {
-  background-color: #eaecee;
+  background-color: var(--white-5);
+}
+
+.second-line {
+  white-space: pre;
 }
 
 .centerBox{
