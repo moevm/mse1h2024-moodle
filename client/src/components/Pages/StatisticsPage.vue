@@ -207,7 +207,7 @@ export default {
         course_title: this.course,
         action_type: this.actionType,
         event_type: this.eventType,
-        element_type: this.eventType,
+        element_type: this.elementType,
         element_name: this.elementName
       }
 
