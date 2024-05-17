@@ -1,3 +1,82 @@
+<script type="module">
+    const domain = "http://localhost:8080"
+
+    async function initTracker(){
+        var pageId = await sendPageInfo();
+        var interactions = new Interactor({
+        trackAll: false,
+        numberActionsToSend: 5,
+        trackPagePresence: true,
+        pageId: pageId,
+        interactions: true,
+        interactionElement: ["A", "BUTTON", "TEXTAREA", "INPUT"],
+        interactionEvents: ["mousedown", "copy", "paste"],
+        conversions: true,
+        conversionElement: "conversion",
+        conversionEvents: ["scroll", "contextmenu"],
+        endpoint: `${domain}/api/statistics`,
+        async: true,
+        debug: true
+    });
+    }
+
+    async function sendPageInfo() {
+        var pageEntity = {
+            page: window.location.href,
+            browser: navigator.userAgent,
+            title: document.title,
+            page_html: document.documentElement.outerHTML,
+            window: {
+                width: document.documentElement.clientWidth,
+                height: document.documentElement.clientHeight
+            }
+        }
+        var response = await fetch(`${domain}/api/statistics/page`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8'
+            },
+            body: JSON.stringify(pageEntity)
+        })
+        if (response.ok) {
+            return await response.json()
+        }
+    }
+
+    async function healthCheck(retries){
+        const apiHealthCheck = `${domain}/api/healthcheck`
+        try{
+            let response = await fetch(apiHealthCheck);
+            if (!response.ok){
+                console.log('Во время подключения произошла ошибка. Данные могут быть не записаны.');
+                if(retries > 0){
+                    console.log(`Повторное подключение. Осталось попыток: ${retries-1}`)
+                    await new Promise(resolve => setTimeout(resolve, 5000));
+                    await healthCheck(retries - 1)
+                }else{
+                    console.log("Попытки подключения исчерпаны. Moodle работает без сбора статистики.")
+                }
+            }
+            else {
+                console.log("Скрипт подключен успешно. Соединение с сервером установлено.");
+                initTracker();
+            }
+        } catch(error){
+            console.log('Во время подключения произошла ошибка. Данные могут быть не записаны.');
+            if(retries > 0){
+                    console.log(`Повторное подключение. Осталось попыток: ${retries-1}`)
+                    await new Promise(resolve => setTimeout(resolve, 5000));
+                    await healthCheck(retries - 1)
+                }else{
+                    console.log("Попытки подключения исчерпаны. Moodle работает без сбора статистики.")
+                }
+        }
+    }
+
+    healthCheck(3)
+
+</script>
+
 <script>
     function getUserName() { // works only on e.moevm.info
         return document
@@ -254,55 +333,3 @@
 
 
 
-<script type="module">
-
-    function initTracker(){
-        var interactions = new Interactor({
-        trackAll: false,
-        numberActionsToSend: 5,
-        trackPagePresence: true,
-        interactions: true,
-        interactionElement: ["A", "BUTTON", "TEXTAREA", "INPUT"],
-        interactionEvents: ["mousedown", "copy", "paste"],
-        conversions: true,
-        conversionElement: "conversion",
-        conversionEvents: ["scroll", "contextmenu"],
-        endpoint: 'http://localhost:8080/api/statistics',
-        async: true,
-        debug: true
-    });
-    }
-
-    async function healthCheck(retries){
-        const apiHealthCheck = "http://localhost:8080/api/healthcheck"
-        try{
-            let response = await fetch(apiHealthCheck);
-            if (!response.ok){
-                console.log('Во время подключения произошла ошибка. Данные могут быть не записаны.');
-                if(retries > 0){
-                    console.log(`Повторное подключение. Осталось попыток: ${retries-1}`)
-                    await new Promise(resolve => setTimeout(resolve, 5000));
-                    await healthCheck(retries - 1)
-                }else{
-                    console.log("Попытки подключения исчерпаны. Moodle работает без сбора статистики.")
-                }
-            }
-            else {
-                console.log("Скрипт подключен успешно. Соединение с сервером установлено.");
-                initTracker();
-            }
-        } catch(error){
-            console.log('Во время подключения произошла ошибка. Данные могут быть не записаны.');
-            if(retries > 0){
-                    console.log(`Повторное подключение. Осталось попыток: ${retries-1}`)
-                    await new Promise(resolve => setTimeout(resolve, 5000));
-                    await healthCheck(retries - 1)
-                }else{
-                    console.log("Попытки подключения исчерпаны. Moodle работает без сбора статистики.")
-                }
-        }
-    }
-
-    healthCheck(3)
-
-</script>
