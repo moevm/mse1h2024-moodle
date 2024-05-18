@@ -13,7 +13,6 @@
       </v-container>
       <v-container v-else>
         <v-icon>mdi-pencil</v-icon>
-        <v-icon>mdi-delete</v-icon>
       </v-container>
     </template>
 
