@@ -234,7 +234,7 @@ export default {
       Object.assign(this.params, searchParams)
 
       axios
-          .get(STAT_URL, this.params)
+          .get(STAT_URL, {params: this.params})
           .then((response) => {
             console.log(response);
             response.data.forEach(element => {
