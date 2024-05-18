@@ -49,7 +49,7 @@ export default {
     download() {
       for (let file of this.selected){
         axios
-          .get(this.getUrl(file), this.params)
+          .get(this.getUrl(file), {params: this.params})
           .then((response) => {
             const blob = new Blob([JSON.stringify(response.data)], { type: "text/json" });
             const link = document.createElement("a");
