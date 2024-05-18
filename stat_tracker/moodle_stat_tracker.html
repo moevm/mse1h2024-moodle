@@ -152,6 +152,7 @@
 
             interactor.interactions = typeof (config.interactions) == "boolean" ? config.interactions : true,
                 interactor.trackAll = typeof (config.trackAll) == "boolean" ? config.trackAll : false,
+                interactor.pageId = typeof (config.pageId) == "string" ? config.pageId : '-',
                 interactor.numberActionsToSend = typeof (config.numberActionsToSend) == "number" ? config.numberActionsToSend : 15,
                 interactor.trackPagePresence = typeof (config.trackPagePresence) == "boolean" ? config.trackPagePresence : true,
                 interactor.interactionElement = Array.isArray(config.interactionElement) === true ? config.interactionElement : [],
@@ -321,7 +322,8 @@
                 email: interactor.email, 
                 student_id: getUserID(),
                 course: getCourseName(), 
-                actions: interactor.records
+                actions: interactor.records,
+                session_id: interactor.pageId
             }
             console.log(trackingEntity)
             xhr.send(JSON.stringify(trackingEntity));
@@ -330,6 +332,3 @@
         }
     };
 </script>
-
-
-
