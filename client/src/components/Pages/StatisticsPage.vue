@@ -17,6 +17,8 @@
         ></DateTime>
         <button id="reset-end-date" class="reset-date" @click="resetEndDate">Сброс</button>
       </div>
+      <v-btn variant="outlined" value="download" icon="mdi-download" class="download-button" @click="downloadDialog=true"></v-btn>
+      <Dialog v-model="downloadDialog" @close="downloadDialog=false" :params="params"></Dialog>
       <div class="choose-type">
         <v-btn-toggle class="stat-type" v-model="selectedType" variant="outlined" color="blue">
           <v-btn value="graphic" class="graphic" icon="mdi-chart-line" id="graph-button"></v-btn>
@@ -58,13 +60,16 @@ import axios from "axios";
 import Filters from "@/components/Filters/Filters.vue";
 import Chart from "@/components/Chart.vue";
 import DateTime from "@/components/Filters/DateTime.vue";
+import Dialog from "@/components/Dialog.vue";
 import ColumnSearch from "@/components/Filters/ColumnSearch.vue";
+
 
 const STAT_URL = "/api/statistics/";
 
 export default {
   name: "Statistics",
-  components: {ColumnSearch, DateTime, Chart, Filters, StatisticsTable, Navbar },
+  components: {ColumnSearch, DateTime, Chart, Filters, StatisticsTable, Navbar, Dialog},
+
 
   data() {
     return {
@@ -76,6 +81,7 @@ export default {
       endTimestamp: '',
       today: '',
       position: '',
+      downloadDialog: false,
       ID: '',
       idRules: [
         value => {
@@ -90,7 +96,8 @@ export default {
       eventType: '',
       elementType: '',
       elementName: '',
-      startSearch: false
+      startSearch: false,
+      params: {}
     };
   },
 
@@ -192,7 +199,7 @@ export default {
 
     getStatistics() {
       this.statisticsInfo = []
-      let params = {}
+      this.params = {}
       const searchParams = {
         student_id: Number(this.ID),
         student_name: this.FIO,
@@ -205,29 +212,29 @@ export default {
       }
 
       if (this.beginTimestamp.length === 0 && this.endTimestamp.length === 0) {
-        params = {}
+        this.params = {}
       }
       else if (this.beginTimestamp.length !== 0 && this.endTimestamp.length === 0) {
-        params = {
+        this.params = {
           begin_timestamp: this.beginTimestamp
         }
       }
       else if (this.beginTimestamp.length === 0 && this.endTimestamp.length !== 0) {
-        params = {
+        this.params = {
           end_timestamp: this.endTimestamp
         }
       }
       else {
-        params = {
+        this.params = {
           begin_timestamp: this.beginTimestamp,
           end_timestamp: this.endTimestamp
         }
       }
 
-      Object.assign(params, searchParams)
+      Object.assign(this.params, searchParams)
 
       axios
-          .get(STAT_URL, { params })
+          .get(STAT_URL, {params: this.params})
           .then((response) => {
             console.log(response);
             response.data.forEach(element => {
@@ -342,6 +349,14 @@ export default {
 
 .stat-type .v-btn {
   color: var(--grey-7);
+}
+
+.download-button{
+  border-radius: 4px;
+  border: 1px solid var(--grey-1);
+  color: var(--grey-7);
+  transform: translateY(14%);
+  margin-left: 50%;
 }
 </style>
   
