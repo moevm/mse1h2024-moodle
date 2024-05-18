@@ -65,11 +65,8 @@ services:
   moodle:
     container_name: moodle
     image: bitnami/moodle
-    environment:
-      - MOODLE_DATABASE_NAME=moodle
-      - MOODLE_DATABASE_HOST=mariadb
-      - MOODLE_DATABASE_USER=moodle
-      - MOODLE_DATABASE_PASSWORD=kamisama123
+    env_file:
+      - server/.env
     ports:
       - "80:8080"
       - "443:8443"
@@ -84,11 +81,8 @@ services:
     image: mariadb
     networks:
       - moodle
-    environment:
-      - MYSQL_DATABASE=moodle
-      - MYSQL_ROOT_PASSWORD=kamisama123
-      - MYSQL_USER=moodle
-      - MYSQL_PASSWORD=kamisama123
+    env_file:
+      - server/.env
     volumes:
       - mariadb-data:/var/lib/mysql
     restart: unless-stopped
