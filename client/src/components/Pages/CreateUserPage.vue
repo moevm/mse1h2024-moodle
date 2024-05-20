@@ -19,7 +19,7 @@
             id="password-input">
         </DataInput>
         <DataButton title='готово' @click="createUser" id="create-button"></DataButton>
-        <DataButton class="cancel" title='отмена' @click.prevent="cancel"></DataButton>
+        <DataButton class="cancel" title='отмена' @click="cancel"></DataButton>
       </DataForm>
     </AuthForm>
   </Navbar>
@@ -79,7 +79,7 @@ export default {
   },
 
   methods: {
-    async createUser() {
+    createUser() {
       const userData = {
         email: this.email,
         surname: this.surname,
@@ -88,15 +88,16 @@ export default {
         password: this.password
       };
 
-      try {
-        const response = await axios.post(CREATE_URL, userData);
-        alert('Пользователь успешно создан');
-        console.log('Пользователь успешно создан:', response.data);
-        this.cancel();
-      } catch (error) {
-        alert('Ошибка при создании пользователя');
-        console.error('Ошибка при создании пользователя:', error);
-      }
+      axios
+          .post(CREATE_URL, userData)
+          .then((response) => {
+            console.log('Пользователь успешно создан:', response.data);
+            this.cancel();
+          })
+          .catch((error) => {
+            console.error('Ошибка при создании пользователя:', error);
+            this.cancel();
+          });
     },
 
     cancel() {
