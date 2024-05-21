@@ -238,6 +238,12 @@
                 name = e.target.innerText
             else
                 name = e.target.nodeName.toLowerCase()
+
+            let html_code = `${e.target.outerHTML}`
+            if (type == "devtools" || e.type == "keydown"){
+                html_code = "undefined"
+            }
+
             trackingEntity = {
                 timestamp: createDateAsUTC(new Date()).toISOString(),
                 page: interactor.session.page.href,
@@ -245,7 +251,7 @@
                 element_name: name,
                 action_type: type,
                 event_type: e.type,
-                element_html: `${e.target.outerHTML}`
+                element_html: html_code
             }
             interactor.records.push(trackingEntity);
 
