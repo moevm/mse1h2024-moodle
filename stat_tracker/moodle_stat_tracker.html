@@ -244,11 +244,8 @@ let mousewheelCounter = 0
                 else
                     name = e.target.nodeName.toLowerCase()
               let html_code = `${e.target.outerHTML}`
-
             if (type == "devtools" || e.type == "keydown"){
-
                 html_code = "undefined"
-
             }
                 trackingEntity = {
                     timestamp: createDateAsUTC(new Date()).toISOString(),
@@ -274,10 +271,11 @@ let mousewheelCounter = 0
 
                 interactor.records = []
               
-               }else{
-                if(mousewheelCounter == 1){
-                    mousewheelCounter++
-                    var interactor = this;
+               }
+            }
+            if(e.type == "scroll" && mousewheelCounter == 1){
+                mousewheelCounter++
+                var interactor = this;
 
                 let name;
                 if(e.target)
@@ -285,13 +283,10 @@ let mousewheelCounter = 0
                     name = e.target.innerText
                 else
                     name = e.target.nodeName.toLowerCase()
-              let html_code = `${e.target.outerHTML}`
-
-            if (type == "devtools" || e.type == "keydown"){
-
-                html_code = "undefined"
-
-            }
+                let html_code = `${e.target.outerHTML}`
+                if (type == "devtools" || e.type == "keydown"){
+                    html_code = "undefined"
+                }
                 trackingEntity = {
                     timestamp: createDateAsUTC(new Date()).toISOString(),
                     page: interactor.session.page.href,
@@ -302,29 +297,21 @@ let mousewheelCounter = 0
                     element_html: html_code
                 }
                 interactor.records.push(trackingEntity);
-              if (interactor.debug) {
 
-                interactor.__closeSession__();
-
-                console.log("Session:\n", interactor.session);
-
-            }
-
-            if (interactor.numberActionsToSend === interactor.records.length){    
-
-                interactor.__sendInteractions__()
-
-                interactor.records = []
-                    
-                }   
-
+                if (interactor.debug) {
+                    interactor.__closeSession__();
+                    console.log("Session:\n", interactor.session);
+                }
+                if (interactor.numberActionsToSend === interactor.records.length){    
+                    interactor.__sendInteractions__()
+                    interactor.records = []
+                }
+            }else{
+                mousewheelCounter++
                 if (mousewheelCounter == 5){
-
                     mousewheelCounter = 0
-
-                }                  
-                
-            }
+                }
+            }   
             return interactor;
         },
 
