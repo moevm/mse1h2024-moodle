@@ -310,16 +310,3 @@ async def delete_one():
 
 async def update_user():
     return True
-
-# async def update_user(self, user_id: str, data: dict) -> dict:
-#     if len(data) < 1:
-#         raise RepoEmptyDataError("empty request body")
-#     user = await self.client.users.find_one({"_id": ObjectId(user_id)})
-#     if not user:
-#         raise RepoNotFoundError(f"user with id {user_id} not found")
-#     await self.client.users.update_one(
-#         {"_id": ObjectId(user_id)}, {"$set": data}
-#     )
-#     updated_user = await self.client.users.find_one({"_id": ObjectId(user_id)})
-#     updated_user["_id"] = str(updated_user["_id"])
-#     return updated_user
