@@ -32,7 +32,7 @@
 4. Убедиться, что на главное странице просмотра статистики отображены 3 записи - будет означать, что корректно собрана статистика
 5. Открыть в браузере https://e.moevm.info/ (для стабильной работы отключить блокировщик рекламы)
 6. Перейти в панель исследования элемента ([инструкции для разных браузеров](https://www.businessinsider.com/guides/tech/how-to-inspect-element)), открыть панель console
-7. Открыть файл [moodle_stat_tracker_without_script.html](https://github.com/moevm/mse1h2024-moodle/blob/main/stat_tracker/moodle_stat_tracker.html)
+7. Открыть файл [moodle_stat_tracker.html](https://github.com/moevm/mse1h2024-moodle/blob/main/stat_tracker/moodle_stat_tracker.html)
 8. Скопировать из него содержимое
 9. При первом запуске или если еще никогда не выполнялось далее в панели "Исследование элемента" в браузере разрешить копирование кода с помощью команды `allow paste`
 10. После чего скопировать туда скрипт и подтвердить выполненине, нажав кнопку "Enter"
