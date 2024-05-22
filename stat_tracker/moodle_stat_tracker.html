@@ -78,6 +78,9 @@
 </script>
 
 <script>
+
+let mousewheelCounter = 0
+
     function getUserName() { // works only on e.moevm.info
         return document
             .getElementById('action-menu-toggle-1')
@@ -145,6 +148,7 @@
     };
 
     Interactor.prototype = {
+        
 
         __init__: function (config) {
             var interactor = this;
@@ -230,32 +234,40 @@
         },
 
         __addInteraction__: function (e, type, element_type) {
+            if(e.type == "scroll" && mousewheelCounter == 1){
+                mousewheelCounter++
+                var interactor = this;
 
-            var interactor = this;
+                let name;
+                if(e.target)
+                if (e.target.nodeName == 'BUTTON')
+                    name = e.target.innerText
+                else
+                    name = e.target.nodeName.toLowerCase()
+                trackingEntity = {
+                    timestamp: createDateAsUTC(new Date()).toISOString(),
+                    page: interactor.session.page.href,
+                    element_type: element_type,
+                    element_name: name,
+                    action_type: type,
+                    event_type: e.type,
+                    element_html: `${e.target.outerHTML}`
+                }
+                interactor.records.push(trackingEntity);
 
-            let name;
-            if (e.target.nodeName == 'BUTTON')
-                name = e.target.innerText
-            else
-                name = e.target.nodeName.toLowerCase()
-            trackingEntity = {
-                timestamp: createDateAsUTC(new Date()).toISOString(),
-                page: interactor.session.page.href,
-                element_type: element_type,
-                element_name: name,
-                action_type: type,
-                event_type: e.type,
-                element_html: `${e.target.outerHTML}`
-            }
-            interactor.records.push(trackingEntity);
-
-            if (interactor.debug) {
-                interactor.__closeSession__();
-                console.log("Session:\n", interactor.session);
-            }
-            if (interactor.numberActionsToSend === interactor.records.length){    
-                interactor.__sendInteractions__()
-                interactor.records = []
+                if (interactor.debug) {
+                    interactor.__closeSession__();
+                    console.log("Session:\n", interactor.session);
+                }
+                if (interactor.numberActionsToSend === interactor.records.length){    
+                    interactor.__sendInteractions__()
+                    interactor.records = []
+                }
+            }else{
+                mousewheelCounter++
+                if (mousewheelCounter == 5){
+                    mousewheelCounter = 0
+                }
             }
             return interactor;
         },
