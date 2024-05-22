@@ -28,20 +28,20 @@
     </Filters>
     <Filters class="second-filter">
       <v-col class="v-col-filters">
-        <ColumnSearch label="ID студента" v-model="ID" :rules="idRules" @keydown.enter="startSearchFilters"></ColumnSearch>
-        <ColumnSearch label="ФИО студента" v-model="FIO" @keydown.enter="startSearchFilters"></ColumnSearch>
+        <ColumnSearch id="search-id" label="ID студента" v-model="ID" :rules="idRules" @keydown.enter="startSearchFilters"></ColumnSearch>
+        <ColumnSearch id="search-name" label="ФИО студента" v-model="FIO" @keydown.enter="startSearchFilters"></ColumnSearch>
       </v-col>
       <v-col class="v-col-filters">
-        <ColumnSearch label="email" v-model="email" @keydown.enter="startSearchFilters"></ColumnSearch>
-        <ColumnSearch label="Название курса" v-model="course" @keydown.enter="startSearchFilters"></ColumnSearch>
+        <ColumnSearch id="search-email" label="email" v-model="email" @keydown.enter="startSearchFilters"></ColumnSearch>
+        <ColumnSearch id="search-course" label="Название курса" v-model="course" @keydown.enter="startSearchFilters"></ColumnSearch>
       </v-col>
       <v-col class="v-col-filters">
-        <ColumnSearch label="Тип действия" v-model="actionType" @keydown.enter="startSearchFilters"></ColumnSearch>
-        <ColumnSearch label="Тип события" v-model="eventType" @keydown.enter="startSearchFilters"></ColumnSearch>
+        <ColumnSearch id="search-action-type" label="Тип действия" v-model="actionType" @keydown.enter="startSearchFilters"></ColumnSearch>
+        <ColumnSearch id="search-event-type" label="Тип события" v-model="eventType" @keydown.enter="startSearchFilters"></ColumnSearch>
       </v-col>
       <v-col class="v-col-filters">
-        <ColumnSearch label="Тип элемента" v-model="elementType" @keydown.enter="startSearchFilters"></ColumnSearch>
-        <ColumnSearch label="Название элемента" v-model="elementName" @keydown.enter="startSearchFilters"></ColumnSearch>
+        <ColumnSearch id="search-element-type" label="Тип элемента" v-model="elementType" @keydown.enter="startSearchFilters"></ColumnSearch>
+        <ColumnSearch id="search-element-name" label="Название элемента" v-model="elementName" @keydown.enter="startSearchFilters"></ColumnSearch>
       </v-col>
       <div class="search-reset-button ">
         <button id="start-search" class="start-search-button" @click="startSearchFilters">Поиск</button>

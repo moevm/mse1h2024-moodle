@@ -9,7 +9,7 @@
     <template v-slot:[`item.actions`]="{ item }">
       <v-container v-if="item['position'] !== 'администратор'">
         <v-icon>mdi-pencil</v-icon>
-        <v-icon @click="deleteItem(item)">mdi-delete</v-icon>
+        <v-icon :id="`delete-item-${item['email'].replace(/[^a-zA-Z0-9]/g, '_')}`" @click="deleteItem(item)">mdi-delete</v-icon>
       </v-container>
       <v-container v-else>
         <v-icon>mdi-pencil</v-icon>
